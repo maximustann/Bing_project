@@ -1,5 +1,12 @@
 #!/usr/bin/env python
+'''
+This is Bing project.
 
+Design by BoBo.
+Implement by Maximus Tann, GabrielXHe
+
+version 0.01
+'''
 from PyQt4 import QtGui, QtCore
 
 class Bing_MainWindow(QtGui.QWidget):
@@ -46,6 +53,7 @@ class Bing_MainWindow(QtGui.QWidget):
 		self.setGeometry(250, 250, 870, 150 + 30 * self.get_rows())
 		self.setWindowTitle('Managment System')
     def create_page(self, *contents):
+        print contents
         page = QtGui.QWidget()
         vbox = QtGui.QVBoxLayout()
         for c in contents:
@@ -62,7 +70,6 @@ class Bing_MainWindow(QtGui.QWidget):
 			table = self.P_create_table()
 		else:
 			table = self.U_create_table()
-
 		return table
 	
 	
