@@ -82,18 +82,24 @@ class Bing_MainWindow(QtGui.QWidget):
         self.tabwidget.setCurrentIndex(len(self.pages) - 1)
 
     def M_create_table(self):
+        titlelist = ["Customer", "RE GO", "Model", "Total Amount", "Amount Paid", "Amount Due", "Date", "Invoice No."]
         columns = 8
         rows = self.get_rows()
         table = QtGui.QTableWidget(rows, columns)
+        for i in xrange(columns):
+            table.setHorizontalHeaderItem(i, QtGui.QTableWidgetItem(titlelist[i]))
         for r in xrange(rows):
-	        table.setItem(r, 0, QtGui.QTableWidgetItem("ak"))
-	        table.setItem(r, 1, QtGui.QTableWidgetItem("ak"))
-	        table.setItem(r, 2, QtGui.QTableWidgetItem("ak"))
-	        table.setItem(r, 3, QtGui.QTableWidgetItem("ak"))
-	        table.setItem(r, 4, QtGui.QTableWidgetItem("ak"))
-	        table.setItem(r, 5, QtGui.QTableWidgetItem("ak"))
-	        table.setItem(r, 6, QtGui.QTableWidgetItem("ak"))
-	        table.setItem(r, 7, QtGui.QTableWidgetItem("ak"))
+            print r
+            table.setItem(r, 0, QtGui.QTableWidgetItem("1"))
+            table.setItem(r, 1, QtGui.QTableWidgetItem("2"))
+            table.setItem(r, 2, QtGui.QTableWidgetItem("3"))
+            table.setItem(r, 3, QtGui.QTableWidgetItem("4"))
+            table.setItem(r, 4, QtGui.QTableWidgetItem("5"))
+            table.setItem(r, 5, QtGui.QTableWidgetItem("6"))
+            table.setItem(r, 6, QtGui.QTableWidgetItem("7"))
+            table.setItem(r, 7, QtGui.QTableWidgetItem("8"))
+        table.setSortingEnabled(True)
+        table.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
         return table
 
     def P_create_table(self):
@@ -119,10 +125,10 @@ class Bing_MainWindow(QtGui.QWidget):
         columns = 1
         rows = self.get_rows()
         table = QtGui.QTableWidget(rows, columns)
+        table.setHorizontalHeaderItem(0, QtGui.QTableWidgetItem('Customer'))
         for r in xrange(rows):
 	        table.setItem(r, 0, QtGui.QTableWidgetItem("ak"))
         return table
-
 if __name__ == "__main__":
     app = QtGui.QApplication([])
     bing_p = Bing_MainWindow()
