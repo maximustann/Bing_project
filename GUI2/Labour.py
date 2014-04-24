@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'labour.ui'
 #
-# Created: Thu Apr 24 13:37:34 2014
+# Created: Thu Apr 24 23:02:54 2014
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -45,12 +45,6 @@ class Ui_Form(object):
         self.textEdit_3 = QtGui.QTextEdit(Form)
         self.textEdit_3.setGeometry(QtCore.QRect(40, 220, 331, 76))
         self.textEdit_3.setObjectName(_fromUtf8("textEdit_3"))
-        self.pushButton = QtGui.QPushButton(Form)
-        self.pushButton.setGeometry(QtCore.QRect(400, 250, 171, 81))
-        self.pushButton.setObjectName(_fromUtf8("pushButton"))
-        self.pushButton_2 = QtGui.QPushButton(Form)
-        self.pushButton_2.setGeometry(QtCore.QRect(400, 350, 171, 81))
-        self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -60,8 +54,6 @@ class Ui_Form(object):
         self.label.setText(_translate("Form", "Check:", None))
         self.label_2.setText(_translate("Form", "Fix/Repair:", None))
         self.label_3.setText(_translate("Form", "Replace:", None))
-        self.pushButton.setText(_translate("Form", "Wheel Algiment", None))
-        self.pushButton_2.setText(_translate("Form", "Parel Painting Labour", None))
 
 
 if __name__ == "__main__":
