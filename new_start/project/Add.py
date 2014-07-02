@@ -14,7 +14,7 @@ class Add_Dialog(QtGui.QDialog):
         self.connect()
         self.cur = self.conn.cursor()
         self.setMake()
-
+        self.ui.comboBox.currentIndexChanged.connect(self.changeModel)
 
     def connect(self):
         try:
@@ -30,6 +30,16 @@ class Add_Dialog(QtGui.QDialog):
             if row == None:
                 break
             self.ui.comboBox.addItem(row[0])
+        self.ui.comboBox.setCurrentIndex(-1)
+    def changeModel(self):
+        self.ui.comboBox_2.clear()
+        chosen_name = self.ui.comboBox.currentText()
+        self.cur.execute("SELECT name from model WHERE make_name='%s'" % chosen_name)
+        while True:
+            row = self.cur.fetchone()
+            if row == None:
+                break
+            self.ui.comboBox_2.addItem(row[0])
 
 if __name__ == "__main__":
     import sys

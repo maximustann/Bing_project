@@ -14,6 +14,7 @@ INSERT INTO tyre (size_, brand, retail_price, cost) VALUES ("175/40 R14", "LINGL
 INSERT INTO invoice (date_in, tel, name, rego, money_in) VALUES ("2014-07-04", "02723567", "Sxo", "EES832" ,30);
 INSERT INTO make (name) VALUES ("Toyota");
 INSERT INTO model (name, make_name) VALUES ("Levin","Toyota");
+INSERT INTO model (name, make_name) VALUES ("Corolla","Toyota");
 INSERT INTO make (name) VALUES ("Honda");
 INSERT INTO model (name, make_name) VALUES ("Civic","Honda");
 
