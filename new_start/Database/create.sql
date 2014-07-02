@@ -21,7 +21,7 @@ CREATE TABLE vehicle
 
 CREATE TABLE tyre
 (
-	ID		varchar(80),
+	ID		integer,
 	size_	varchar(80),
 	brand	varchar(80),
 	retail_price	real,
@@ -32,7 +32,7 @@ CREATE TABLE tyre
 
 CREATE TABLE invoice 
 (
-	invoice_no	varchar(80),
+	invoice_no	integer,
 	date_in		date,
 	tel			varchar(80),
 	name		varchar(80),
@@ -42,3 +42,18 @@ CREATE TABLE invoice
 	foreign key (tel) references customer(tel)
 );
 
+CREATE TABLE make
+(
+	ID		integer,
+	name	varchar(80),
+	primary key (ID)
+);
+
+CREATE TABLE model
+(
+	ID 		integer,
+	name	varchar(80),
+	make_name varchar(80),
+	primary key (ID),
+	foreign key (make_name) references make(name)
+);
