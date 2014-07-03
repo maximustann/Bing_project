@@ -3,6 +3,7 @@
 from PyQt4 import QtCore, QtGui;
 from ui import Ui_Add as ui_add;
 import sqlite3 as lite
+import time
 
 class Add_Dialog(QtGui.QDialog):
     def __init__(self):
@@ -12,6 +13,7 @@ class Add_Dialog(QtGui.QDialog):
         self.conn = None
         self.cur = None
         self.connect()
+        self.setTime()
         self.cur = self.conn.cursor()
         self.setMake()
         self.ui.comboBox.currentIndexChanged.connect(self.changeModel)
@@ -41,6 +43,8 @@ class Add_Dialog(QtGui.QDialog):
                 break
             self.ui.comboBox_2.addItem(row[0])
 
+    def setTime(self):
+        self.ui.pushButton_5.setText(time.strftime("%Y-%m-%d", time.localtime(time.time())))
 if __name__ == "__main__":
     import sys
     app = QtGui.QApplication(sys.argv)

@@ -13,10 +13,10 @@ INSERT INTO vehicle VALUES ("EES832", "Mazda", "Demio", "0213237", "2015-01-21")
 INSERT INTO tyre (size_, brand, retail_price, cost) VALUES ("175/40 R14", "LINGLONG", 180.00, 90.00);
 INSERT INTO invoice (date_in, tel, name, rego, money_in) VALUES ("2014-07-04", "02723567", "Sxo", "EES832" ,30);
 INSERT INTO make (name) VALUES ("Toyota");
-INSERT INTO model (name,make_name) VALUES ("Levin","Toyota");
+INSERT INTO model (name, make_name) VALUES ("Levin","Toyota");
 INSERT INTO make (name) VALUES ("Honda");
-INSERT INTO model (name,make_name) VALUES ("Civic","Honda");
+INSERT INTO model (name, make_name) VALUES ("Civic","Honda");
 
 INSERT INTO make (name) VALUES ("BMW");
-INSERT INTO model (name,make_name) VALUES ("318i","BMW");
+INSERT INTO model (name, make_name) VALUES ("318i","BMW");
 
