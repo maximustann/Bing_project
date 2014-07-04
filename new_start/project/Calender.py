@@ -8,6 +8,12 @@ class Calender_Dialog(QtGui.QDialog):
         super(Calender_Dialog, self).__init__()
         self.ui = ui_calender.Ui_Dialog()
         self.ui.setupUi(self)
+        self.ui.calendarWidget.clicked.connect(self.setDate)
+    def setDate(self):
+        self.date = self.ui.calendarWidget.selectedDate().toString("yyyy-M-d")
+        super(Calender_Dialog, self).accept()
+    def getDate(self):
+        return self.date
 if __name__ == "__main__":
     import sys
     app = QtGui.QApplication(sys.argv)
