@@ -5,6 +5,7 @@ from ui import Ui_Add as ui_add;
 import sqlite3 as lite;
 import Tyres as tyres;
 import Calender as calender;
+import Labour as labour;
 import time;
 
 class Add_Dialog(QtGui.QDialog):
@@ -21,6 +22,7 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.comboBox.currentIndexChanged.connect(self.changeModel)
         self.ui.pushButton_7.clicked.connect(self.clicked_bt_Tyres)
         self.ui.pushButton_5.clicked.connect(self.clicked_bt_Calender)
+        self.ui.pushButton_9.clicked.connect(self.clicked_bt_Labour)
         #self.ui.pushButton_12.clicked.connect(self.clicked_bt_addLine)
     def connect(self):
         try:
@@ -43,6 +45,11 @@ class Add_Dialog(QtGui.QDialog):
             date = Dialog.getDate()
             self.ui.pushButton_5.setText(date)
 
+    def clicked_bt_Labour(self):
+        Dialog = labour.Labour_Dialog()
+        Dialog.show()
+        result = Dialog.exec_()
+
     def setMake(self):
         self.cur.execute("SELECT name from make")
         while True:
@@ -51,6 +58,7 @@ class Add_Dialog(QtGui.QDialog):
                 break
             self.ui.comboBox.addItem(row[0])
         self.ui.comboBox.setCurrentIndex(-1)
+
     def changeModel(self):
         self.ui.comboBox_2.clear()
         chosen_name = self.ui.comboBox.currentText()
@@ -64,7 +72,7 @@ class Add_Dialog(QtGui.QDialog):
     def setTime(self):
         self.ui.pushButton_5.setText(time.strftime("%Y-%m-%d", time.localtime(time.time())))
 
-    def 
+     
 if __name__ == "__main__":
     import sys
     app = QtGui.QApplication(sys.argv)

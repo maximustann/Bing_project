@@ -149,7 +149,7 @@
           <item>
            <widget class="QLabel" name="label_20">
             <property name="text">
-             <string>Paid:</string>
+             <string>Amount Paid:</string>
             </property>
            </widget>
           </item>

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Add.ui'
 #
-# Created: Fri Jul  4 12:05:48 2014
+# Created: Fri Jul  4 16:05:33 2014
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -421,7 +421,7 @@ class Ui_Dialog(object):
         self.pushButton_14.setText(_translate("Dialog", "Full Payment", None))
         self.pushButton_15.setText(_translate("Dialog", "Partial Payment", None))
         self.pushButton_16.setText(_translate("Dialog", "Clear Payment", None))
-        self.label_20.setText(_translate("Dialog", "Paid:", None))
+        self.label_20.setText(_translate("Dialog", "Amount Paid:", None))
         self.label_21.setText(_translate("Dialog", "Amount Due:", None))
         self.pushButton_3.setText(_translate("Dialog", "Preview", None))
         self.pushButton_2.setText(_translate("Dialog", "Print", None))
