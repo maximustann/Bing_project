@@ -21,13 +21,15 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.comboBox.currentIndexChanged.connect(self.changeModel)
         self.ui.pushButton_7.clicked.connect(self.clicked_bt_Tyres)
         self.ui.pushButton_5.clicked.connect(self.clicked_bt_Calender)
-
+        #self.ui.pushButton_12.clicked.connect(self.clicked_bt_addLine)
     def connect(self):
         try:
             self.conn = lite.connect("../Database/garage")
         except lite.Error, e:
             print "Error %s:" % e.args[0]
             sys.exit(1)
+
+    #def clicked_bt_addLine(self):
 
     def clicked_bt_Tyres(self):
         Dialog = tyres.Tyres_Dialog()
@@ -37,7 +39,9 @@ class Add_Dialog(QtGui.QDialog):
     def clicked_bt_Calender(self):
         Dialog = calender.Calender_Dialog()
         Dialog.show()
-        result = Dialog.exec_()
+        if Dialog.exec_() == 1:
+            date = Dialog.getDate()
+            self.ui.pushButton_5.setText(date)
 
     def setMake(self):
         self.cur.execute("SELECT name from make")
@@ -59,6 +63,8 @@ class Add_Dialog(QtGui.QDialog):
 
     def setTime(self):
         self.ui.pushButton_5.setText(time.strftime("%Y-%m-%d", time.localtime(time.time())))
+
+    def 
 if __name__ == "__main__":
     import sys
     app = QtGui.QApplication(sys.argv)
