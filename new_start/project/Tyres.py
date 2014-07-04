@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from PyQt4 import QtCore, QtGui
-from ui import Ui_Tyres as ui_Tyres
+from ui import Ui_Tyres as ui_tyres
 
 class Tyres_Dialog(QtGui.QDialog):
     def __init__(self):

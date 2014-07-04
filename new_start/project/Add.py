@@ -2,8 +2,9 @@
 
 from PyQt4 import QtCore, QtGui;
 from ui import Ui_Add as ui_add;
-import sqlite3 as lite
-import time
+import sqlite3 as lite;
+import Tyres as tyres;
+import time;
 
 class Add_Dialog(QtGui.QDialog):
     def __init__(self):
@@ -17,6 +18,7 @@ class Add_Dialog(QtGui.QDialog):
         self.cur = self.conn.cursor()
         self.setMake()
         self.ui.comboBox.currentIndexChanged.connect(self.changeModel)
+        self.ui.pushButton_7.clicked.connect(self.clicked_bt_Tyres)
 
     def connect(self):
         try:
@@ -24,6 +26,11 @@ class Add_Dialog(QtGui.QDialog):
         except lite.Error, e:
             print "Error %s:" % e.args[0]
             sys.exit(1)
+
+    def clicked_bt_Tyres(self):
+        Dialog = tyres.Tyres_Dialog()
+        Dialog.show()
+        result = Dialog.exec_()
 
     def setMake(self):
         self.cur.execute("SELECT name from make")
