@@ -4,6 +4,7 @@ from PyQt4 import QtCore, QtGui;
 from ui import Ui_Add as ui_add;
 import sqlite3 as lite;
 import Tyres as tyres;
+import Calender as calender;
 import time;
 
 class Add_Dialog(QtGui.QDialog):
@@ -19,6 +20,7 @@ class Add_Dialog(QtGui.QDialog):
         self.setMake()
         self.ui.comboBox.currentIndexChanged.connect(self.changeModel)
         self.ui.pushButton_7.clicked.connect(self.clicked_bt_Tyres)
+        self.ui.pushButton_5.clicked.connect(self.clicked_bt_Calender)
 
     def connect(self):
         try:
@@ -29,6 +31,11 @@ class Add_Dialog(QtGui.QDialog):
 
     def clicked_bt_Tyres(self):
         Dialog = tyres.Tyres_Dialog()
+        Dialog.show()
+        result = Dialog.exec_()
+
+    def clicked_bt_Calender(self):
+        Dialog = calender.Calender_Dialog()
         Dialog.show()
         result = Dialog.exec_()
 
