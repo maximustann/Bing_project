@@ -38,25 +38,87 @@ class Add_Dialog(QtGui.QDialog):
     def clicked_bt_addLine(self):
         self.ui.tableWidget.insertRow(0)
     def clicked_bt_delLine(self):
+        gst = 0
+        amount_value = 0
+        gst_amount = 0
         current_row = self.ui.tableWidget.currentRow()
+        try:
+            amount_value = float(self.ui.tableWidget.item(current_row, 3).text())
+        except AttributeError:
+            amount_value = 0
+        sub_value = float(self.ui.label_15.text())
+        sub_value -= amount_value
+
+        try:
+            self.ui.label_15.setText(str("%.2f" % sub_value))
+        except RuntimeError:
+            pass
+
+        try:
+            gst_amount = float(self.ui.tableWidget.item(current_row, 4).text())
+        except AttributeError:
+            gst_amount = 0
+        total = float(self.ui.label_17.text())
+        total -= gst_amount
+
+        gst = total - sub_value
+        try:
+            self.ui.label_16.setText(str("%.2f" % gst))
+            self.ui.label_17.setText(str("%.2f" % total))
+        except RuntimeError:
+            pass
+
+
+
         self.ui.tableWidget.removeRow(current_row)
 
     def changed_table(self):
+        sub_total = 0
+        gst = 0
+        total = 0
+        value = 0
         current_row = self.ui.tableWidget.currentRow()
         current_column = self.ui.tableWidget.currentColumn()
         #Need to calculate Amount
         if current_column == 3:
-            value = float(self.ui.tableWidget.currentItem().text()) * 1.15
-            str_value = repr("%.2f" % value)[1:-1]
-            item = QtGui.QTableWidgetItem(str_value)
-            self.ui.tableWidget.setItem(current_row, 4, item)
-            '''
+            try:
+                value = float(self.ui.tableWidget.currentItem().text()) * 1.15
+                str_value = repr("%.2f" % value)[1:-1]
+                item = QtGui.QTableWidgetItem(str_value)
+                self.ui.tableWidget.setItem(current_row, 4, item)
+            except RuntimeError:
+                pass
+
             total_row = self.ui.tableWidget.rowCount()
             for i in range(total_row):
-                value = float(self.ui.tableWidget.takeItem(i, 3).text())
+                try:
+                    value = float(self.ui.tableWidget.item(i, 3).text())
+                except AttributeError:
+                    value = 0
+                except RuntimeError:
+                    pass
                 sub_total += value
-            self.ui.label_15.setText(str(sub_total)[1:-1])
-            '''
+                value = 0
+            try:
+                self.ui.label_15.setText(str("%.2f" % sub_total))
+            except RuntimeError:
+                pass
+
+            for i in range(total_row):
+                try:
+                    value = float(self.ui.tableWidget.item(i, 4).text())
+                except AttributeError:
+                    value = 0
+                except RuntimeError:
+                    pass
+                total += value
+                gst = total - sub_total
+                value = 0
+            try:
+                self.ui.label_16.setText(str("%.2f" % gst))
+                self.ui.label_17.setText(str("%.2f" % total))
+            except RuntimeError:
+                pass
     def clicked_bt_Tyres(self):
         Dialog = tyres.Tyres_Dialog()
         Dialog.show()
@@ -85,6 +147,14 @@ class Add_Dialog(QtGui.QDialog):
             self.ui.comboBox.addItem(row[0])
         self.ui.comboBox.setCurrentIndex(-1)
 
+
+    def setLabourText(self, dialog):
+        checkText = dialog.getCheckText()  
+        fixText = dialog.getFixText()
+        replaceText = dialog.getReplaceText()
+        self.ui.textEdit_3.setPlainText("Check: %s \n\nFix/Repair: %s \n\nReplace: %s" %(checkText, fixText, replaceText))
+
+
     def changeModel(self):
         self.ui.comboBox_2.clear()
         chosen_name = self.ui.comboBox.currentText()
@@ -97,12 +167,6 @@ class Add_Dialog(QtGui.QDialog):
 
     def setTime(self):
         self.ui.pushButton_5.setText(time.strftime("%Y-%m-%d", time.localtime(time.time())))
-
-    def setLabourText(self, dialog):
-        checkText = dialog.getCheckText()  
-        fixText = dialog.getFixText()
-        replaceText = dialog.getReplaceText()
-        self.ui.textEdit_3.setPlainText("Check: %s \n\nFix/Repair: %s \n\nReplace: %s" %(checkText, fixText, replaceText))
 
 if __name__ == "__main__":
     import sys

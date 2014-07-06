@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Add.ui'
 #
-# Created: Fri Jul  4 16:05:33 2014
+# Created: Sun Jul  6 15:42:08 2014
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -348,16 +348,16 @@ class Ui_Dialog(object):
         self.tableWidget.verticalHeader().setVisible(False)
         self.tableWidget.verticalHeader().setHighlightSections(False)
         self.tableWidget.verticalHeader().setSortIndicatorShown(False)
-        self.WOF = QtGui.QComboBox(Dialog)
-        self.WOF.setGeometry(QtCore.QRect(490, 70, 101, 41))
+        self.comboBox_3 = QtGui.QComboBox(Dialog)
+        self.comboBox_3.setGeometry(QtCore.QRect(490, 70, 101, 41))
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("FreeSans"))
         font.setPointSize(14)
-        self.WOF.setFont(font)
-        self.WOF.setObjectName(_fromUtf8("WOF"))
-        self.WOF.addItem(_fromUtf8(""))
-        self.WOF.addItem(_fromUtf8(""))
-        self.WOF.addItem(_fromUtf8(""))
+        self.comboBox_3.setFont(font)
+        self.comboBox_3.setObjectName(_fromUtf8("comboBox_3"))
+        self.comboBox_3.addItem(_fromUtf8(""))
+        self.comboBox_3.addItem(_fromUtf8(""))
+        self.comboBox_3.addItem(_fromUtf8(""))
         self.layoutWidget_6 = QtGui.QWidget(Dialog)
         self.layoutWidget_6.setGeometry(QtCore.QRect(30, 330, 224, 30))
         self.layoutWidget_6.setObjectName(_fromUtf8("layoutWidget_6"))
@@ -420,7 +420,7 @@ class Ui_Dialog(object):
         self.pushButton_17.setText(_translate("Dialog", "Discount", None))
         self.pushButton_14.setText(_translate("Dialog", "Full Payment", None))
         self.pushButton_15.setText(_translate("Dialog", "Partial Payment", None))
-        self.pushButton_16.setText(_translate("Dialog", "Clear Payment", None))
+        self.pushButton_16.setText(_translate("Dialog", "Cash Paid", None))
         self.label_20.setText(_translate("Dialog", "Amount Paid:", None))
         self.label_21.setText(_translate("Dialog", "Amount Due:", None))
         self.pushButton_3.setText(_translate("Dialog", "Preview", None))
@@ -456,9 +456,9 @@ class Ui_Dialog(object):
         item.setText(_translate("Dialog", "Amount", None))
         item = self.tableWidget.horizontalHeaderItem(4)
         item.setText(_translate("Dialog", "Amount(GST)", None))
-        self.WOF.setItemText(0, _translate("Dialog", "WOF", None))
-        self.WOF.setItemText(1, _translate("Dialog", "$30", None))
-        self.WOF.setItemText(2, _translate("Dialog", "$45", None))
+        self.comboBox_3.setItemText(0, _translate("Dialog", "WOF", None))
+        self.comboBox_3.setItemText(1, _translate("Dialog", "$30", None))
+        self.comboBox_3.setItemText(2, _translate("Dialog", "$45", None))
         self.pushButton_12.setText(_translate("Dialog", "PushButton", None))
         self.pushButton_13.setText(_translate("Dialog", "PushButton", None))
         self.pushButton_10.setText(_translate("Dialog", "Save", None))

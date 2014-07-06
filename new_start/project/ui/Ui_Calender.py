@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Calender.ui'
 #
-# Created: Fri Jul  4 16:05:33 2014
+# Created: Sun Jul  6 15:42:08 2014
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -24,26 +24,26 @@ except AttributeError:
         return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_Dialog(object):
-    def setupUi(self, Calender):
-        Calender.setObjectName(_fromUtf8("Calender"))
-        Calender.resize(400, 300)
-        self.calendarWidget = QtGui.QCalendarWidget(Calender)
+    def setupUi(self, Dialog):
+        Dialog.setObjectName(_fromUtf8("Dialog"))
+        Dialog.resize(400, 300)
+        self.calendarWidget = QtGui.QCalendarWidget(Dialog)
         self.calendarWidget.setGeometry(QtCore.QRect(0, 0, 401, 301))
         self.calendarWidget.setObjectName(_fromUtf8("calendarWidget"))
 
-        self.retranslateUi(Calender)
-        QtCore.QMetaObject.connectSlotsByName(Calender)
+        self.retranslateUi(Dialog)
+        QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-    def retranslateUi(self, Calender):
-        Calender.setWindowTitle(_translate("Calender", "Dialog", None))
+    def retranslateUi(self, Dialog):
+        Dialog.setWindowTitle(_translate("Dialog", "Dialog", None))
 
 
 if __name__ == "__main__":
     import sys
     app = QtGui.QApplication(sys.argv)
-    Calender = QtGui.QDialog()
-    ui = Ui_Calender()
-    ui.setupUi(Calender)
-    Calender.show()
+    Dialog = QtGui.QDialog()
+    ui = Ui_Dialog()
+    ui.setupUi(Dialog)
+    Dialog.show()
     sys.exit(app.exec_())
 

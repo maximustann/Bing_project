@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Tyres.ui'
 #
-# Created: Fri Jul  4 16:05:33 2014
+# Created: Sun Jul  6 15:42:08 2014
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
