@@ -73,6 +73,8 @@ class Add_Dialog(QtGui.QDialog):
         Dialog = labour.Labour_Dialog()
         Dialog.show()
         result = Dialog.exec_()
+        if result == 1:
+            self.setLabourText(Dialog)
 
     def setMake(self):
         self.cur.execute("SELECT name from make")
@@ -95,6 +97,12 @@ class Add_Dialog(QtGui.QDialog):
 
     def setTime(self):
         self.ui.pushButton_5.setText(time.strftime("%Y-%m-%d", time.localtime(time.time())))
+
+    def setLabourText(self, dialog):
+        checkText = dialog.getCheckText()  
+        fixText = dialog.getFixText()
+        replaceText = dialog.getReplaceText()
+        self.ui.textEdit_3.setPlainText("Check: %s \n\nFix/Repair: %s \n\nReplace: %s" %(checkText, fixText, replaceText))
 
 if __name__ == "__main__":
     import sys
