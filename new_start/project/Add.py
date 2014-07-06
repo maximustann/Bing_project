@@ -13,6 +13,8 @@ class Add_Dialog(QtGui.QDialog):
         super(Add_Dialog, self).__init__()
         self.ui = ui_add.Ui_Dialog()
         self.ui.setupUi(self)
+        self.ui.pushButton_12.setText("Add")
+        self.ui.pushButton_13.setText("Delete")
         self.conn = None
         self.cur = None
         self.connect()
@@ -23,7 +25,9 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.pushButton_7.clicked.connect(self.clicked_bt_Tyres)
         self.ui.pushButton_5.clicked.connect(self.clicked_bt_Calender)
         self.ui.pushButton_9.clicked.connect(self.clicked_bt_Labour)
-        #self.ui.pushButton_12.clicked.connect(self.clicked_bt_addLine)
+        self.ui.pushButton_12.clicked.connect(self.clicked_bt_addLine)
+        self.ui.pushButton_13.clicked.connect(self.clicked_bt_delLine)
+        self.ui.tableWidget.itemChanged.connect(self.changed_table)
     def connect(self):
         try:
             self.conn = lite.connect("../Database/garage")
@@ -31,8 +35,28 @@ class Add_Dialog(QtGui.QDialog):
             print "Error %s:" % e.args[0]
             sys.exit(1)
 
-    #def clicked_bt_addLine(self):
+    def clicked_bt_addLine(self):
+        self.ui.tableWidget.insertRow(0)
+    def clicked_bt_delLine(self):
+        current_row = self.ui.tableWidget.currentRow()
+        self.ui.tableWidget.removeRow(current_row)
 
+    def changed_table(self):
+        current_row = self.ui.tableWidget.currentRow()
+        current_column = self.ui.tableWidget.currentColumn()
+        #Need to calculate Amount
+        if current_column == 3:
+            value = float(self.ui.tableWidget.currentItem().text()) * 1.15
+            str_value = repr("%.2f" % value)[1:-1]
+            item = QtGui.QTableWidgetItem(str_value)
+            self.ui.tableWidget.setItem(current_row, 4, item)
+            '''
+            total_row = self.ui.tableWidget.rowCount()
+            for i in range(total_row):
+                value = float(self.ui.tableWidget.takeItem(i, 3).text())
+                sub_total += value
+            self.ui.label_15.setText(str(sub_total)[1:-1])
+            '''
     def clicked_bt_Tyres(self):
         Dialog = tyres.Tyres_Dialog()
         Dialog.show()
@@ -72,7 +96,6 @@ class Add_Dialog(QtGui.QDialog):
     def setTime(self):
         self.ui.pushButton_5.setText(time.strftime("%Y-%m-%d", time.localtime(time.time())))
 
-     
 if __name__ == "__main__":
     import sys
     app = QtGui.QApplication(sys.argv)

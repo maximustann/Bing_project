@@ -9,6 +9,7 @@ class Labour_Dialog(QtGui.QDialog):
         self.ui = ui_labour.Ui_Dialog()
         self.ui.setupUi(self)
 
+
 if __name__ == "__main__":
     import sys
     app = QtGui.QApplication(sys.argv)
