@@ -19,14 +19,9 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.setupUi(self)
         self.ui.pushButton_12.setText("Add")
         self.ui.pushButton_13.setText("Delete")
+        self.init_data()
         self.conn = None
         self.cur = None
-        self.before_gst_dis = "26.09"
-        self.before_gst = "39.10"
-        self.express = "99.00"
-        self.extensive = "120.00"
-        self.euroCars = "160.00"
-        self.van = "160.00"
         self.connect()
         self.setTime()
         self.cur = self.conn.cursor()
@@ -44,6 +39,20 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.pushButton_13.clicked.connect(self.clicked_bt_delLine)
         self.ui.tableWidget.itemChanged.connect(self.changed_table)
         self.ui.comboBox_3.currentIndexChanged.connect(self.wof_comboBox)
+    def init_data(self):
+        self.before_gst_dis = "26.09"
+        self.before_gst = "39.10"
+        self.express = "99.00"
+        self.extensive = "120.00"
+        self.euroCars = "160.00"
+        self.van = "160.00"
+        self.des = 0
+        self.pri = 1
+        self.qty = 2
+        self.unit = 3
+        self.amount =4
+        self.gst_amount = 5
+
     def connect(self):
         try:
             self.conn = lite.connect("../Database/garage")
@@ -55,21 +64,21 @@ class Add_Dialog(QtGui.QDialog):
         if self.ui.comboBox_3.currentIndex() == 1:
             self.ui.tableWidget.insertRow(0)
             item = QtGui.QTableWidgetItem("Warrant of Fitness Check")
-            self.ui.tableWidget.setItem(0,0, item)
+            self.ui.tableWidget.setItem(0, self.des, item)
             item = QtGui.QTableWidgetItem("1")
-            self.ui.tableWidget.setItem(0,1, item)
+            self.ui.tableWidget.setItem(0, self.pri, item)
             item = QtGui.QTableWidgetItem(self.before_gst_dis)
-            self.ui.tableWidget.setItem(0,3, item)
+            self.ui.tableWidget.setItem(0, self.amount, item)
             self.set_labels_and_gst(flag)
 
         elif self.ui.comboBox_3.currentIndex() == 2:
             self.ui.tableWidget.insertRow(0)
             item = QtGui.QTableWidgetItem("Warrant of Fitness Check")
-            self.ui.tableWidget.setItem(0,0, item)
+            self.ui.tableWidget.setItem(0, self.des, item)
             item = QtGui.QTableWidgetItem("1")
-            self.ui.tableWidget.setItem(0,1, item)
+            self.ui.tableWidget.setItem(0, self.pri, item)
             item = QtGui.QTableWidgetItem(self.before_gst)
-            self.ui.tableWidget.setItem(0,3, item)
+            self.ui.tableWidget.setItem(0, self.amount, item)
             self.set_labels_and_gst(flag)
     def write_log(self, string):
         my_time = None
@@ -79,16 +88,17 @@ class Add_Dialog(QtGui.QDialog):
         fd.close()
 
     def changeService(self):
+        flag = 0
         self.ui.textEdit_2.clear()
         chosen_name = self.ui.comboBox_5.currentText()
         if chosen_name == 'Express':
             self.ui.tableWidget.insertRow(0)
             item = QtGui.QTableWidgetItem("Express Service")
-            self.ui.tableWidget.setItem(0,0, item)
+            self.ui.tableWidget.setItem(0, self.des, item)
             item = QtGui.QTableWidgetItem("1")
-            self.ui.tableWidget.setItem(0,1, item)
+            self.ui.tableWidget.setItem(0, self.pri, item)
             item = QtGui.QTableWidgetItem(self.express)
-            self.ui.tableWidget.setItem(0,3, item)
+            self.ui.tableWidget.setItem(0, self.amount, item)
             try:
                 fd = open("../Database/text/express.txt", 'r')
             except IOError,e:
@@ -98,11 +108,11 @@ class Add_Dialog(QtGui.QDialog):
         elif chosen_name == 'Extensive':
             self.ui.tableWidget.insertRow(0)
             item = QtGui.QTableWidgetItem("Extensive Service")
-            self.ui.tableWidget.setItem(0,0, item)
+            self.ui.tableWidget.setItem(0, self.des, item)
             item = QtGui.QTableWidgetItem("1")
-            self.ui.tableWidget.setItem(0,1, item)
+            self.ui.tableWidget.setItem(0, self.pri, item)
             item = QtGui.QTableWidgetItem(self.extensive)
-            self.ui.tableWidget.setItem(0,3, item)
+            self.ui.tableWidget.setItem(0, self.amount, item)
             try:
                 fd = open("../Database/text/extensive.txt", 'r')
             except IOError, e:
@@ -112,11 +122,11 @@ class Add_Dialog(QtGui.QDialog):
         elif chosen_name == 'Euro_Car':
             self.ui.tableWidget.insertRow(0)
             item = QtGui.QTableWidgetItem("EuroCars Service")
-            self.ui.tableWidget.setItem(0,0, item)
+            self.ui.tableWidget.setItem(0, self.des, item)
             item = QtGui.QTableWidgetItem("1")
-            self.ui.tableWidget.setItem(0,1, item)
+            self.ui.tableWidget.setItem(0, self.pri, item)
             item = QtGui.QTableWidgetItem(self.euroCars)
-            self.ui.tableWidget.setItem(0,3, item)
+            self.ui.tableWidget.setItem(0, self.amount, item)
             try:
                 fd = open("../Database/text/euro.txt", 'r')
             except IOError, e:
@@ -126,17 +136,18 @@ class Add_Dialog(QtGui.QDialog):
         else:
             self.ui.tableWidget.insertRow(0)
             item = QtGui.QTableWidgetItem("Van 4wd Service")
-            self.ui.tableWidget.setItem(0,0, item)
+            self.ui.tableWidget.setItem(0, self.des, item)
             item = QtGui.QTableWidgetItem("1")
-            self.ui.tableWidget.setItem(0,1, item)
+            self.ui.tableWidget.setItem(0, self.pri, item)
             item = QtGui.QTableWidgetItem(self.van)
-            self.ui.tableWidget.setItem(0,3, item)
+            self.ui.tableWidget.setItem(0, self.amount, item)
             try:
                 fd = open("../Database/text/van_4wd.txt", 'r')
             except IOError, e:
                 self.write_log(e)
             self.ui.textEdit_2.setPlainText(fd.read())
             fd.close()
+        self.set_labels_and_gst(flag)
     def clicked_bt_fullPayment(self):
         text = self.ui.label_17.text()
         self.ui.lineEdit_8.setText(text)
@@ -151,7 +162,7 @@ class Add_Dialog(QtGui.QDialog):
         gst_amount = 0
         current_row = self.ui.tableWidget.currentRow()
         try:
-            amount_value = float(self.ui.tableWidget.item(current_row, 3).text())
+            amount_value = float(self.ui.tableWidget.item(current_row, self.amount).text())
         except AttributeError:
             amount_value = 0
         sub_value = float(self.ui.label_15.text())
@@ -163,7 +174,7 @@ class Add_Dialog(QtGui.QDialog):
             pass
 
         try:
-            gst_amount = float(self.ui.tableWidget.item(current_row, 4).text())
+            gst_amount = float(self.ui.tableWidget.item(current_row, self.gst_amount).text())
         except AttributeError:
             gst_amount = 0
         total = float(self.ui.label_17.text())
@@ -184,10 +195,10 @@ class Add_Dialog(QtGui.QDialog):
             current_row = 0
         try:
             value = 0
-            value = float(self.ui.tableWidget.item(current_row, 3).text()) * 1.15
+            value = float(self.ui.tableWidget.item(current_row, self.amount).text()) * 1.15
             str_value = repr("%.2f" % value)[1:-1]
             item = QtGui.QTableWidgetItem(str_value)
-            self.ui.tableWidget.setItem(current_row, 4, item)
+            self.ui.tableWidget.setItem(current_row, self.gst_amount, item)
         except RuntimeError:
             pass
         except ValueError, e:
@@ -201,7 +212,7 @@ class Add_Dialog(QtGui.QDialog):
 
         for i in range(total_row):
             try:
-                value = float(self.ui.tableWidget.item(i, 3).text())
+                value = float(self.ui.tableWidget.item(i, self.amount).text())
             except AttributeError:
                 value = 0
             except RuntimeError:
@@ -219,7 +230,7 @@ class Add_Dialog(QtGui.QDialog):
         total_row = self.ui.tableWidget.rowCount()
         for i in range(total_row):
             try:
-                value = float(self.ui.tableWidget.item(i, 4).text())
+                value = float(self.ui.tableWidget.item(i, self.gst_amount).text())
             except AttributeError:
                 value = 0
             except RuntimeError:
@@ -270,12 +281,12 @@ class Add_Dialog(QtGui.QDialog):
         total = 0
         current_column = self.ui.tableWidget.currentColumn()
         #Need to calculate Amount
-        if current_column == 3:
+        if current_column == self.amount:
             try:
                 self.set_labels_and_gst(flag)
             except RuntimeError:
                 pass
-        elif current_column == 4:
+        elif current_column == self.gst_amount:
             try:
                 self.set_labels_and_amount()
             except RuntimeError:
