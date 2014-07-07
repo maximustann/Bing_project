@@ -66,7 +66,7 @@ class Add_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem("Warrant of Fitness Check")
             self.ui.tableWidget.setItem(0, self.des, item)
             item = QtGui.QTableWidgetItem("1")
-            self.ui.tableWidget.setItem(0, self.pri, item)
+            self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem(self.before_gst_dis)
             self.ui.tableWidget.setItem(0, self.amount, item)
             self.set_labels_and_gst(flag)
@@ -76,7 +76,7 @@ class Add_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem("Warrant of Fitness Check")
             self.ui.tableWidget.setItem(0, self.des, item)
             item = QtGui.QTableWidgetItem("1")
-            self.ui.tableWidget.setItem(0, self.pri, item)
+            self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem(self.before_gst)
             self.ui.tableWidget.setItem(0, self.amount, item)
             self.set_labels_and_gst(flag)
@@ -96,7 +96,7 @@ class Add_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem("Express Service")
             self.ui.tableWidget.setItem(0, self.des, item)
             item = QtGui.QTableWidgetItem("1")
-            self.ui.tableWidget.setItem(0, self.pri, item)
+            self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem(self.express)
             self.ui.tableWidget.setItem(0, self.amount, item)
             try:
@@ -110,7 +110,7 @@ class Add_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem("Extensive Service")
             self.ui.tableWidget.setItem(0, self.des, item)
             item = QtGui.QTableWidgetItem("1")
-            self.ui.tableWidget.setItem(0, self.pri, item)
+            self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem(self.extensive)
             self.ui.tableWidget.setItem(0, self.amount, item)
             try:
@@ -124,7 +124,7 @@ class Add_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem("EuroCars Service")
             self.ui.tableWidget.setItem(0, self.des, item)
             item = QtGui.QTableWidgetItem("1")
-            self.ui.tableWidget.setItem(0, self.pri, item)
+            self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem(self.euroCars)
             self.ui.tableWidget.setItem(0, self.amount, item)
             try:
@@ -138,7 +138,7 @@ class Add_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem("Van 4wd Service")
             self.ui.tableWidget.setItem(0, self.des, item)
             item = QtGui.QTableWidgetItem("1")
-            self.ui.tableWidget.setItem(0, self.pri, item)
+            self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem(self.van)
             self.ui.tableWidget.setItem(0, self.amount, item)
             try:
