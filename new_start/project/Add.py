@@ -37,6 +37,7 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.pushButton_5.clicked.connect(self.clicked_bt_Calender)
         self.ui.pushButton_9.clicked.connect(self.clicked_bt_Labour)
         self.ui.pushButton_17.clicked.connect(self.clicked_bt_Discount)
+        self.ui.pushButton_14.clicked.connect(self.clicked_bt_fullPayment)
         self.ui.pushButton_15.clicked.connect(self.clicked_bt_Paid)
         self.ui.pushButton_16.clicked.connect(self.clicked_bt_Cash)
         self.ui.pushButton_12.clicked.connect(self.clicked_bt_addLine)
@@ -136,6 +137,9 @@ class Add_Dialog(QtGui.QDialog):
                 self.write_log(e)
             self.ui.textEdit_2.setPlainText(fd.read())
             fd.close()
+    def clicked_bt_fullPayment(self):
+        text = self.ui.label_17.text()
+        self.ui.lineEdit_8.setText(text)
 
     def clicked_bt_addLine(self):
         self.ui.tableWidget.insertRow(0)
