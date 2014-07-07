@@ -325,9 +325,7 @@ class Add_Dialog(QtGui.QDialog):
         checkText = dialog.getCheckText()
         fixText = dialog.getFixText()
         replaceText = dialog.getReplaceText()
-        wholeText = checkText + fixText + replaceText
-        if wholeText != "":
-            self.ui.textEdit_3.setPlainText("Check: %s \n\nFix/Repair: %s \n\nReplace: %s" %(checkText, fixText, replaceText))
+        self.ui.textEdit_3.setPlainText("Check: %s \n\nFix/Repair: %s \n\nReplace: %s" %(checkText, fixText, replaceText))
     def clicked_bt_Discount(self):
         Dialog = discount.Discount_Dialog()
         Dialog.show()
