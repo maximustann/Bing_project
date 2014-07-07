@@ -6,6 +6,9 @@ import sqlite3 as lite;
 import Tyres as tyres;
 import Calender as calender;
 import Labour as labour;
+import Discount as discount;
+import Paid as paid;
+import Cash as cash;
 import time;
 import os;
 
@@ -18,6 +21,10 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.pushButton_13.setText("Delete")
         self.conn = None
         self.cur = None
+        self.express = "99.00"
+        self.extensive = "120.00"
+        self.euroCars = "160.00"
+        self.van = "160.00"
         self.connect()
         self.setTime()
         self.cur = self.conn.cursor()
@@ -27,6 +34,9 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.pushButton_7.clicked.connect(self.clicked_bt_Tyres)
         self.ui.pushButton_5.clicked.connect(self.clicked_bt_Calender)
         self.ui.pushButton_9.clicked.connect(self.clicked_bt_Labour)
+        self.ui.pushButton_17.clicked.connect(self.clicked_bt_Discount)
+        self.ui.pushButton_15.clicked.connect(self.clicked_bt_Paid)
+        self.ui.pushButton_16.clicked.connect(self.clicked_bt_Cash)
         self.ui.pushButton_12.clicked.connect(self.clicked_bt_addLine)
         self.ui.pushButton_13.clicked.connect(self.clicked_bt_delLine)
         self.ui.tableWidget.itemChanged.connect(self.changed_table)
@@ -66,6 +76,13 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.textEdit_2.clear()
         chosen_name = self.ui.comboBox_5.currentText()
         if chosen_name == 'Express':
+            self.ui.tableWidget.insertRow(0)
+            item = QtGui.QTableWidgetItem("Express Service")
+            self.ui.tableWidget.setItem(0,0, item)
+            item = QtGui.QTableWidgetItem("1")
+            self.ui.tableWidget.setItem(0,1, item)
+            item = QtGui.QTableWidgetItem(self.express)
+            self.ui.tableWidget.setItem(0,3, item)
             try:
                 fd = open("../Database/text/express.txt", 'r')
             except IOError,e:
@@ -73,6 +90,13 @@ class Add_Dialog(QtGui.QDialog):
             self.ui.textEdit_2.setPlainText(fd.read())
             fd.close()
         elif chosen_name == 'Extensive':
+            self.ui.tableWidget.insertRow(0)
+            item = QtGui.QTableWidgetItem("Extensive Service")
+            self.ui.tableWidget.setItem(0,0, item)
+            item = QtGui.QTableWidgetItem("1")
+            self.ui.tableWidget.setItem(0,1, item)
+            item = QtGui.QTableWidgetItem(self.extensive)
+            self.ui.tableWidget.setItem(0,3, item)
             try:
                 fd = open("../Database/text/extensive.txt", 'r')
             except IOError, e:
@@ -80,6 +104,13 @@ class Add_Dialog(QtGui.QDialog):
             self.ui.textEdit_2.setPlainText(fd.read())
             fd.close()
         elif chosen_name == 'Euro_Car':
+            self.ui.tableWidget.insertRow(0)
+            item = QtGui.QTableWidgetItem("EuroCars Service")
+            self.ui.tableWidget.setItem(0,0, item)
+            item = QtGui.QTableWidgetItem("1")
+            self.ui.tableWidget.setItem(0,1, item)
+            item = QtGui.QTableWidgetItem(self.euroCars)
+            self.ui.tableWidget.setItem(0,3, item)
             try:
                 fd = open("../Database/text/euro.txt", 'r')
             except IOError, e:
@@ -87,6 +118,13 @@ class Add_Dialog(QtGui.QDialog):
             self.ui.textEdit_2.setPlainText(fd.read())
             fd.close()
         else:
+            self.ui.tableWidget.insertRow(0)
+            item = QtGui.QTableWidgetItem("Van 4wd Service")
+            self.ui.tableWidget.setItem(0,0, item)
+            item = QtGui.QTableWidgetItem("1")
+            self.ui.tableWidget.setItem(0,1, item)
+            item = QtGui.QTableWidgetItem(self.van)
+            self.ui.tableWidget.setItem(0,3, item)
             try:
                 fd = open("../Database/text/van_4wd.txt", 'r')
             except IOError, e:
@@ -214,8 +252,18 @@ class Add_Dialog(QtGui.QDialog):
         fixText = dialog.getFixText()
         replaceText = dialog.getReplaceText()
         self.ui.textEdit_3.setPlainText("Check: %s \n\nFix/Repair: %s \n\nReplace: %s" %(checkText, fixText, replaceText))
-
-
+    def clicked_bt_Discount(self):
+        Dialog = discount.Discount_Dialog()
+        Dialog.show()
+        result = Dialog.exec_()
+    def clicked_bt_Paid(self):
+        Dialog = paid.Paid_Dialog()
+        Dialog.show()
+        result = Dialog.exec_()
+    def clicked_bt_Cash(self):
+        Dialog = cash.Cash_Dialog()
+        Dialog.show()
+        result = Dialog.exec_()
     def changeModel(self):
         self.ui.comboBox_2.clear()
         chosen_name = self.ui.comboBox.currentText()
