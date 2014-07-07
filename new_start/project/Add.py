@@ -30,12 +30,31 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.pushButton_12.clicked.connect(self.clicked_bt_addLine)
         self.ui.pushButton_13.clicked.connect(self.clicked_bt_delLine)
         self.ui.tableWidget.itemChanged.connect(self.changed_table)
+        self.ui.comboBox_3.currentIndexChanged.connect(self.wof_comboBox)
     def connect(self):
         try:
             self.conn = lite.connect("../Database/garage")
         except lite.Error, e:
             print "Error %s:" % e.args[0]
             sys.exit(1)
+    def wof_comboBox(self):
+        if self.ui.comboBox_3.currentIndex() == 1:
+            self.ui.tableWidget.insertRow(0)
+            item = QtGui.QTableWidgetItem("Warrant of Fitness Check")
+            self.ui.tableWidget.setItem(0,0, item)
+            item = QtGui.QTableWidgetItem("1")
+            self.ui.tableWidget.setItem(0,1, item)
+            item = QtGui.QTableWidgetItem("26.09")
+            self.ui.tableWidget.setItem(0,3, item)
+
+        elif self.ui.comboBox_3.currentIndex() == 2:
+            self.ui.tableWidget.insertRow(0)
+            item = QtGui.QTableWidgetItem("Warrant of Fitness Check")
+            self.ui.tableWidget.setItem(0,0, item)
+            item = QtGui.QTableWidgetItem("1")
+            self.ui.tableWidget.setItem(0,1, item)
+            item = QtGui.QTableWidgetItem("39.10")
+            self.ui.tableWidget.setItem(0,3, item)
     def write_log(self, string):
         my_time = None
         fd = open("../Database/log/log.txt", "a")
