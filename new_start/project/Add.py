@@ -18,6 +18,8 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.pushButton_13.setText("Delete")
         self.conn = None
         self.cur = None
+        self.before_gst_dis = "26.09"
+        self.before_gst = "39.10"
         self.connect()
         self.setTime()
         self.cur = self.conn.cursor()
@@ -38,14 +40,16 @@ class Add_Dialog(QtGui.QDialog):
             print "Error %s:" % e.args[0]
             sys.exit(1)
     def wof_comboBox(self):
+        flag = 0 #come from changing from wof
         if self.ui.comboBox_3.currentIndex() == 1:
             self.ui.tableWidget.insertRow(0)
             item = QtGui.QTableWidgetItem("Warrant of Fitness Check")
             self.ui.tableWidget.setItem(0,0, item)
             item = QtGui.QTableWidgetItem("1")
             self.ui.tableWidget.setItem(0,1, item)
-            item = QtGui.QTableWidgetItem("26.09")
+            item = QtGui.QTableWidgetItem(self.before_gst_dis)
             self.ui.tableWidget.setItem(0,3, item)
+            self.set_labels_and_gst(flag)
 
         elif self.ui.comboBox_3.currentIndex() == 2:
             self.ui.tableWidget.insertRow(0)
@@ -53,8 +57,9 @@ class Add_Dialog(QtGui.QDialog):
             self.ui.tableWidget.setItem(0,0, item)
             item = QtGui.QTableWidgetItem("1")
             self.ui.tableWidget.setItem(0,1, item)
-            item = QtGui.QTableWidgetItem("39.10")
+            item = QtGui.QTableWidgetItem(self.before_gst)
             self.ui.tableWidget.setItem(0,3, item)
+            self.set_labels_and_gst(flag)
     def write_log(self, string):
         my_time = None
         fd = open("../Database/log/log.txt", "a")
@@ -98,6 +103,9 @@ class Add_Dialog(QtGui.QDialog):
 
     def clicked_bt_addLine(self):
         self.ui.tableWidget.insertRow(0)
+
+
+   
     def clicked_bt_delLine(self):
         gst = 0
         amount_value = 0
@@ -128,60 +136,85 @@ class Add_Dialog(QtGui.QDialog):
             self.ui.label_17.setText(str("%.2f" % total))
         except RuntimeError:
             pass
-
-
         self.ui.tableWidget.removeRow(current_row)
+    def set_amount_gst(self, flag):
+        current_row = self.ui.tableWidget.currentRow()
+        if current_row == -1:
+            current_row = 0
+        if flag == 0:
+            current_row = 0
+        try:
+            value = 0
+            value = float(self.ui.tableWidget.item(current_row, 3).text()) * 1.15
+            str_value = repr("%.2f" % value)[1:-1]
+            item = QtGui.QTableWidgetItem(str_value)
+            self.ui.tableWidget.setItem(current_row, 4, item)
+        except RuntimeError:
+            pass
+        except ValueError, e:
+            self.ui.tableWidget.takeItem(current_row, current_column)
+            self.ui.tableWidget.takeItem(current_row, current_column + 1)
+
+    def set_sub_label(self):
+        total_row = self.ui.tableWidget.rowCount()
+        sub_total = 0
+        value = 0
+
+        for i in range(total_row):
+            try:
+                value = float(self.ui.tableWidget.item(i, 3).text())
+            except AttributeError:
+                value = 0
+            except RuntimeError:
+                pass
+            sub_total += value
+            value = 0
+        try:
+            self.ui.label_15.setText(str("%.2f" % sub_total))
+        except RuntimeError:
+            pass
+        return sub_total
+
+    def set_total_label(self):
+        total = 0
+        total_row = self.ui.tableWidget.rowCount()
+        for i in range(total_row):
+            try:
+                value = float(self.ui.tableWidget.item(i, 4).text())
+            except AttributeError:
+                value = 0
+            except RuntimeError:
+                pass
+            total += value
+            value = 0
+            try:
+                self.ui.label_17.setText(str("%.2f" % total))
+            except RuntimeError:
+                pass
+        return total
+    def set_gst_label(self, total, sub_total):
+        gst = total - sub_total
+        self.ui.label_16.setText(str("%.2f" % gst))
+
+    def set_labels_and_gst(self, flag):
+        self.set_amount_gst(flag)
+        sub_total = self.set_sub_label()
+        total = self.set_total_label()
+        self.set_gst_label(total, sub_total)
 
     def changed_table(self):
+        flag = 1 #come from changing table item
         sub_total = 0
         gst = 0
         total = 0
-        value = 0
-        current_row = self.ui.tableWidget.currentRow()
         current_column = self.ui.tableWidget.currentColumn()
         #Need to calculate Amount
         if current_column == 3:
             try:
-                value = float(self.ui.tableWidget.currentItem().text()) * 1.15
-                str_value = repr("%.2f" % value)[1:-1]
-                item = QtGui.QTableWidgetItem(str_value)
-                self.ui.tableWidget.setItem(current_row, 4, item)
-            except RuntimeError:
-                pass
-            except ValueError, e:
-                self.ui.tableWidget.takeItem(current_row, current_column)
-                self.ui.tableWidget.takeItem(current_row, current_column + 1)
-
-            total_row = self.ui.tableWidget.rowCount()
-            for i in range(total_row):
-                try:
-                    value = float(self.ui.tableWidget.item(i, 3).text())
-                except AttributeError:
-                    value = 0
-                except RuntimeError:
-                    pass
-                sub_total += value
-                value = 0
-            try:
-                self.ui.label_15.setText(str("%.2f" % sub_total))
+                self.set_labels_and_gst(flag)
             except RuntimeError:
                 pass
 
-            for i in range(total_row):
-                try:
-                    value = float(self.ui.tableWidget.item(i, 4).text())
-                except AttributeError:
-                    value = 0
-                except RuntimeError:
-                    pass
-                total += value
-                gst = total - sub_total
-                value = 0
-            try:
-                self.ui.label_16.setText(str("%.2f" % gst))
-                self.ui.label_17.setText(str("%.2f" % total))
-            except RuntimeError:
-                pass
     def clicked_bt_Tyres(self):
         Dialog = tyres.Tyres_Dialog()
         Dialog.show()
