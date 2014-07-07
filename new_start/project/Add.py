@@ -241,6 +241,28 @@ class Add_Dialog(QtGui.QDialog):
         total = self.set_total_label()
         self.set_gst_label(total, sub_total)
 
+    def set_amount(self):
+        current_row = self.ui.tableWidget.currentRow()
+        current_column = self.ui.tableWidget.currentColumn()
+        try:
+            value = 0
+            value = float(self.ui.tableWidget.item(current_row, current_column).text()) / 1.15
+            str_value = repr("%.2f" % value)[1:-1]
+            item = QtGui.QTableWidgetItem(str_value)
+            self.ui.tableWidget.setItem(current_row, current_column - 1, item)
+        except RuntimeError:
+            pass
+        except ValueError, e:
+            self.ui.tableWidget.takeItem(current_row, current_column)
+            self.ui.tableWidget.takeItem(current_row, current_column - 1)
+
+
+
+    def set_labels_and_amount(self):
+        self.set_amount()
+        sub_total = self.set_sub_label()
+        total = self.set_total_label()
+        self.set_gst_label(total, sub_total)
     def changed_table(self):
         flag = 1 #come from changing table item
         sub_total = 0
@@ -251,6 +273,11 @@ class Add_Dialog(QtGui.QDialog):
         if current_column == 3:
             try:
                 self.set_labels_and_gst(flag)
+            except RuntimeError:
+                pass
+        elif current_column == 4:
+            try:
+                self.set_labels_and_amount()
             except RuntimeError:
                 pass
 
