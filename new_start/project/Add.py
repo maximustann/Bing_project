@@ -135,7 +135,7 @@ class Add_Dialog(QtGui.QDialog):
     def clicked_bt_fullPayment(self):
         text = self.ui.label_17.text()
         self.ui.lineEdit_8.setText(text)
-
+        self.ui.lineEdit_9.setText("0")
     def clicked_bt_addLine(self):
         self.ui.tableWidget.insertRow(0)
     def clicked_bt_delLine(self):
@@ -250,10 +250,12 @@ class Add_Dialog(QtGui.QDialog):
 
 
     def setLabourText(self, dialog):
-        checkText = dialog.getCheckText()  
+        checkText = dialog.getCheckText()
         fixText = dialog.getFixText()
         replaceText = dialog.getReplaceText()
-        self.ui.textEdit_3.setPlainText("Check: %s \n\nFix/Repair: %s \n\nReplace: %s" %(checkText, fixText, replaceText))
+        wholeText = checkText + fixText + replaceText
+        if wholeText != "":
+            self.ui.textEdit_3.setPlainText("Check: %s \n\nFix/Repair: %s \n\nReplace: %s" %(checkText, fixText, replaceText))
     def clicked_bt_Discount(self):
         Dialog = discount.Discount_Dialog()
         Dialog.show()
