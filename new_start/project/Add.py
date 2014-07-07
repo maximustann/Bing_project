@@ -275,7 +275,7 @@ class Add_Dialog(QtGui.QDialog):
                 self.set_labels_and_gst(flag)
             except RuntimeError:
                 pass
-        if current_column == 4:
+        elif current_column == 4:
             try:
                 self.set_labels_and_amount()
             except RuntimeError:
