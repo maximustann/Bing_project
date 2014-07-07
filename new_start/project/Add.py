@@ -130,6 +130,9 @@ class Add_Dialog(QtGui.QDialog):
                 self.ui.tableWidget.setItem(current_row, 4, item)
             except RuntimeError:
                 pass
+            except ValueError, e:
+                self.ui.tableWidget.takeItem(current_row, current_column)
+                self.ui.tableWidget.takeItem(current_row, current_column + 1)
 
             total_row = self.ui.tableWidget.rowCount()
             for i in range(total_row):
