@@ -130,7 +130,6 @@ class Add_Dialog(QtGui.QDialog):
             pass
 
 
-
         self.ui.tableWidget.removeRow(current_row)
 
     def changed_table(self):
