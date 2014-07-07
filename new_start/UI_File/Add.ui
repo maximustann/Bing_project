@@ -572,7 +572,7 @@
     </rect>
    </property>
    <property name="columnCount">
-    <number>5</number>
+    <number>6</number>
    </property>
    <attribute name="horizontalHeaderVisible">
     <bool>true</bool>
@@ -610,6 +610,11 @@
     </property>
     <property name="textAlignment">
      <set>AlignLeft|AlignVCenter</set>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Price</string>
     </property>
    </column>
    <column>

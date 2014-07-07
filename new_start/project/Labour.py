@@ -11,11 +11,12 @@ class Labour_Dialog(QtGui.QDialog):
         self.ui.plainTextEdit.textChanged.connect(self.setCheckText)
         self.ui.plainTextEdit_2.textChanged.connect(self.setFixText)
         self.ui.plainTextEdit_3.textChanged.connect(self.setReplaceText)
-
-    
     def setCheckText(self):
-        self.check_text = self.ui.plainTextEdit.toPlainText()
-
+        text = self.ui.plainTextEdit.toPlainText()
+        if text != "":
+            self.check_text = text
+        else:
+            self.check_text = " "
     def setFixText(self):
         self.fix_text = self.ui.plainTextEdit_2.toPlainText()
 
