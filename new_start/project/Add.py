@@ -7,6 +7,7 @@ import Tyres as tyres;
 import Calender as calender;
 import Labour as labour;
 import time;
+import os;
 
 class Add_Dialog(QtGui.QDialog):
     def __init__(self):
@@ -22,6 +23,7 @@ class Add_Dialog(QtGui.QDialog):
         self.cur = self.conn.cursor()
         self.setMake()
         self.ui.comboBox.currentIndexChanged.connect(self.changeModel)
+        self.ui.comboBox_5.currentIndexChanged.connect(self.changeService)
         self.ui.pushButton_7.clicked.connect(self.clicked_bt_Tyres)
         self.ui.pushButton_5.clicked.connect(self.clicked_bt_Calender)
         self.ui.pushButton_9.clicked.connect(self.clicked_bt_Labour)
@@ -34,6 +36,46 @@ class Add_Dialog(QtGui.QDialog):
         except lite.Error, e:
             print "Error %s:" % e.args[0]
             sys.exit(1)
+    def write_log(self, string):
+        my_time = None
+        fd = open("../Database/log/log.txt", "a")
+        my_time = str(time.strftime("%Y-%m-%d-%I:%M", time.localtime(time.time())))
+        fd.write(string + "\t" + my_time + "\n")
+        fd.close()
+
+    def changeService(self):
+        self.ui.textEdit_2.clear()
+        chosen_name = self.ui.comboBox_5.currentText()
+        if chosen_name == 'Express':
+            try:
+                fd = open("../Database/text/express.txt", 'r')
+            except IOError,e:
+                self.write_log(e)
+            self.ui.textEdit_2.setPlainText(fd.read())
+            fd.close()
+        elif chosen_name == 'Extensive':
+            try:
+                fd = open("../Database/text/extensive.txt", 'r')
+            except IOError, e:
+                self.write_log(e)
+            self.ui.textEdit_2.setPlainText(fd.read())
+            fd.close()
+        elif chosen_name == 'Euro_Car':
+            try:
+                fd = open("../Database/text/euro.txt", 'r')
+            except IOError, e:
+                self.write_log(str(e))
+            self.ui.textEdit_2.setPlainText(fd.read())
+            fd.close()
+        else:
+            try:
+                fd = open("../Database/text/van_4wd.txt", 'r')
+            except IOError, e:
+                self.write_log(e)
+            self.ui.textEdit_2.setPlainText(fd.read())
+            fd.close()
+
+
 
     def clicked_bt_addLine(self):
         self.ui.tableWidget.insertRow(0)
