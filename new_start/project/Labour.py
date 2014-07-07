@@ -6,17 +6,17 @@ from ui import Ui_Labour as ui_labour
 class Labour_Dialog(QtGui.QDialog):
     def __init__(self):
         super(Labour_Dialog, self) .__init__()
+        self.check_text = " "
+        self.fix_text = " "
+        self.replace_text = " "
         self.ui = ui_labour.Ui_Dialog()
         self.ui.setupUi(self)
         self.ui.plainTextEdit.textChanged.connect(self.setCheckText)
         self.ui.plainTextEdit_2.textChanged.connect(self.setFixText)
         self.ui.plainTextEdit_3.textChanged.connect(self.setReplaceText)
     def setCheckText(self):
-        text = self.ui.plainTextEdit.toPlainText()
-        if text != "":
-            self.check_text = text
-        else:
-            self.check_text = " "
+        self.check_text = self.ui.plainTextEdit.toPlainText()
+
     def setFixText(self):
         self.fix_text = self.ui.plainTextEdit_2.toPlainText()
 
