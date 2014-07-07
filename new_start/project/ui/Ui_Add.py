@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Add.ui'
 #
-# Created: Mon Jul  7 15:23:52 2014
+# Created: Mon Jul  7 19:16:30 2014
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -324,7 +324,7 @@ class Ui_Dialog(object):
         self.comboBox_5.addItem(_fromUtf8(""))
         self.tableWidget = QtGui.QTableWidget(Dialog)
         self.tableWidget.setGeometry(QtCore.QRect(20, 380, 891, 191))
-        self.tableWidget.setColumnCount(5)
+        self.tableWidget.setColumnCount(6)
         self.tableWidget.setObjectName(_fromUtf8("tableWidget"))
         self.tableWidget.setRowCount(0)
         item = QtGui.QTableWidgetItem()
@@ -338,6 +338,8 @@ class Ui_Dialog(object):
         self.tableWidget.setHorizontalHeaderItem(3, item)
         item = QtGui.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(4, item)
+        item = QtGui.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(5, item)
         self.tableWidget.horizontalHeader().setVisible(True)
         self.tableWidget.horizontalHeader().setCascadingSectionResizes(False)
         self.tableWidget.horizontalHeader().setDefaultSectionSize(100)
@@ -449,12 +451,14 @@ class Ui_Dialog(object):
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("Dialog", "Description", None))
         item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("Dialog", "Qty", None))
+        item.setText(_translate("Dialog", "Price", None))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("Dialog", "Unit", None))
+        item.setText(_translate("Dialog", "Qty", None))
         item = self.tableWidget.horizontalHeaderItem(3)
-        item.setText(_translate("Dialog", "Amount", None))
+        item.setText(_translate("Dialog", "Unit", None))
         item = self.tableWidget.horizontalHeaderItem(4)
+        item.setText(_translate("Dialog", "Amount", None))
+        item = self.tableWidget.horizontalHeaderItem(5)
         item.setText(_translate("Dialog", "Amount(GST)", None))
         self.comboBox_3.setItemText(0, _translate("Dialog", "WOF", None))
         self.comboBox_3.setItemText(1, _translate("Dialog", "$30", None))
