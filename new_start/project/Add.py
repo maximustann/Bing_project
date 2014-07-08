@@ -46,6 +46,7 @@ class Add_Dialog(QtGui.QDialog):
         self.extensive = "120.00"
         self.euroCars = "160.00"
         self.van = "160.00"
+        self.labour = "60.00"
         self.des = 0
         self.pri = 1
         self.qty = 2
@@ -66,9 +67,9 @@ class Add_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem("Warrant of Fitness Check")
             self.ui.tableWidget.setItem(0, self.des, item)
             item = QtGui.QTableWidgetItem("1")
-            self.ui.tableWidget.setItem(0, self.pri, item)
+            self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem(self.before_gst_dis)
-            self.ui.tableWidget.setItem(0, self.amount, item)
+            self.ui.tableWidget.setItem(0, self.pri, item)
             self.set_labels_and_gst(flag)
 
         elif self.ui.comboBox_3.currentIndex() == 2:
@@ -76,9 +77,9 @@ class Add_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem("Warrant of Fitness Check")
             self.ui.tableWidget.setItem(0, self.des, item)
             item = QtGui.QTableWidgetItem("1")
-            self.ui.tableWidget.setItem(0, self.pri, item)
+            self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem(self.before_gst)
-            self.ui.tableWidget.setItem(0, self.amount, item)
+            self.ui.tableWidget.setItem(0, self.pri, item)
             self.set_labels_and_gst(flag)
     def write_log(self, string):
         my_time = None
@@ -96,9 +97,9 @@ class Add_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem("Express Service")
             self.ui.tableWidget.setItem(0, self.des, item)
             item = QtGui.QTableWidgetItem("1")
-            self.ui.tableWidget.setItem(0, self.pri, item)
+            self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem(self.express)
-            self.ui.tableWidget.setItem(0, self.amount, item)
+            self.ui.tableWidget.setItem(0, self.pri, item)
             try:
                 fd = open("../Database/text/express.txt", 'r')
             except IOError,e:
@@ -110,9 +111,9 @@ class Add_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem("Extensive Service")
             self.ui.tableWidget.setItem(0, self.des, item)
             item = QtGui.QTableWidgetItem("1")
-            self.ui.tableWidget.setItem(0, self.pri, item)
+            self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem(self.extensive)
-            self.ui.tableWidget.setItem(0, self.amount, item)
+            self.ui.tableWidget.setItem(0, self.pri, item)
             try:
                 fd = open("../Database/text/extensive.txt", 'r')
             except IOError, e:
@@ -124,9 +125,9 @@ class Add_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem("EuroCars Service")
             self.ui.tableWidget.setItem(0, self.des, item)
             item = QtGui.QTableWidgetItem("1")
-            self.ui.tableWidget.setItem(0, self.pri, item)
+            self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem(self.euroCars)
-            self.ui.tableWidget.setItem(0, self.amount, item)
+            self.ui.tableWidget.setItem(0, self.pri, item)
             try:
                 fd = open("../Database/text/euro.txt", 'r')
             except IOError, e:
@@ -138,9 +139,9 @@ class Add_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem("Van 4wd Service")
             self.ui.tableWidget.setItem(0, self.des, item)
             item = QtGui.QTableWidgetItem("1")
-            self.ui.tableWidget.setItem(0, self.pri, item)
+            self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem(self.van)
-            self.ui.tableWidget.setItem(0, self.amount, item)
+            self.ui.tableWidget.setItem(0, self.pri, item)
             try:
                 fd = open("../Database/text/van_4wd.txt", 'r')
             except IOError, e:
@@ -256,7 +257,6 @@ class Add_Dialog(QtGui.QDialog):
         current_row = self.ui.tableWidget.currentRow()
         current_column = self.ui.tableWidget.currentColumn()
         try:
-            value = 0
             value = float(self.ui.tableWidget.item(current_row, current_column).text()) / 1.15
             str_value = repr("%.2f" % value)[1:-1]
             item = QtGui.QTableWidgetItem(str_value)
@@ -266,8 +266,6 @@ class Add_Dialog(QtGui.QDialog):
         except ValueError, e:
             self.ui.tableWidget.takeItem(current_row, current_column)
             self.ui.tableWidget.takeItem(current_row, current_column - 1)
-
-
 
     def set_labels_and_amount(self):
         self.set_amount()
@@ -308,8 +306,23 @@ class Add_Dialog(QtGui.QDialog):
         Dialog = labour.Labour_Dialog()
         Dialog.show()
         result = Dialog.exec_()
+        flag = 0
         if result == 1:
             self.setLabourText(Dialog)
+            self.ui.tableWidget.insertRow(0)
+            item = QtGui.QTableWidgetItem("Labour")
+            self.ui.tableWidget.setItem(0, self.des, item)
+            item = QtGui.QTableWidgetItem(self.labour)
+            self.ui.tableWidget.setItem(0, self.pri, item)
+            labourPrice = float(self.labour)
+            item = QtGui.QTableWidgetItem(labourPrice * Dialog.getHours())
+            self.ui.tableWidget.setItem(0, self.amount, item)
+            item = QtGui.QTableWidgetItem(Dialog.getHours())
+            self.ui.tableWidget.setItem(0, self.qty, item)
+            item = QtGui.QTableWidgetItem("Hrs")
+            self.ui.tableWidget.setItem(0, self.unit, item)
+            self.set_labels_and_gst(flag)
+
 
     def setMake(self):
         self.cur.execute("SELECT name from make")
@@ -330,10 +343,27 @@ class Add_Dialog(QtGui.QDialog):
         Dialog = discount.Discount_Dialog()
         Dialog.show()
         result = Dialog.exec_()
+        if result == 1:
+            total = float(self.ui.label_17.text())
+            result = total * Dialog.getDiscount()
+            text = str("%.2f") % result
+            self.ui.label_17.setText(text)
+            discountPersentage = 100 - Dialog.getDiscount() * 100
+            string_DP = str("%.0f") % discountPersentage
+            noteText = string_DP + "%"
+            self.ui.textEdit.setPlainText("A discount of " + noteText + " applied on total amount")
     def clicked_bt_Paid(self):
         Dialog = paid.Paid_Dialog()
         Dialog.show()
         result = Dialog.exec_()
+        if result == 1:
+            paid1 = Dialog.getPaid()
+            stringPaid = str("%.2f") % paid1
+            self.ui.lineEdit_8.setText(stringPaid)
+            total = float(self.ui.label_17.text())
+            amountDue = total - paid1
+            strAmountDue = str("%.2f") % amountDue
+            self.ui.lineEdit_9.setText(strAmountDue)
     def clicked_bt_Cash(self):
         Dialog = cash.Cash_Dialog()
         Dialog.show()

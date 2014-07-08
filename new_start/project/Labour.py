@@ -14,6 +14,7 @@ class Labour_Dialog(QtGui.QDialog):
         self.ui.plainTextEdit.textChanged.connect(self.setCheckText)
         self.ui.plainTextEdit_2.textChanged.connect(self.setFixText)
         self.ui.plainTextEdit_3.textChanged.connect(self.setReplaceText)
+        self.ui.lineEdit.textChanged.connect(self.setHours)
     def setCheckText(self):
         self.check_text = self.ui.plainTextEdit.toPlainText()
 
@@ -23,6 +24,9 @@ class Labour_Dialog(QtGui.QDialog):
     def setReplaceText(self):
         self.replace_text = self.ui.plainTextEdit_3.toPlainText()
 
+    def setHours(self):
+        self.hours = float(self.ui.lineEdit.text())
+
     def getCheckText(self):
         return self.check_text
 
@@ -31,6 +35,9 @@ class Labour_Dialog(QtGui.QDialog):
 
     def getReplaceText(self):
         return self.replace_text
+
+    def getHours(self):
+        return self.hours
 
 if __name__ == "__main__":
     import sys

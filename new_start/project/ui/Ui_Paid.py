@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Paid.ui'
 #
-# Created: Mon Jul  7 19:16:31 2014
+# Created: Mon Jul  7 19:33:19 2014
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
