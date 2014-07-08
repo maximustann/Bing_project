@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from PyQt4 import QtCore, QtGui;
+from PyQt4 import QtCore, QtGui, QtWebKit;
 from ui import Ui_Add as ui_add;
 import sqlite3 as lite;
 import Tyres as tyres;
@@ -28,6 +28,7 @@ class Add_Dialog(QtGui.QDialog):
         self.setMake()
         self.ui.comboBox.currentIndexChanged.connect(self.changeModel)
         self.ui.comboBox_5.currentIndexChanged.connect(self.changeService)
+        self.ui.pushButton_2.clicked.connect(self.clicked_bt_print)
         self.ui.pushButton_7.clicked.connect(self.clicked_bt_Tyres)
         self.ui.pushButton_5.clicked.connect(self.clicked_bt_Calender)
         self.ui.pushButton_9.clicked.connect(self.clicked_bt_Labour)
@@ -53,6 +54,11 @@ class Add_Dialog(QtGui.QDialog):
         self.unit = 3
         self.amount =4
         self.gst_amount = 5
+
+    def clicked_bt_print(self):
+        dialog = QtGui.QPrintDialog()
+        if dialog.exec_() == QtGui.QDialog.Accepted:
+            print "ha"
 
     def connect(self):
         try:
