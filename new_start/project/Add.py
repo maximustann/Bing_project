@@ -11,6 +11,8 @@ import Paid as paid;
 import Cash as cash;
 import time;
 import os;
+import edit_file
+
 
 class Add_Dialog(QtGui.QDialog):
     def __init__(self):
@@ -56,9 +58,23 @@ class Add_Dialog(QtGui.QDialog):
         self.gst_amount = 5
 
     def clicked_bt_print(self):
+        self.gather_data()
+        self.generate_pdf()
         dialog = QtGui.QPrintDialog()
         if dialog.exec_() == QtGui.QDialog.Accepted:
-            print "ha"
+            self.web.print_(dialog.printer())
+
+    def convert(self):
+        self.web.print_(self.printer)
+
+    def generate_pdf(self):
+        self.web = QtWebKit.QWebView()
+        self.web.load(QtCore.QUrl("../Database/invoice/invoice.html"))
+        self.printer = QtGui.QPrinter()
+        self.printer.setPageSize(QtGui.QPrinter.A4)
+        self.printer.setOutputFormat(QtGui.QPrinter.PdfFormat)
+        self.printer.setOutputFileName("../Database/invoice/invoice.pdf")
+        self.web.loadFinished.connect(self.convert)
 
     def connect(self):
         try:
@@ -67,7 +83,6 @@ class Add_Dialog(QtGui.QDialog):
             print "Error %s:" % e.args[0]
             sys.exit(1)
     def wof_comboBox(self):
-        flag = 0 #come from changing from wof
         if self.ui.comboBox_3.currentIndex() == 1:
             self.ui.tableWidget.insertRow(0)
             item = QtGui.QTableWidgetItem("Warrant of Fitness Check")
@@ -76,7 +91,6 @@ class Add_Dialog(QtGui.QDialog):
             self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem(self.before_gst_dis)
             self.ui.tableWidget.setItem(0, self.pri, item)
-            self.set_labels_and_gst(flag)
 
         elif self.ui.comboBox_3.currentIndex() == 2:
             self.ui.tableWidget.insertRow(0)
@@ -86,7 +100,6 @@ class Add_Dialog(QtGui.QDialog):
             self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem(self.before_gst)
             self.ui.tableWidget.setItem(0, self.pri, item)
-            self.set_labels_and_gst(flag)
     def write_log(self, string):
         my_time = None
         fd = open("../Database/log/log.txt", "a")
@@ -95,7 +108,6 @@ class Add_Dialog(QtGui.QDialog):
         fd.close()
 
     def changeService(self):
-        flag = 0
         self.ui.textEdit_2.clear()
         chosen_name = self.ui.comboBox_5.currentText()
         if chosen_name == 'Express':
@@ -140,7 +152,7 @@ class Add_Dialog(QtGui.QDialog):
                 self.write_log(str(e))
             self.ui.textEdit_2.setPlainText(fd.read())
             fd.close()
-        else:
+        elif chosen_name == 'Van_4WD':
             self.ui.tableWidget.insertRow(0)
             item = QtGui.QTableWidgetItem("Van 4wd Service")
             self.ui.tableWidget.setItem(0, self.des, item)
@@ -154,7 +166,20 @@ class Add_Dialog(QtGui.QDialog):
                 self.write_log(e)
             self.ui.textEdit_2.setPlainText(fd.read())
             fd.close()
-        self.set_labels_and_gst(flag)
+        else:
+            return
+    def calculate_amount(self, row):
+        price_item = self.ui.tableWidget.item(row, self.pri)
+        qty_item = self.ui.tableWidget.item(row, self.qty)
+        if price_item == None or qty_item == None:
+            return -1
+        price = float(price_item.text())
+        qty = float(qty_item.text())
+        amount = str(price * qty)
+        item = QtGui.QTableWidgetItem(amount)
+        self.ui.tableWidget.setItem(row, self.amount, item)
+        return 0
+
     def clicked_bt_fullPayment(self):
         text = self.ui.label_17.text()
         self.ui.lineEdit_8.setText(text)
@@ -168,6 +193,8 @@ class Add_Dialog(QtGui.QDialog):
         amount_value = 0
         gst_amount = 0
         current_row = self.ui.tableWidget.currentRow()
+        if current_row == -1:
+            current_row = 0
         try:
             amount_value = float(self.ui.tableWidget.item(current_row, self.amount).text())
         except AttributeError:
@@ -194,12 +221,8 @@ class Add_Dialog(QtGui.QDialog):
         except RuntimeError:
             pass
         self.ui.tableWidget.removeRow(current_row)
-    def set_amount_gst(self, flag):
-        current_row = self.ui.tableWidget.currentRow()
-        if current_row == -1:
-            current_row = 0
-        if flag == 0:
-            current_row = 0
+
+    def set_amount_gst(self, current_row, current_column):
         try:
             value = 0
             value = float(self.ui.tableWidget.item(current_row, self.amount).text()) * 1.15
@@ -253,15 +276,13 @@ class Add_Dialog(QtGui.QDialog):
         gst = total - sub_total
         self.ui.label_16.setText(str("%.2f" % gst))
 
-    def set_labels_and_gst(self, flag):
-        self.set_amount_gst(flag)
+    def set_labels_and_gst(self, current_row, current_column):
+        self.set_amount_gst(current_row, current_column)
         sub_total = self.set_sub_label()
         total = self.set_total_label()
         self.set_gst_label(total, sub_total)
 
-    def set_amount(self):
-        current_row = self.ui.tableWidget.currentRow()
-        current_column = self.ui.tableWidget.currentColumn()
+    def set_amount(self, current_row, current_column):
         try:
             value = float(self.ui.tableWidget.item(current_row, current_column).text()) / 1.15
             str_value = repr("%.2f" % value)[1:-1]
@@ -273,26 +294,27 @@ class Add_Dialog(QtGui.QDialog):
             self.ui.tableWidget.takeItem(current_row, current_column)
             self.ui.tableWidget.takeItem(current_row, current_column - 1)
 
-    def set_labels_and_amount(self):
-        self.set_amount()
+    def set_labels_and_amount(self, current_row, current_column):
+        self.set_amount(current_row, current_column)
         sub_total = self.set_sub_label()
         total = self.set_total_label()
         self.set_gst_label(total, sub_total)
-    def changed_table(self):
-        flag = 1 #come from changing table item
+    def changed_table(self, data):
         sub_total = 0
         gst = 0
         total = 0
-        current_column = self.ui.tableWidget.currentColumn()
+        current_column = data.column()
+        current_row = data.row()
         #Need to calculate Amount
-        if current_column == self.amount:
+        if current_column == self.pri or current_column == self.qty:
             try:
-                self.set_labels_and_gst(flag)
+                if self.calculate_amount(current_row) != -1:
+                    self.set_labels_and_gst(current_row, current_column)
             except RuntimeError:
                 pass
         elif current_column == self.gst_amount:
             try:
-                self.set_labels_and_amount()
+                self.set_labels_and_amount(current_row, current_column)
             except RuntimeError:
                 pass
 
@@ -312,7 +334,6 @@ class Add_Dialog(QtGui.QDialog):
         Dialog = labour.Labour_Dialog()
         Dialog.show()
         result = Dialog.exec_()
-        flag = 0
         if result == 1:
             self.setLabourText(Dialog)
             self.ui.tableWidget.insertRow(0)
@@ -321,14 +342,58 @@ class Add_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem(self.labour)
             self.ui.tableWidget.setItem(0, self.pri, item)
             labourPrice = float(self.labour)
-            item = QtGui.QTableWidgetItem(labourPrice * Dialog.getHours())
+            amount = labourPrice * Dialog.getHours()
+            item = QtGui.QTableWidgetItem(str("%.2f" % amount))
             self.ui.tableWidget.setItem(0, self.amount, item)
-            item = QtGui.QTableWidgetItem(Dialog.getHours())
+            item = QtGui.QTableWidgetItem(str(Dialog.getHours()))
             self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem("Hrs")
             self.ui.tableWidget.setItem(0, self.unit, item)
-            self.set_labels_and_gst(flag)
+    def gather_data(self):
+        table = []
+        name = self.ui.lineEdit.text()
+        tel = self.ui.lineEdit_3.text()
+        addr = self.ui.lineEdit_2.text()
+        invoice_no = self.ui.lineEdit_7.text()
+        date = self.ui.pushButton_5.text()
+        make = self.ui.comboBox.currentText()
+        model = self.ui.comboBox_2.currentText()
+        rego = self.ui.lineEdit_4.text()
+        odo = self.ui.lineEdit_6.text()
+        note = self.ui.textEdit.toPlainText()
+        service = self.ui.textEdit_2.toPlainText()
+        labour = self.ui.textEdit_3.toPlainText()
+        sub_total = self.ui.label_15.text()
+        gst = self.ui.label_16.text()
+        total = self.ui.label_17.text()
 
+        for i in range(self.ui.tableWidget.rowCount()):
+            row = {}
+            if self.ui.tableWidget.item(i, 0) != None:
+                row["des"] = self.ui.tableWidget.item(i, 0).text()
+            else:
+                row["des"] = ""
+            if self.ui.tableWidget.item(i, 1) != None:
+                row["pri"] = self.ui.tableWidget.item(i, 1).text()
+            else:
+                row["pri"] = ""
+            if self.ui.tableWidget.item(i, 2) != None:
+                row["qty"] = self.ui.tableWidget.item(i, 2).text()
+            else:
+                row["qty"] = ""
+            if self.ui.tableWidget.item(i, 3) != None:
+                row["unit"] = self.ui.tableWidget.item(i, 3).text()
+            else:
+                row["unit"] = ""
+            if self.ui.tableWidget.item(i, 4) != None:
+                row["amount"] = self.ui.tableWidget.item(i, 4).text()
+            else:
+                row["amount"] = ""
+            table.append(row)
+
+        edit = edit_file.edit_invoice()
+        edit.edit_all(invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service,
+                        labour, note, table)
 
     def setMake(self):
         self.cur.execute("SELECT name from make")
