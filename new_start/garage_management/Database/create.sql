@@ -33,19 +33,20 @@ CREATE TABLE tyre
 CREATE TABLE invoice 
 (
 	invoice_no	integer,
-	date_in		varchar(80),
+	date_in		date,
 	tel			varchar(80),
 	name		varchar(80),
 	rego		varchar(80),
-	money_in	varchar(80),
+	money_in	real,
 	primary key (invoice_no),
 	foreign key (tel) references customer(tel)
 );
 
 CREATE TABLE make
 (
+	ID		integer,
 	name	varchar(80),
-	primary key (name)
+	primary key (ID)
 );
 
 CREATE TABLE model
