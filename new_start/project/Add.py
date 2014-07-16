@@ -21,6 +21,9 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.setupUi(self)
         self.ui.pushButton_12.setText("Add")
         self.ui.pushButton_13.setText("Delete")
+        self.ui.label_15.setText("0")
+        self.ui.label_16.setText("0")
+        self.ui.label_17.setText("0")
         self.init_data()
         self.conn = None
         self.cur = None
@@ -30,6 +33,7 @@ class Add_Dialog(QtGui.QDialog):
         self.setMake()
         self.ui.comboBox.currentIndexChanged.connect(self.changeModel)
         self.ui.comboBox_5.currentIndexChanged.connect(self.changeService)
+        self.ui.pushButton_10.clicked.connect(self.clicked_bt_save)
         self.ui.pushButton_2.clicked.connect(self.clicked_bt_print)
         self.ui.pushButton_7.clicked.connect(self.clicked_bt_Tyres)
         self.ui.pushButton_5.clicked.connect(self.clicked_bt_Calender)
@@ -42,6 +46,7 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.pushButton_13.clicked.connect(self.clicked_bt_delLine)
         self.ui.tableWidget.itemChanged.connect(self.changed_table)
         self.ui.comboBox_3.currentIndexChanged.connect(self.wof_comboBox)
+        self.ui.tableWidget.setColumnWidth(0, 300)
     def init_data(self):
         self.before_gst_dis = "26.09"
         self.before_gst = "39.10"
@@ -57,8 +62,10 @@ class Add_Dialog(QtGui.QDialog):
         self.amount =4
         self.gst_amount = 5
 
+
     def clicked_bt_print(self):
-        self.gather_data()
+        invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table = self.gather_data()
+        self.editFile(invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table)
         self.generate_pdf()
         dialog = QtGui.QPrintDialog()
         if dialog.exec_() == QtGui.QDialog.Accepted:
@@ -349,6 +356,15 @@ class Add_Dialog(QtGui.QDialog):
             self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem("Hrs")
             self.ui.tableWidget.setItem(0, self.unit, item)
+    def clicked_bt_save(self):
+        invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table = self.gather_data()
+        self.cur.execute("INSERT INTO invoice(invoice_no, date_in, tel, name, rego, money_in) VALUES('%s', '%s', '%s', '%s', '%s', '%s')" % (invoice_no, date, tel, name, rego, sub_total))
+        self.conn.commit()
+        self.cur.execute("INSERT INTO customer(tel, name, Address) VALUES('%s', '%s', '%s')" % (name, tel,addr))
+        self.conn.commit()
+        self.cur.execute("INSERT INTO vehicle(rego, make, model, tel) VALUES('%s', '%s', '%s', '%s')" % (rego, make, model, tel))
+        self.conn.commit()
+
     def gather_data(self):
         table = []
         name = self.ui.lineEdit.text()
@@ -390,10 +406,12 @@ class Add_Dialog(QtGui.QDialog):
             else:
                 row["amount"] = ""
             table.append(row)
+        return invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table
 
+
+    def editFile(self, invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table):
         edit = edit_file.edit_invoice()
-        edit.edit_all(invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service,
-                        labour, note, table)
+        edit.edit_all(invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service,labour, note, table)
 
     def setMake(self):
         self.cur.execute("SELECT name from make")
