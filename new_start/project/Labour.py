@@ -9,6 +9,7 @@ class Labour_Dialog(QtGui.QDialog):
         self.check_text = " "
         self.fix_text = " "
         self.replace_text = " "
+        self.hours = 0
         self.ui = ui_labour.Ui_Dialog()
         self.ui.setupUi(self)
         self.ui.plainTextEdit.textChanged.connect(self.setCheckText)
