@@ -1021,7 +1021,6 @@ INSERT INTO model (name, make_name) VALUES ("IQ", "Toyota");
 INSERT INTO model (name, make_name) VALUES ("Isis", "Toyota");
 INSERT INTO model (name, make_name) VALUES ("Ist", "Toyota");
 INSERT INTO model (name, make_name) VALUES ("Kluger", "Toyota");
-INSERT INTO model (name, make_name) VALUES ("Lancer", "Toyota");
 INSERT INTO model (name, make_name) VALUES ("Land Cruiser", "Toyota");
 INSERT INTO model (name, make_name) VALUES ("Land Cruiser Prado", "Toyota");
 INSERT INTO model (name, make_name) VALUES ("Levin", "Toyota");

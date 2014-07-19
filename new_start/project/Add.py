@@ -52,7 +52,7 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.tableWidget.setColumnWidth(0, 300)
     def init_data(self):
         self.before_gst_dis = "26.09"
-        self.before_gst = "39.10"
+        self.before_gst = "39.13"
         self.express = "99.00"
         self.extensive = "120.00"
         self.euroCars = "160.00"
@@ -388,16 +388,27 @@ class Add_Dialog(QtGui.QDialog):
             self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem("Hrs")
             self.ui.tableWidget.setItem(0, self.unit, item)
+    def error_window(self, errorMessage):
+        reply = QtGui.QMessageBox.question(self, 'Message', "%s existed in Database, Please Check it." % errorMessage, QtGui.QMessageBox.OK)
     def clicked_bt_save(self):
         invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table = self.gather_data()
-        self.cur.execute("INSERT INTO invoice(invoice_no, date_in, tel, name, rego, money_in) VALUES('%s', '%s', '%s', '%s', '%s', '%s')" % (invoice_no, date, tel, name, rego, sub_total))
-        self.conn.commit()
-        self.cur.execute("INSERT INTO customer(tel, name, Address) VALUES('%s', '%s', '%s')" % (name, tel,addr))
-        self.conn.commit()
-        self.cur.execute("INSERT INTO vehicle(rego, make, model, tel) VALUES('%s', '%s', '%s', '%s')" % (rego, make, model, tel))
+        try:
+            self.cur.execute("INSERT INTO invoice(invoice_no, date_in, tel, name, rego, money_in) VALUES('%s', '%s', '%s', '%s', '%s', '%s')" % (invoice_no, date, tel, name, rego, sub_total))
+        except lite.IntegrityError:
+            self.error_window("Invoice No.")
+        try:
+            self.cur.execute("INSERT INTO customer(tel, name, Address) VALUES('%s', '%s', '%s')" % (name, tel,addr))
+        except lite.IntegrityError:
+            pass
+        try:
+            self.cur.execute("INSERT INTO vehicle(rego, make, model, tel) VALUES('%s', '%s', '%s', '%s')" % (rego, make, model, tel))
+        except lite.IntegrityError,e:
+            pass
         self.conn.commit()
         self.saved_flag = 1
 
+        self.ui.pushButton_10.setText("Saved")
+        self.ui.pushButton_10.setStyleSheet('QPushButton {color: green}')
     def gather_data(self):
         table = []
         name = self.ui.lineEdit.text()
@@ -473,7 +484,10 @@ class Add_Dialog(QtGui.QDialog):
             discountPersentage = 100 - Dialog.getDiscount() * 100
             string_DP = str("%.0f") % discountPersentage
             noteText = string_DP + "%"
-            self.ui.textEdit.setPlainText("A discount of " + noteText + " applied on total amount")
+            if self.ui.textEdit.toPlainText() == "":
+                 self.ui.textEdit.insertPlainText("A discount of " + noteText + " applied on total amount")
+            else:
+                self.ui.textEdit.insertPlainText("\nA discount of " + noteText + " applied on total amount")
     def clicked_bt_Paid(self):
         Dialog = paid.Paid_Dialog()
         Dialog.show()

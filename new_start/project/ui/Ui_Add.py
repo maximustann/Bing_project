@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Add.ui'
 #
-# Created: Mon Jul  7 19:33:18 2014
+# Created: Sat Jul 19 21:24:44 2014
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(935, 877)
+        Dialog.resize(975, 863)
         self.layoutWidget = QtGui.QWidget(Dialog)
         self.layoutWidget.setGeometry(QtCore.QRect(500, 590, 411, 261))
         self.layoutWidget.setObjectName(_fromUtf8("layoutWidget"))
@@ -130,9 +130,6 @@ class Ui_Dialog(object):
         self.pushButton_2 = QtGui.QPushButton(self.layoutWidget_2)
         self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
         self.horizontalLayout_4.addWidget(self.pushButton_2)
-        self.pushButton_4 = QtGui.QPushButton(self.layoutWidget_2)
-        self.pushButton_4.setObjectName(_fromUtf8("pushButton_4"))
-        self.horizontalLayout_4.addWidget(self.pushButton_4)
         self.layoutWidget_3 = QtGui.QWidget(Dialog)
         self.layoutWidget_3.setGeometry(QtCore.QRect(30, 180, 431, 116))
         self.layoutWidget_3.setObjectName(_fromUtf8("layoutWidget_3"))
@@ -284,9 +281,11 @@ class Ui_Dialog(object):
         self.verticalLayout_4 = QtGui.QVBoxLayout()
         self.verticalLayout_4.setObjectName(_fromUtf8("verticalLayout_4"))
         self.comboBox = QtGui.QComboBox(self.layoutWidget_5)
+        self.comboBox.setEditable(True)
         self.comboBox.setObjectName(_fromUtf8("comboBox"))
         self.verticalLayout_4.addWidget(self.comboBox)
         self.comboBox_2 = QtGui.QComboBox(self.layoutWidget_5)
+        self.comboBox_2.setEditable(True)
         self.comboBox_2.setObjectName(_fromUtf8("comboBox_2"))
         self.verticalLayout_4.addWidget(self.comboBox_2)
         self.horizontalLayout_2 = QtGui.QHBoxLayout()
@@ -427,7 +426,6 @@ class Ui_Dialog(object):
         self.label_21.setText(_translate("Dialog", "Amount Due:", None))
         self.pushButton_3.setText(_translate("Dialog", "Preview", None))
         self.pushButton_2.setText(_translate("Dialog", "Print", None))
-        self.pushButton_4.setText(_translate("Dialog", "EMAIL", None))
         self.label_5.setText(_translate("Dialog", "Customer Detail", None))
         self.label_2.setText(_translate("Dialog", "Name:", None))
         self.label_3.setText(_translate("Dialog", "Tel:", None))
