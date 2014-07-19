@@ -31,6 +31,7 @@ class Add_Dialog(QtGui.QDialog):
         self.setTime()
         self.cur = self.conn.cursor()
         self.setMake()
+        self.init_invoice()
         self.ui.comboBox.currentIndexChanged.connect(self.changeModel)
         self.ui.comboBox_5.currentIndexChanged.connect(self.changeService)
         self.ui.pushButton_10.clicked.connect(self.clicked_bt_save)
@@ -44,6 +45,8 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.pushButton_16.clicked.connect(self.clicked_bt_Cash)
         self.ui.pushButton_12.clicked.connect(self.clicked_bt_addLine)
         self.ui.pushButton_13.clicked.connect(self.clicked_bt_delLine)
+        self.ui.pushButton_3.clicked.connect(self.clicked_bt_preview)
+
         self.ui.tableWidget.itemChanged.connect(self.changed_table)
         self.ui.comboBox_3.currentIndexChanged.connect(self.wof_comboBox)
         self.ui.tableWidget.setColumnWidth(0, 300)
@@ -61,8 +64,18 @@ class Add_Dialog(QtGui.QDialog):
         self.unit = 3
         self.amount =4
         self.gst_amount = 5
+        self.saved_flag = 0
 
-
+    def closeEvent(self, event):
+        print "Closing!"
+        if self.saved_flag == 0:
+            reply = QtGui.QMessageBox.question(self, 'Message', 'Do you want to save this page?', QtGui.QMessageBox.Yes,
+                    QtGui.QMessageBox.No)
+            if reply == QtGui.QMessageBox.Yes:
+                self.clicked_bt_save()
+                event.accept()
+            else:
+                event.accept()
     def clicked_bt_print(self):
         invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table = self.gather_data()
         self.editFile(invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table)
@@ -71,8 +84,27 @@ class Add_Dialog(QtGui.QDialog):
         if dialog.exec_() == QtGui.QDialog.Accepted:
             self.web.print_(dialog.printer())
 
+    def init_invoice(self):
+        self.cur.execute("SELECT invoice_no FROM INVOICE ORDER BY invoice_no DESC;")
+        try:
+            row = self.cur.fetchone()[0]
+        except TypeError:
+            row = 10000
+        row += 1
+        self.ui.lineEdit_7.setText(str(row))
     def convert(self):
         self.web.print_(self.printer)
+
+    def clicked_bt_preview(self):
+        invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table = self.gather_data()
+        self.editFile(invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table)
+        self.web = QtWebKit.QWebView()
+        self.web.load(QtCore.QUrl("../Database/invoice/invoice.html"))
+        self.web.loadFinished.connect(self.display_pdf)
+    def display_pdf(self, web):
+        dialog = QtGui.QPrintPreviewDialog()
+        dialog.paintRequested.connect(self.web.print_)
+        dialog.exec_()
 
     def generate_pdf(self):
         self.web = QtWebKit.QWebView()
@@ -364,6 +396,7 @@ class Add_Dialog(QtGui.QDialog):
         self.conn.commit()
         self.cur.execute("INSERT INTO vehicle(rego, make, model, tel) VALUES('%s', '%s', '%s', '%s')" % (rego, make, model, tel))
         self.conn.commit()
+        self.saved_flag = 1
 
     def gather_data(self):
         table = []
