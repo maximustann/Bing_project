@@ -67,7 +67,6 @@ class Add_Dialog(QtGui.QDialog):
         self.saved_flag = 0
 
     def closeEvent(self, event):
-        print "Closing!"
         if self.saved_flag == 0:
             reply = QtGui.QMessageBox.question(self, 'Message', 'Do you want to save this page?', QtGui.QMessageBox.Yes,
                     QtGui.QMessageBox.No)
