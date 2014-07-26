@@ -38,6 +38,11 @@ CREATE TABLE invoice
 	name		varchar(80),
 	rego		varchar(80),
 	money_in	real,
+	amount_paid real,
+	amount_due	real,
+	note		varchar(1024);
+	service		varchar(1024);
+	labour		varchar(1024);
 	primary key (invoice_no),
 	foreign key (tel) references customer(tel)
 );
