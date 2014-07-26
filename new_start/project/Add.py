@@ -76,7 +76,7 @@ class Add_Dialog(QtGui.QDialog):
             else:
                 event.accept()
     def clicked_bt_print(self):
-        invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table = self.gather_data()
+        invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, amount_paid, amount_due, table = self.gather_data()
         self.editFile(invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table)
         self.generate_pdf()
         dialog = QtGui.QPrintDialog()
@@ -95,7 +95,7 @@ class Add_Dialog(QtGui.QDialog):
         self.web.print_(self.printer)
 
     def clicked_bt_preview(self):
-        invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table = self.gather_data()
+        invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, amount_paid, amount_due, table = self.gather_data()
         self.editFile(invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table)
         self.web = QtWebKit.QWebView()
         self.web.load(QtCore.QUrl("../Database/invoice/invoice.html"))
@@ -118,7 +118,7 @@ class Add_Dialog(QtGui.QDialog):
         try:
             self.conn = lite.connect("../Database/garage")
         except lite.Error, e:
-            print "Error %s:" % e.args[0]
+            self.write_log(e.args[0])
             sys.exit(1)
     def wof_comboBox(self):
         if self.ui.comboBox_3.currentIndex() == 1:
@@ -390,9 +390,9 @@ class Add_Dialog(QtGui.QDialog):
     def error_window(self, errorMessage):
         reply = QtGui.QMessageBox.question(self, 'Message', "%s existed in Database, Please Check it." % errorMessage, QtGui.QMessageBox.OK)
     def clicked_bt_save(self):
-        invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table = self.gather_data()
+        invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, amount_paid, amount_due, table = self.gather_data()
         try:
-            self.cur.execute("INSERT INTO invoice(invoice_no, date_in, tel, name, rego, money_in) VALUES('%s', '%s', '%s', '%s', '%s', '%s')" % (invoice_no, date, tel, name, rego, sub_total))
+            self.cur.execute("INSERT INTO invoice(invoice_no, date_in, tel, name, rego, money_in, amount_paid, amount_due) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (invoice_no, date, tel, name, rego, sub_total, amount_paid, amount_due))
         except lite.IntegrityError:
             self.error_window("Invoice No.")
         try:
@@ -404,6 +404,19 @@ class Add_Dialog(QtGui.QDialog):
         except lite.IntegrityError,e:
             pass
         self.conn.commit()
+
+        for row in table:
+            des = row["des"]
+            price = row["pri"]
+            qty = row["qty"]
+            unit = row["unit"]
+            amount = row["amount"]
+            amount_gst = row['amount_gst']
+            try:
+                self.cur.execute("INSERT INTO items(invoice_no, des, price, qty, unit, amount, amount_gst) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (invoice_no, des, price, qty, unit, amount, amount_gst))
+            except lite.IntegrityError:
+                pass
+            self.conn.commit()
         self.saved_flag = 1
 
         self.ui.pushButton_10.setText("Saved")
@@ -425,6 +438,9 @@ class Add_Dialog(QtGui.QDialog):
         sub_total = self.ui.label_15.text()
         gst = self.ui.label_16.text()
         total = self.ui.label_17.text()
+        amount_paid = self.ui.lineEdit_8.text()
+        amount_due = self.ui.lineEdit_9.text()
+
 
         for i in range(self.ui.tableWidget.rowCount()):
             row = {}
@@ -448,8 +464,12 @@ class Add_Dialog(QtGui.QDialog):
                 row["amount"] = self.ui.tableWidget.item(i, 4).text()
             else:
                 row["amount"] = ""
+            if self.ui.tableWidget.item(i, 5) != None:
+                row["amount_gst"] = self.ui.tableWidget.item(1, 5).text()
+            else:
+                row["amount_gst"] = ""
             table.append(row)
-        return invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table
+        return invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, amount_paid, amount_due, table
 
 
     def editFile(self, invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table):

@@ -40,11 +40,22 @@ CREATE TABLE invoice
 	money_in	real,
 	amount_paid real,
 	amount_due	real,
-	note		varchar(1024);
-	service		varchar(1024);
-	labour		varchar(1024);
+	note		varchar(1024),
+	service		varchar(1024),
+	labour		varchar(1024),
 	primary key (invoice_no),
 	foreign key (tel) references customer(tel)
+);
+
+CREATE TABLE items
+(
+	invoice_no integer,
+	des varchar(1024),
+	price	real,
+	qty		real,
+	unit	varchar(80),
+	amount	real,
+	amount_gst	real
 );
 
 CREATE TABLE make
