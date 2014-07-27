@@ -392,7 +392,7 @@ class Add_Dialog(QtGui.QDialog):
     def clicked_bt_save(self):
         invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, amount_paid, amount_due, table = self.gather_data()
         try:
-            self.cur.execute("INSERT INTO invoice(invoice_no, date_in, tel, name, rego, money_in, amount_paid, amount_due) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (invoice_no, date, tel, name, rego, sub_total, amount_paid, amount_due))
+            self.cur.execute("INSERT INTO invoice(invoice_no, date_in, tel, name, rego, money_in, amount_paid, amount_due, model) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (invoice_no, date, tel, name, rego, sub_total, amount_paid, amount_due, model))
         except lite.IntegrityError:
             self.error_window("Invoice No.")
         try:

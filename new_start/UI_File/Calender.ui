@@ -10,8 +10,11 @@
     <height>300</height>
    </rect>
   </property>
+  <property name="cursor">
+   <cursorShape>PointingHandCursor</cursorShape>
+  </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Calender</string>
   </property>
   <widget class="QCalendarWidget" name="calendarWidget">
    <property name="geometry">

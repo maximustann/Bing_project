@@ -10,7 +10,7 @@ class Calender_Dialog(QtGui.QDialog):
         self.ui.setupUi(self)
         self.ui.calendarWidget.clicked.connect(self.setDate)
     def setDate(self):
-        self.date = self.ui.calendarWidget.selectedDate().toString("yyyy-M-d")
+        self.date = self.ui.calendarWidget.selectedDate().toString("yyyy-MM-dd")
         super(Calender_Dialog, self).accept()
     def getDate(self):
         return self.date

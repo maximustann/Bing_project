@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Calender.ui'
 #
-# Created: Mon Jul  7 19:16:30 2014
+# Created: Sun Jul 27 18:18:22 2014
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,6 +27,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.resize(400, 300)
+        Dialog.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.calendarWidget = QtGui.QCalendarWidget(Dialog)
         self.calendarWidget.setGeometry(QtCore.QRect(0, 0, 401, 301))
         self.calendarWidget.setObjectName(_fromUtf8("calendarWidget"))
@@ -35,7 +36,7 @@ class Ui_Dialog(object):
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog", None))
+        Dialog.setWindowTitle(_translate("Dialog", "Calender", None))
 
 
 if __name__ == "__main__":

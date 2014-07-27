@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Labour.ui'
 #
-# Created: Mon Jul  7 19:33:19 2014
+# Created: Sun Jul 27 18:18:22 2014
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -63,7 +63,7 @@ class Ui_Dialog(object):
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog", None))
+        Dialog.setWindowTitle(_translate("Dialog", "Labour", None))
         self.label.setText(_translate("Dialog", "Check:", None))
         self.label_2.setText(_translate("Dialog", "Fix/Repair:", None))
         self.label_3.setText(_translate("Dialog", "Repalce:", None))

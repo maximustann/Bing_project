@@ -43,6 +43,7 @@ CREATE TABLE invoice
 	note		varchar(1024),
 	service		varchar(1024),
 	labour		varchar(1024),
+	model		varchar(1024),
 	primary key (invoice_no),
 	foreign key (tel) references customer(tel)
 );

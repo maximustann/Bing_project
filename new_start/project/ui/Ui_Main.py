@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Sun Jul 27 00:11:22 2014
+# Created: Sun Jul 27 18:18:23 2014
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,22 +26,20 @@ except AttributeError:
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(1136, 723)
-        self.layoutWidget = QtGui.QWidget(Dialog)
-        self.layoutWidget.setGeometry(QtCore.QRect(6, 2, 224, 30))
-        self.layoutWidget.setObjectName(_fromUtf8("layoutWidget"))
-        self.horizontalLayout = QtGui.QHBoxLayout(self.layoutWidget)
-        self.horizontalLayout.setMargin(0)
+        Dialog.resize(769, 723)
+        self.gridLayout = QtGui.QGridLayout(Dialog)
+        self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
+        self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.pushButton_2 = QtGui.QPushButton(self.layoutWidget)
+        self.pushButton_2 = QtGui.QPushButton(Dialog)
         self.pushButton_2.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
         self.horizontalLayout.addWidget(self.pushButton_2)
-        self.pushButton = QtGui.QPushButton(self.layoutWidget)
+        self.pushButton = QtGui.QPushButton(Dialog)
         self.pushButton.setObjectName(_fromUtf8("pushButton"))
         self.horizontalLayout.addWidget(self.pushButton)
+        self.gridLayout.addLayout(self.horizontalLayout, 0, 0, 1, 1)
         self.tabWidget = QtGui.QTabWidget(Dialog)
-        self.tabWidget.setGeometry(QtCore.QRect(10, 40, 1114, 662))
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
         self.tab = QtGui.QWidget()
         self.tab.setObjectName(_fromUtf8("tab"))
@@ -134,15 +132,16 @@ class Ui_Dialog(object):
         self.tableWidget_4.horizontalHeader().setStretchLastSection(True)
         self.gridLayout_5.addWidget(self.tableWidget_4, 0, 0, 1, 1)
         self.tabWidget.addTab(self.tab_2, _fromUtf8(""))
+        self.gridLayout.addWidget(self.tabWidget, 1, 0, 1, 1)
 
         self.retranslateUi(Dialog)
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog", None))
-        self.pushButton_2.setText(_translate("Dialog", "PushButton", None))
-        self.pushButton.setText(_translate("Dialog", "PushButton", None))
+        Dialog.setWindowTitle(_translate("Dialog", "Garage Management", None))
+        self.pushButton_2.setText(_translate("Dialog", "Add", None))
+        self.pushButton.setText(_translate("Dialog", "Delete", None))
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("Dialog", "Invoice No.", None))
         item = self.tableWidget.horizontalHeaderItem(1)
@@ -160,7 +159,7 @@ class Ui_Dialog(object):
         self.comboBox.setItemText(0, _translate("Dialog", "Current Week", None))
         self.comboBox.setItemText(1, _translate("Dialog", "Current Day", None))
         self.comboBox.setItemText(2, _translate("Dialog", "Current Month", None))
-        self.pushButton_3.setText(_translate("Dialog", "PushButton", None))
+        self.pushButton_3.setText(_translate("Dialog", "Search", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("Dialog", "Main", None))
         item = self.tableWidget_2.horizontalHeaderItem(0)
         item.setText(_translate("Dialog", "Name", None))
