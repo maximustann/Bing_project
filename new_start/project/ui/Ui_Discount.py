@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'Discount.ui'
 #
-# Created: Sun Jul 27 18:18:22 2014
-#      by: PyQt4 UI code generator 4.10.2
+#      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
 
