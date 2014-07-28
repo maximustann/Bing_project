@@ -1,4 +1,5 @@
 #/bin/bash
+ui_dir="../project/ui"
 output=`ls *.ui`
 for i in ${output}
 do
@@ -6,15 +7,15 @@ do
 	name=`expr substr "$i" 1 $p`
 	pyuic4 -x $i -o ${name}.py
 	sed -i "5d" ${name}.py
-	if [ ! -e ../project/ui/"Ui_"${name}.py ]
+	if [ ! -e ${ui_dir}/"Ui_"${name}.py ]
 	then
-		cp ${name}.py ../project/ui/"Ui_"${name}.py
+		cp ${name}.py ${ui_dir}/"Ui_"${name}.py
 	fi
 
-	diff -u ${name}.py ../project/ui/"Ui_"${name}.py
+	diff -u ${name}.py ${ui_dir}/"Ui_"${name}.py
 	if [ 0 -ne $? ]
 	then
-		cp ${name}.py ../project/ui/"Ui_"${name}.py
+		cp ${name}.py ${ui_dir}/"Ui_"${name}.py
 	fi
 	rm ${name}.py
 done
