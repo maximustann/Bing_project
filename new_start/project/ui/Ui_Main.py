@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-#      by: PyQt4 UI code generator 4.10.4
+#      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -45,6 +45,7 @@ class Ui_Dialog(object):
         self.gridLayout_6 = QtGui.QGridLayout(self.tab)
         self.gridLayout_6.setObjectName(_fromUtf8("gridLayout_6"))
         self.tableWidget = QtGui.QTableWidget(self.tab)
+        self.tableWidget.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
         self.tableWidget.setShowGrid(True)
         self.tableWidget.setObjectName(_fromUtf8("tableWidget"))
         self.tableWidget.setColumnCount(7)
@@ -68,6 +69,7 @@ class Ui_Dialog(object):
         self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
         self.comboBox = QtGui.QComboBox(self.tab)
         self.comboBox.setObjectName(_fromUtf8("comboBox"))
+        self.comboBox.addItem(_fromUtf8(""))
         self.comboBox.addItem(_fromUtf8(""))
         self.comboBox.addItem(_fromUtf8(""))
         self.comboBox.addItem(_fromUtf8(""))
@@ -158,6 +160,7 @@ class Ui_Dialog(object):
         self.comboBox.setItemText(0, _translate("Dialog", "Current Week", None))
         self.comboBox.setItemText(1, _translate("Dialog", "Current Day", None))
         self.comboBox.setItemText(2, _translate("Dialog", "Current Month", None))
+        self.comboBox.setItemText(3, _translate("Dialog", "All record", None))
         self.pushButton_3.setText(_translate("Dialog", "Search", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("Dialog", "Main", None))
         item = self.tableWidget_2.horizontalHeaderItem(0)

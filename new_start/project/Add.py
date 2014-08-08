@@ -15,7 +15,7 @@ import edit_file
 
 
 class Add_Dialog(QtGui.QDialog):
-    def __init__(self):
+    def __init__(self, package):
         super(Add_Dialog, self).__init__()
         self.ui = ui_add.Ui_Dialog()
         self.ui.setupUi(self)
@@ -50,6 +50,9 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.tableWidget.itemChanged.connect(self.changed_table)
         self.ui.comboBox_3.currentIndexChanged.connect(self.wof_comboBox)
         self.ui.tableWidget.setColumnWidth(0, 300)
+        if package != None:
+            self.initialize(package)
+
     def init_data(self):
         self.before_gst_dis = "26.09"
         self.before_gst = "39.13"
@@ -66,9 +69,30 @@ class Add_Dialog(QtGui.QDialog):
         self.gst_amount = 5
         self.saved_flag = 0
 
+    def initialize(self, package):
+        self.ui.lineEdit_7.setText(package[0])      #invoice_no
+        self.ui.lineEdit.setText(package[1])        #customer name
+        self.ui.lineEdit_4.setText(package[3])      #rego
+        self.ui.pushButton_5.setText(package[6])    #Date
+        self.ui.lineEdit_3.setText(package[8][2])   #tel
+        self.restore_table(package[7])
+
+    def restore_table(self, table):
+        for record in table:
+            self.ui.tableWidget.insertRow(0)
+            for item in record:
+                if item == '':
+                    item = 'None'
+            lis = [item for item in record]
+            lis.pop(0)
+            for idx, item in enumerate(lis):
+                it = QtGui.QTableWidgetItem(str(item))
+                self.ui.tableWidget.setItem(0, idx, it)
+
     def closeEvent(self, event):
         if self.saved_flag == 0:
-            reply = QtGui.QMessageBox.question(self, 'Message', 'Do you want to save this page?', QtGui.QMessageBox.Yes,
+            reply = QtGui.QMessageBox.question(self, 'Message', 
+                    'Do you want to save this page?', QtGui.QMessageBox.Yes,
                     QtGui.QMessageBox.No)
             if reply == QtGui.QMessageBox.Yes:
                 self.clicked_bt_save()
@@ -76,8 +100,14 @@ class Add_Dialog(QtGui.QDialog):
             else:
                 event.accept()
     def clicked_bt_print(self):
-        invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, amount_paid, amount_due, table = self.gather_data()
-        self.editFile(invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table)
+        invoice_no, date, name, tel, addr, make, model, 
+        rego, odo, sub_total, gst, total, service, labour, 
+        note, amount_paid, amount_due, table = self.gather_data()
+
+        self.editFile(invoice_no, date, name, tel, addr, make, 
+                        model, rego, odo, sub_total, gst, 
+                        total, service, labour, note, table)
+
         self.generate_pdf()
         dialog = QtGui.QPrintDialog()
         if dialog.exec_() == QtGui.QDialog.Accepted:
@@ -95,8 +125,13 @@ class Add_Dialog(QtGui.QDialog):
         self.web.print_(self.printer)
 
     def clicked_bt_preview(self):
-        invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, amount_paid, amount_due, table = self.gather_data()
-        self.editFile(invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table)
+        invoice_no, date, name, tel, addr, make, model, rego, odo, 
+        sub_total, gst, total, service, labour, note, amount_paid, 
+        amount_due, table = self.gather_data()
+
+        self.editFile(invoice_no, date, name, tel, addr, make, model, 
+                rego, odo, sub_total, gst, total, service, labour, note, table)
+
         self.web = QtWebKit.QWebView()
         self.web.load(QtCore.QUrl("../Database/invoice/invoice.html"))
         self.web.loadFinished.connect(self.display_pdf)
@@ -388,17 +423,24 @@ class Add_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem("Hrs")
             self.ui.tableWidget.setItem(0, self.unit, item)
     def error_window(self, errorMessage):
-        reply = QtGui.QMessageBox.question(self, 'Message', "%s existed in Database, Please Check it." % errorMessage, QtGui.QMessageBox.OK)
+        reply = QtGui.QMessageBox.question(self, 'Message', 
+                "%s existed in Database, Please Check it." % errorMessage, QtGui.QMessageBox.Yes)
     def clicked_bt_save(self):
-        invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, amount_paid, amount_due, table = self.gather_data()
+        invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note,amount_paid, amount_due, table = self.gather_data()
         try:
-            self.cur.execute("INSERT INTO invoice(invoice_no, date_in, tel, name, rego, money_in, amount_paid, amount_due, model) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (invoice_no, date, tel, name, rego, sub_total, amount_paid, amount_due, model))
+            self.cur.execute("INSERT INTO invoice(invoice_no,date_in, tel, name, rego, money_in, amount_paid,amount_due, model) VALUES('%s', '%s', '%s', '%s','%s', '%s', '%s', '%s', '%s')" % (invoice_no,date, tel, name, rego, sub_total, amount_paid,amount_due, model))
+
         except lite.IntegrityError:
-            self.error_window("Invoice No.")
+            self.cur.execute('UPDATE invoice SET date_in="%s", tel="%s", name="%s", rego="%s", money_in="%s", amount_paid="%s",amount_due="%s", model="%s" where invoice_no="%s"' % (date, tel, name, rego, sub_total, amount_paid, amount_due, model, invoice_no))
+            #self.error_window("Invoice No.")
         try:
-            self.cur.execute("INSERT INTO customer(tel, name, Address) VALUES('%s', '%s', '%s')" % (name, tel,addr))
+            self.cur.execute("INSERT INTO customer(tel, name, Address) VALUES('%s', '%s', '%s')" % (tel, name, addr))
         except lite.IntegrityError:
-            pass
+            try:
+                self.cur.execute("UPDATE customer SET tel='%s', name='%s', Address='%s'" % (tel, name, addr))
+            except lite.IntegrityError:
+                self.cur.execute("UPDATE customer SET name='%s', Address='%s' where tel='%s'" % (name, addr, tel))
+
         try:
             self.cur.execute("INSERT INTO vehicle(rego, make, model, tel) VALUES('%s', '%s', '%s', '%s')" % (rego, make, model, tel))
         except lite.IntegrityError,e:
@@ -465,7 +507,7 @@ class Add_Dialog(QtGui.QDialog):
             else:
                 row["amount"] = ""
             if self.ui.tableWidget.item(i, 5) != None:
-                row["amount_gst"] = self.ui.tableWidget.item(1, 5).text()
+                row["amount_gst"] = self.ui.tableWidget.item(i, 5).text()
             else:
                 row["amount_gst"] = ""
             table.append(row)
