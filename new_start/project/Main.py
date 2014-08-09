@@ -42,10 +42,11 @@ class Main_Dialog(QtGui.QDialog):
         package.append(self.return_invoice(self.ui.tableWidget.item(current_row, self.invoice_no).text()))
 
 
-
         Dialog = add.Add_Dialog(package)
         Dialog.show()
         result = Dialog.exec_()
+        if result == 0:
+            self.clicked_bt_filter()
     def return_items(self, invoice_no):
         items = []
         self.cur.execute('select * from items where invoice_no="%s"' % invoice_no)
@@ -56,9 +57,14 @@ class Main_Dialog(QtGui.QDialog):
             items.append(row)
         return items
     def return_invoice(self, invoice_no):
+        items = []
         self.cur.execute('select * from invoice where invoice_no="%s"' % invoice_no)
-        row = self.cur.fetchone()
-        return row
+        while True:
+            row = self.cur.fetchone()
+            if row == None:
+                break
+            items.append(row)
+        return items
 
 
     def clicked_bt_filter(self):
@@ -82,6 +88,7 @@ class Main_Dialog(QtGui.QDialog):
         Dialog = add.Add_Dialog(None)
         Dialog.show()
         result = Dialog.exec_()
+        print result
         if result == 0:
             self.clicked_bt_filter()
     def connect(self):

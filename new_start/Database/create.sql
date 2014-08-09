@@ -44,6 +44,7 @@ CREATE TABLE invoice
 	service		varchar(1024),
 	labour		varchar(1024),
 	model		varchar(1024),
+	make		varchar(1024),
 	primary key (invoice_no),
 	foreign key (tel) references customer(tel)
 );
@@ -58,7 +59,7 @@ CREATE TABLE items
 	unit	varchar(80),
 	amount	real,
 	amount_gst	real,
-	primary key (ID),
+	primary key (invoice_no, ID),
 	foreign key (invoice_no) references invoice(invoice_no)
 );
 

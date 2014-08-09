@@ -75,7 +75,12 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.lineEdit.setText(package[1])        #customer name
         self.ui.lineEdit_4.setText(package[3])      #rego
         self.ui.pushButton_5.setText(package[6])    #Date
-        self.ui.lineEdit_3.setText(package[8][2])   #tel
+        self.ui.lineEdit_8.setText(package[4])      #amount paid
+        self.ui.lineEdit_9.setText(package[5])      #amount due
+        self.ui.lineEdit_3.setText(package[8][0][2])   #tel
+        print package[8][0][12]
+        self.ui.comboBox.setCurrentIndex(self.ui.comboBox.findText(package[8][0][12]))#make
+        self.ui.comboBox_2.setCurrentIndex(self.ui.comboBox_2.findText(package[8][0][11])) #model
         self.restore_table(package[7])
 
     def restore_table(self, table):
@@ -84,8 +89,7 @@ class Add_Dialog(QtGui.QDialog):
             for item in record:
                 if item == '':
                     item = 'None'
-            lis = [item for item in record]
-            lis.pop(1)
+            lis = [item for no, item in enumerate(record) if no != 1]
             for idx, item in enumerate(lis):
                 it = QtGui.QTableWidgetItem(str(item))
                 self.ui.tableWidget.setItem(0, idx, it)
@@ -168,6 +172,7 @@ class Add_Dialog(QtGui.QDialog):
             self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem(self.before_gst)
             self.ui.tableWidget.setItem(0, self.pri, item)
+        self.add_no()
     def write_log(self, string):
         my_time = None
         fd = open("../Database/log/log.txt", "a")
@@ -236,6 +241,7 @@ class Add_Dialog(QtGui.QDialog):
             fd.close()
         else:
             return
+        self.add_no()
     def calculate_amount(self, row):
         price_item = self.ui.tableWidget.item(row, self.pri)
         qty_item = self.ui.tableWidget.item(row, self.qty)
@@ -254,6 +260,11 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.lineEdit_9.setText("0")
     def clicked_bt_addLine(self):
         self.ui.tableWidget.insertRow(0)
+        self.add_no()
+    def add_no(self):
+        no = self.ui.tableWidget.rowCount()
+        item = QtGui.QTableWidgetItem(str(no))
+        self.ui.tableWidget.setItem(0, self.no, item)
 
 
     def clicked_bt_delLine(self):
@@ -423,10 +434,10 @@ class Add_Dialog(QtGui.QDialog):
     def clicked_bt_save(self):
         invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note,amount_paid, amount_due, table = self.gather_data()
         try:
-            self.cur.execute("INSERT INTO invoice(invoice_no,date_in, tel, name, rego, money_in, amount_paid,amount_due, model) VALUES('%s', '%s', '%s', '%s','%s', '%s', '%s', '%s', '%s')" % (invoice_no,date, tel, name, rego, sub_total, amount_paid,amount_due, model))
+            self.cur.execute("INSERT INTO invoice(invoice_no,date_in, tel, name, rego, money_in, amount_paid,amount_due, model, make) VALUES('%s', '%s', '%s', '%s','%s', '%s', '%s', '%s', '%s', '%s')" % (invoice_no,date, tel, name, rego, sub_total, amount_paid,amount_due, model, make))
 
         except lite.IntegrityError:
-            self.cur.execute('UPDATE invoice SET date_in="%s", tel="%s", name="%s", rego="%s", money_in="%s", amount_paid="%s",amount_due="%s", model="%s" where invoice_no="%s"' % (date, tel, name, rego, sub_total, amount_paid, amount_due, model, invoice_no))
+            self.cur.execute('UPDATE invoice SET date_in="%s", tel="%s", name="%s", rego="%s", money_in="%s", amount_paid="%s",amount_due="%s", model="%s", make="%s" where invoice_no="%s"' % (date, tel, name, rego, sub_total, amount_paid, amount_due, model, make, invoice_no))
             #self.error_window("Invoice No.")
         try:
             self.cur.execute("INSERT INTO customer(tel, name, Address) VALUES('%s', '%s', '%s')" % (tel, name, addr))
@@ -443,6 +454,7 @@ class Add_Dialog(QtGui.QDialog):
         self.conn.commit()
 
         for row in table:
+            no = row["no"]
             des = row["des"]
             price = row["pri"]
             qty = row["qty"]
@@ -450,9 +462,9 @@ class Add_Dialog(QtGui.QDialog):
             amount = row["amount"]
             amount_gst = row['amount_gst']
             try:
-                self.cur.execute("INSERT INTO items(invoice_no, des, price, qty, unit, amount, amount_gst) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (invoice_no, des, price, qty, unit, amount, amount_gst))
+                self.cur.execute("INSERT INTO items(ID, invoice_no, des, price, qty, unit, amount, amount_gst) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (no, invoice_no, des, price, qty, unit, amount, amount_gst))
             except lite.IntegrityError:
-                pass
+                self.cur.execute("UPDATE items SET des='%s', price='%s', qty='%s', unit='%s', amount='%s', amount_gst='%s' where ID='%s' AND invoice_no='%s'" % (des, price, qty, unit, amount, amount_gst, no, invoice_no))
             self.conn.commit()
         self.saved_flag = 1
 
@@ -481,28 +493,32 @@ class Add_Dialog(QtGui.QDialog):
 
         for i in range(self.ui.tableWidget.rowCount()):
             row = {}
-            if self.ui.tableWidget.item(i, 0) != None:
-                row["des"] = self.ui.tableWidget.item(i, 0).text()
+            if self.ui.tableWidget.item(i, self.no) != None:
+                row["no"] = self.ui.tableWidget.item(i, self.no).text()
+            else:
+                row["no"] = ""
+            if self.ui.tableWidget.item(i, self.des) != None:
+                row["des"] = self.ui.tableWidget.item(i, self.des).text()
             else:
                 row["des"] = ""
-            if self.ui.tableWidget.item(i, 1) != None:
-                row["pri"] = self.ui.tableWidget.item(i, 1).text()
+            if self.ui.tableWidget.item(i, self.pri) != None:
+                row["pri"] = self.ui.tableWidget.item(i, self.pri).text()
             else:
                 row["pri"] = ""
-            if self.ui.tableWidget.item(i, 2) != None:
-                row["qty"] = self.ui.tableWidget.item(i, 2).text()
+            if self.ui.tableWidget.item(i, self.qty) != None:
+                row["qty"] = self.ui.tableWidget.item(i, self.qty).text()
             else:
                 row["qty"] = ""
-            if self.ui.tableWidget.item(i, 3) != None:
-                row["unit"] = self.ui.tableWidget.item(i, 3).text()
+            if self.ui.tableWidget.item(i, self.unit) != None:
+                row["unit"] = self.ui.tableWidget.item(i, self.unit).text()
             else:
                 row["unit"] = ""
-            if self.ui.tableWidget.item(i, 4) != None:
-                row["amount"] = self.ui.tableWidget.item(i, 4).text()
+            if self.ui.tableWidget.item(i, self.amount) != None:
+                row["amount"] = self.ui.tableWidget.item(i, self.amount).text()
             else:
                 row["amount"] = ""
-            if self.ui.tableWidget.item(i, 5) != None:
-                row["amount_gst"] = self.ui.tableWidget.item(i, 5).text()
+            if self.ui.tableWidget.item(i, self.gst_amount) != None:
+                row["amount_gst"] = self.ui.tableWidget.item(i, self.gst_amount).text()
             else:
                 row["amount_gst"] = ""
             table.append(row)
