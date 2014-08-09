@@ -49,7 +49,7 @@ class Add_Dialog(QtGui.QDialog):
 
         self.ui.tableWidget.itemChanged.connect(self.changed_table)
         self.ui.comboBox_3.currentIndexChanged.connect(self.wof_comboBox)
-        self.ui.tableWidget.setColumnWidth(0, 300)
+        self.ui.tableWidget.setColumnWidth(1, 300)
         if package != None:
             self.initialize(package)
 
@@ -84,7 +84,7 @@ class Add_Dialog(QtGui.QDialog):
                 if item == '':
                     item = 'None'
             lis = [item for item in record]
-            lis.pop(0)
+            lis.pop(1)
             for idx, item in enumerate(lis):
                 it = QtGui.QTableWidgetItem(str(item))
                 self.ui.tableWidget.setItem(0, idx, it)
@@ -100,13 +100,9 @@ class Add_Dialog(QtGui.QDialog):
             else:
                 event.accept()
     def clicked_bt_print(self):
-        invoice_no, date, name, tel, addr, make, model, 
-        rego, odo, sub_total, gst, total, service, labour, 
-        note, amount_paid, amount_due, table = self.gather_data()
+        invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, amount_paid, amount_due, table = self.gather_data()
 
-        self.editFile(invoice_no, date, name, tel, addr, make, 
-                        model, rego, odo, sub_total, gst, 
-                        total, service, labour, note, table)
+        self.editFile(invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, table)
 
         self.generate_pdf()
         dialog = QtGui.QPrintDialog()
@@ -125,11 +121,9 @@ class Add_Dialog(QtGui.QDialog):
         self.web.print_(self.printer)
 
     def clicked_bt_preview(self):
-        invoice_no, date, name, tel, addr, make, model, rego, odo, 
-        sub_total, gst, total, service, labour, note, amount_paid, 
-        amount_due, table = self.gather_data()
+        invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note, amount_paid, amount_due, table = self.gather_data()
 
-        self.editFile(invoice_no, date, name, tel, addr, make, model, 
+        self.editFile(invoice_no, date, name, tel, addr, make, model,\
                 rego, odo, sub_total, gst, total, service, labour, note, table)
 
         self.web = QtWebKit.QWebView()

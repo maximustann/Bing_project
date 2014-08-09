@@ -50,13 +50,16 @@ CREATE TABLE invoice
 
 CREATE TABLE items
 (
+	ID	integer,
 	invoice_no integer,
 	des varchar(1024),
 	price	real,
 	qty		real,
 	unit	varchar(80),
 	amount	real,
-	amount_gst	real
+	amount_gst	real,
+	primary key (ID),
+	foreign key (invoice_no) references invoice(invoice_no)
 );
 
 CREATE TABLE make
@@ -74,3 +77,4 @@ CREATE TABLE model
 	primary key (ID),
 	foreign key (make_name) references make(name)
 );
+
