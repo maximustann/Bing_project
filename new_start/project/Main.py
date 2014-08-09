@@ -36,7 +36,7 @@ class Main_Dialog(QtGui.QDialog):
     def clicked_table(self):
         current_row = self.ui.tableWidget.currentRow()
         package = []
-        for i in xrange(8):
+        for i in xrange(7):
             package.append(self.ui.tableWidget.item(current_row, i).text())
         package.append(self.return_items(self.ui.tableWidget.item(current_row, self.invoice_no).text()))
         package.append(self.return_invoice(self.ui.tableWidget.item(current_row, self.invoice_no).text()))
