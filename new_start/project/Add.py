@@ -61,12 +61,13 @@ class Add_Dialog(QtGui.QDialog):
         self.euroCars = "160.00"
         self.van = "160.00"
         self.labour = "60.00"
-        self.des = 0
-        self.pri = 1
-        self.qty = 2
-        self.unit = 3
-        self.amount =4
-        self.gst_amount = 5
+        self.no = 0
+        self.des = 1
+        self.pri = 2
+        self.qty = 3
+        self.unit = 4
+        self.amount = 5
+        self.gst_amount = 6
         self.saved_flag = 0
 
     def initialize(self, package):
