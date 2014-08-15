@@ -12,6 +12,7 @@ CREATE TABLE vehicle
 	rego	varchar(80),
 	make	varchar(80),
 	model	varchar(80),
+	odo		varchar(80),
 	tel		varchar(80),
 	expire_date	date,
 	primary key (rego, tel),

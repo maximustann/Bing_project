@@ -25,7 +25,7 @@ except AttributeError:
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(975, 863)
+        Dialog.resize(975, 884)
         self.layoutWidget = QtGui.QWidget(Dialog)
         self.layoutWidget.setGeometry(QtCore.QRect(500, 590, 411, 261))
         self.layoutWidget.setObjectName(_fromUtf8("layoutWidget"))
@@ -393,7 +393,7 @@ class Ui_Dialog(object):
         self.label_17.setText(_translate("Dialog", "TextLabel", None))
         self.pushButton_17.setText(_translate("Dialog", "Discount", None))
         self.pushButton_14.setText(_translate("Dialog", "Full Payment", None))
-        self.pushButton_15.setText(_translate("Dialog", "Partial Payment", None))
+        self.pushButton_15.setText(_translate("Dialog", "Insert Payment", None))
         self.pushButton_16.setText(_translate("Dialog", "Cash Paid", None))
         self.label_20.setText(_translate("Dialog", "Amount Paid:", None))
         self.label_21.setText(_translate("Dialog", "Amount Due:", None))

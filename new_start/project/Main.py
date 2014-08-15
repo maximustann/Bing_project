@@ -16,6 +16,7 @@ class Main_Dialog(QtGui.QDialog):
         self.ui = ui_main.Ui_Dialog()
         self.ui.setupUi(self)
         self.ui.pushButton_2.clicked.connect(self.clicked_bt_Add)
+        self.ui.pushButton.clicked.connect(self.clicked_bt_Del)
         self.init_data()
         self.conn = None
         self.cur = None
@@ -32,6 +33,16 @@ class Main_Dialog(QtGui.QDialog):
         self.amount_paid = 4
         self.amount_due = 5
         self.date = 6
+
+    def clicked_bt_Del(self):
+        current_row = self.ui.tableWidget.currentRow()
+        if current_row == -1:
+            current_row = 0
+        invoice_no = self.ui.tableWidget.item(current_row, self.invoice_no).text()
+        self.cur.execute("DELETE FROM invoice WHERE invoice_no='%s'" % invoice_no)
+        self.cur.execute("DELETE FROM items WHERE invoice_no='%s'" % invoice_no)
+        self.conn.commit()
+        self.ui.tableWidget.removeRow(current_row)
 
     def clicked_table(self):
         current_row = self.ui.tableWidget.currentRow()
@@ -88,7 +99,6 @@ class Main_Dialog(QtGui.QDialog):
         Dialog = add.Add_Dialog(None)
         Dialog.show()
         result = Dialog.exec_()
-        print result
         if result == 0:
             self.clicked_bt_filter()
     def connect(self):

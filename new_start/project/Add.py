@@ -77,12 +77,24 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.pushButton_5.setText(package[6])    #Date
         self.ui.lineEdit_8.setText(package[4])      #amount paid
         self.ui.lineEdit_9.setText(package[5])      #amount due
-        self.ui.lineEdit_3.setText(package[8][0][2])   #tel
-        print package[8][0][12]
+        tel = package[8][0][2]
+        self.ui.lineEdit_3.setText(tel)   #tel
         self.ui.comboBox.setCurrentIndex(self.ui.comboBox.findText(package[8][0][12]))#make
         self.ui.comboBox_2.setCurrentIndex(self.ui.comboBox_2.findText(package[8][0][11])) #model
-        self.restore_table(package[7])
+        self.restore_table(package[7]) #center table restore
 
+        #looking for address and set back
+        self.cur.execute("SELECT Address FROM customer WHERE tel = '%s'" % tel)
+        addr = self.cur.fetchone()[0]
+        if addr != None:
+            self.ui.lineEdit_2.setText(addr)
+        
+        #looking for oddometer and set back
+        self.cur.execute("SELECT odo FROM vehicle WHERE tel='%s'" % tel)
+        odo = self.cur.fetchone()[0]
+        if odo != None:
+            self.ui.lineEdit_6.setText(odo)
+    
     def restore_table(self, table):
         for record in table:
             self.ui.tableWidget.insertRow(0)
@@ -271,6 +283,7 @@ class Add_Dialog(QtGui.QDialog):
         gst = 0
         amount_value = 0
         gst_amount = 0
+        invoice_no = self.ui.lineEdit_7.text()
         current_row = self.ui.tableWidget.currentRow()
         if current_row == -1:
             current_row = 0
@@ -298,6 +311,12 @@ class Add_Dialog(QtGui.QDialog):
             self.ui.label_16.setText(str("%.2f" % gst))
             self.ui.label_17.setText(str("%.2f" % total))
         except RuntimeError:
+            pass
+        try:
+            no = self.ui.tableWidget.item(current_row, self.no).text()
+            self.cur.execute("DELETE FROM items WHERE invoice_no='%s' AND ID='%s'" % (invoice_no, no))
+            self.conn.commit()
+        except:
             pass
         self.ui.tableWidget.removeRow(current_row)
 
@@ -448,9 +467,9 @@ class Add_Dialog(QtGui.QDialog):
                 self.cur.execute("UPDATE customer SET name='%s', Address='%s' where tel='%s'" % (name, addr, tel))
 
         try:
-            self.cur.execute("INSERT INTO vehicle(rego, make, model, tel) VALUES('%s', '%s', '%s', '%s')" % (rego, make, model, tel))
+            self.cur.execute("INSERT INTO vehicle(rego, make, model, odo, tel) VALUES('%s', '%s', '%s', '%s','%s')" % (rego, make, model, odo, tel))
         except lite.IntegrityError,e:
-            pass
+            self.cur.execute("UPDATE vehicle SET rego='%s', make='%s', model='%s', odo='%s' WHERE tel='%s'" % (rego, make, model, odo, tel))
         self.conn.commit()
 
         for row in table:
