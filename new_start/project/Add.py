@@ -7,7 +7,7 @@ import Tyres as tyres;
 import Calender as calender;
 import Labour as labour;
 import Discount as discount;
-import Paid as paid;
+import Paid as paid_file;
 import Cash as cash;
 import time;
 import os;
@@ -580,17 +580,26 @@ class Add_Dialog(QtGui.QDialog):
             else:
                 self.ui.textEdit.insertPlainText("\nA discount of " + noteText + " applied on total amount")
     def clicked_bt_Paid(self):
-        Dialog = paid.Paid_Dialog()
+        Dialog = paid_file.Paid_Dialog()
         Dialog.show()
         result = Dialog.exec_()
         if result == 1:
-            paid1 = Dialog.getPaid()
-            stringPaid = str("%.2f") % paid1
-            self.ui.lineEdit_8.setText(stringPaid)
+            paid = Dialog.getPaid()
             total = float(self.ui.label_17.text())
-            amountDue = total - paid1
-            strAmountDue = str("%.2f") % amountDue
-            self.ui.lineEdit_9.setText(strAmountDue)
+            
+            amount_paid = self.ui.lineEdit_8.text()
+            if amount_paid == '':
+                amount_due = total - paid
+                amount_paid = paid
+                self.ui.lineEdit_8.setText(str("%.2f") % amount_paid)
+                self.ui.lineEdit_9.setText(str("%.2f") % amount_due)
+            else:
+                amount_paid = float(amount_paid) + paid
+                amount_due = total - float(amount_paid)
+                self.ui.lineEdit_8.setText(str("%.2f") % amount_paid)
+                self.ui.lineEdit_9.setText(str("%.2f") % amount_due)
+
+
     def clicked_bt_Cash(self):
         Dialog = cash.Cash_Dialog()
         Dialog.show()
