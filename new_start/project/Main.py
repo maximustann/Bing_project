@@ -54,6 +54,7 @@ class Main_Dialog(QtGui.QDialog):
 
 
         Dialog = add.Add_Dialog(package)
+        Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
         Dialog.show()
         result = Dialog.exec_()
         if result == 0:
@@ -97,6 +98,7 @@ class Main_Dialog(QtGui.QDialog):
 
     def clicked_bt_Add(self):
         Dialog = add.Add_Dialog(None)
+        Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
         Dialog.show()
         result = Dialog.exec_()
         if result == 0:

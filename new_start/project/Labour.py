@@ -4,8 +4,8 @@ from PyQt4 import QtCore, QtGui
 from ui import Ui_Labour as ui_labour
 
 class Labour_Dialog(QtGui.QDialog):
-    def __init__(self):
-        super(Labour_Dialog, self) .__init__()
+    def __init__(self, parent=None):
+        super(Labour_Dialog, self) .__init__(parent)
         self.check_text = " "
         self.fix_text = " "
         self.replace_text = " "
