@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>975</width>
-    <height>884</height>
+    <width>996</width>
+    <height>890</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -64,6 +64,13 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>After Discount :</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
@@ -99,6 +106,13 @@
             <family>Courier 10 Pitch</family>
            </font>
           </property>
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_11">
           <property name="text">
            <string>TextLabel</string>
           </property>

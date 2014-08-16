@@ -21,6 +21,7 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.setupUi(self)
         self.ui.pushButton_12.setText("Add")
         self.ui.pushButton_13.setText("Delete")
+        self.ui.label_11.setText("0")
         self.ui.label_15.setText("0")
         self.ui.label_16.setText("0")
         self.ui.label_17.setText("0")
@@ -46,6 +47,7 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.pushButton_12.clicked.connect(self.clicked_bt_addLine)
         self.ui.pushButton_13.clicked.connect(self.clicked_bt_delLine)
         self.ui.pushButton_3.clicked.connect(self.clicked_bt_preview)
+        self.ui.lineEdit_8.editingFinished.connect(self.autoChangeText)
 
         self.ui.tableWidget.itemChanged.connect(self.changed_table)
         self.ui.comboBox_3.currentIndexChanged.connect(self.wof_comboBox)
@@ -590,17 +592,23 @@ class Add_Dialog(QtGui.QDialog):
         Dialog.show()
         result = Dialog.exec_()
         if result == 1:
+            flag, discount1 = Dialog.getDiscount()
+            flag = float(flag)
+            discount1 = float(discount1)
             total = float(self.ui.label_17.text())
-            result = total * Dialog.getDiscount()
-            text = str("%.2f") % result
-            self.ui.label_17.setText(text)
-            discountPersentage = 100 - Dialog.getDiscount() * 100
-            string_DP = str("%.0f") % discountPersentage
-            noteText = string_DP + "%"
-            if self.ui.textEdit.toPlainText() == "":
-                 self.ui.textEdit.insertPlainText("A discount of " + noteText + " applied on total amount")
-            else:
-                self.ui.textEdit.insertPlainText("\nA discount of " + noteText + " applied on total amount")
+            if (flag == 1):
+                newTotal = total * discount1
+                string_DP = str("%.0f") % (discount1 * 100)
+                noteText = string_DP + "%"
+                text = str("%.2f") % newTotal + "(" + noteText + ")"
+                self.ui.label_11.setText(text)
+            elif (flag == 2):
+                newTotal = total + discount1
+                percentage = str  ((1 - ((total - newTotal) / total)) * 100) + "%"
+                text = str("%.2f") % newTotal + "(" + percentage + ")"
+                self.ui.label_11.setText(text)
+        else:
+            return
     def clicked_bt_Paid(self):
         Dialog = paid_file.Paid_Dialog()
         Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
@@ -609,7 +617,6 @@ class Add_Dialog(QtGui.QDialog):
         if result == 1:
             paid = Dialog.getPaid()
             total = float(self.ui.label_17.text())
-            
             amount_paid = self.ui.lineEdit_8.text()
             if amount_paid == '':
                 amount_due = total - paid
@@ -637,6 +644,12 @@ class Add_Dialog(QtGui.QDialog):
             if row == None:
                 break
             self.ui.comboBox_2.addItem(row[0])
+
+    def autoChangeText(self):
+        amount_paid = float(self.ui.lineEdit_8.text())
+        total = float(self.ui.label_17.text())
+        amount_due = float (total) - float (amount_paid)
+        self.ui.lineEdit_9.setText(str("%.2f") % amount_due)
 
     def setTime(self):
         self.ui.pushButton_5.setText(time.strftime("%Y-%m-%d", time.localtime(time.time())))
