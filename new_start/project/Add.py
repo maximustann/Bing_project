@@ -94,7 +94,21 @@ class Add_Dialog(QtGui.QDialog):
         odo = self.cur.fetchone()[0]
         if odo != None:
             self.ui.lineEdit_6.setText(odo)
-    
+
+        #looking for note and service and labour
+        self.cur.execute("SELECT note, service, labour FROM invoice WHERE tel='%s'" % tel)
+        row = self.cur.fetchone()
+        note = row[0]
+        service = row[1]
+        labour = row[2]
+
+        if note != None:
+            self.ui.textEdit.setText(note)
+        if service != None:
+            self.ui.textEdit_2.setText(service)
+        if labour != None:
+            self.ui.textEdit_3.setText(labour)
+
     def restore_table(self, table):
         for record in table:
             self.ui.tableWidget.insertRow(0)
@@ -103,7 +117,10 @@ class Add_Dialog(QtGui.QDialog):
                     item = 'None'
             lis = [item for no, item in enumerate(record) if no != 1]
             for idx, item in enumerate(lis):
-                it = QtGui.QTableWidgetItem(str(item))
+                if not isinstance(item, unicode):
+                    it = QtGui.QTableWidgetItem(('%.2f') % item)
+                else:
+                    it = QtGui.QTableWidgetItem(str(item))
                 self.ui.tableWidget.setItem(0, idx, it)
 
     def closeEvent(self, event):
@@ -418,18 +435,21 @@ class Add_Dialog(QtGui.QDialog):
 
     def clicked_bt_Tyres(self):
         Dialog = tyres.Tyres_Dialog()
+        Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
         Dialog.show()
         result = Dialog.exec_()
 
     def clicked_bt_Calender(self):
         Dialog = calender.Calender_Dialog()
+        Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
         Dialog.show()
         if Dialog.exec_() == 1:
             date = Dialog.getDate()
             self.ui.pushButton_5.setText(date)
 
     def clicked_bt_Labour(self):
-        Dialog = labour.Labour_Dialog()
+        Dialog = labour.Labour_Dialog(self)
+        Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
         Dialog.show()
         result = Dialog.exec_()
         if result == 1:
@@ -447,16 +467,17 @@ class Add_Dialog(QtGui.QDialog):
             self.ui.tableWidget.setItem(0, self.qty, item)
             item = QtGui.QTableWidgetItem("Hrs")
             self.ui.tableWidget.setItem(0, self.unit, item)
+        self.add_no()
     def error_window(self, errorMessage):
         reply = QtGui.QMessageBox.question(self, 'Message', 
                 "%s existed in Database, Please Check it." % errorMessage, QtGui.QMessageBox.Yes)
     def clicked_bt_save(self):
         invoice_no, date, name, tel, addr, make, model, rego, odo, sub_total, gst, total, service, labour, note,amount_paid, amount_due, table = self.gather_data()
         try:
-            self.cur.execute("INSERT INTO invoice(invoice_no,date_in, tel, name, rego, money_in, amount_paid,amount_due, model, make) VALUES('%s', '%s', '%s', '%s','%s', '%s', '%s', '%s', '%s', '%s')" % (invoice_no,date, tel, name, rego, sub_total, amount_paid,amount_due, model, make))
+            self.cur.execute("INSERT INTO invoice(invoice_no, date_in, tel, name, rego, money_in, amount_paid,amount_due, model, make, service, note, labour) VALUES('%s', '%s', '%s', '%s','%s', '%s', '%s', '%s', '%s', '%s', '%s','%s','%s')" % (invoice_no,date, tel, name, rego, sub_total, amount_paid,amount_due, model, make, service, note, labour))
 
         except lite.IntegrityError:
-            self.cur.execute('UPDATE invoice SET date_in="%s", tel="%s", name="%s", rego="%s", money_in="%s", amount_paid="%s",amount_due="%s", model="%s", make="%s" where invoice_no="%s"' % (date, tel, name, rego, sub_total, amount_paid, amount_due, model, make, invoice_no))
+            self.cur.execute('UPDATE invoice SET date_in="%s", tel="%s", name="%s", rego="%s", money_in="%s", amount_paid="%s",amount_due="%s", model="%s", make="%s", service="%s", note="%s", labour="%s" where invoice_no="%s"' % (date, tel, name, rego, sub_total, amount_paid, amount_due, model, make, service, note, labour, invoice_no))
             #self.error_window("Invoice No.")
         try:
             self.cur.execute("INSERT INTO customer(tel, name, Address) VALUES('%s', '%s', '%s')" % (tel, name, addr))
@@ -565,6 +586,7 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.textEdit_3.setPlainText("Check: %s \n\nFix/Repair: %s \n\nReplace: %s" %(checkText, fixText, replaceText))
     def clicked_bt_Discount(self):
         Dialog = discount.Discount_Dialog()
+        Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
         Dialog.show()
         result = Dialog.exec_()
         if result == 1:
@@ -581,6 +603,7 @@ class Add_Dialog(QtGui.QDialog):
                 self.ui.textEdit.insertPlainText("\nA discount of " + noteText + " applied on total amount")
     def clicked_bt_Paid(self):
         Dialog = paid_file.Paid_Dialog()
+        Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
         Dialog.show()
         result = Dialog.exec_()
         if result == 1:
@@ -602,6 +625,7 @@ class Add_Dialog(QtGui.QDialog):
 
     def clicked_bt_Cash(self):
         Dialog = cash.Cash_Dialog()
+        Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
         Dialog.show()
         result = Dialog.exec_()
     def changeModel(self):
