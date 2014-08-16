@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Discount.ui'
 #
-#      by: PyQt4 UI code generator 4.10.4
+#      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -25,9 +25,9 @@ except AttributeError:
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(306, 154)
+        Dialog.resize(362, 240)
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
-        self.buttonBox.setGeometry(QtCore.QRect(-130, 80, 341, 32))
+        self.buttonBox.setGeometry(QtCore.QRect(-90, 190, 341, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
@@ -40,6 +40,18 @@ class Ui_Dialog(object):
         self.label_2 = QtGui.QLabel(Dialog)
         self.label_2.setGeometry(QtCore.QRect(220, 50, 71, 19))
         self.label_2.setObjectName(_fromUtf8("label_2"))
+        self.label_3 = QtGui.QLabel(Dialog)
+        self.label_3.setGeometry(QtCore.QRect(160, 80, 71, 19))
+        self.label_3.setObjectName(_fromUtf8("label_3"))
+        self.lineEdit_2 = QtGui.QLineEdit(Dialog)
+        self.lineEdit_2.setGeometry(QtCore.QRect(140, 110, 81, 31))
+        self.lineEdit_2.setObjectName(_fromUtf8("lineEdit_2"))
+        self.label_4 = QtGui.QLabel(Dialog)
+        self.label_4.setGeometry(QtCore.QRect(110, 120, 71, 19))
+        self.label_4.setObjectName(_fromUtf8("label_4"))
+        self.label_5 = QtGui.QLabel(Dialog)
+        self.label_5.setGeometry(QtCore.QRect(140, 160, 71, 19))
+        self.label_5.setObjectName(_fromUtf8("label_5"))
 
         self.retranslateUi(Dialog)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), Dialog.accept)
@@ -50,6 +62,9 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(_translate("Dialog", "Discount", None))
         self.label.setText(_translate("Dialog", "Discount:", None))
         self.label_2.setText(_translate("Dialog", "%", None))
+        self.label_3.setText(_translate("Dialog", "OR", None))
+        self.label_4.setText(_translate("Dialog", "-$:", None))
+        self.label_5.setText(_translate("Dialog", "TextLabel", None))
 
 
 if __name__ == "__main__":
