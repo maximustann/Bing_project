@@ -294,7 +294,7 @@ class Add_Dialog(QtGui.QDialog):
         return 0
 
     def clicked_bt_fullPayment(self):
-        text = self.ui.label_17.text()
+        text = self.ui.label_11.text()
         self.ui.lineEdit_8.setText(text)
         self.ui.lineEdit_9.setText("0")
     def clicked_bt_addLine(self):
@@ -337,6 +337,7 @@ class Add_Dialog(QtGui.QDialog):
         try:
             self.ui.label_16.setText(str("%.2f" % gst))
             self.ui.label_17.setText(str("%.2f" % total))
+            self.ui.label_11.setText(str("%.2f" % total))
         except RuntimeError:
             pass
         try:
@@ -394,6 +395,7 @@ class Add_Dialog(QtGui.QDialog):
             value = 0
             try:
                 self.ui.label_17.setText(str("%.2f" % total))
+                self.ui.label_11.setText(str("%.2f" % total))
             except RuntimeError:
                 pass
         return total
@@ -636,12 +638,13 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.textEdit_3.setPlainText("Check: %s \n\nFix/Repair:\
                 %s \n\nReplace: %s" %(checkText, fixText, replaceText))
     def clicked_bt_Discount(self):
-        Dialog = discount.Discount_Dialog()
+        beforeDiscount = self.ui.label_17.text()
+        Dialog = discount.Discount_Dialog(beforeDiscount)
         Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
         Dialog.show()
         result = Dialog.exec_()
         if result == 1:
-            flag, discount1 = Dialog.getDiscount()
+            flag, discount1, beforeDiscount = Dialog.getDiscount()
             flag = float(flag)
             discount1 = float(discount1)
             total = float(self.ui.label_17.text())
@@ -653,9 +656,11 @@ class Add_Dialog(QtGui.QDialog):
                 self.ui.label_11.setText(text)
             elif (flag == 2):
                 newTotal = total + discount1
-                percentage = str  ((1 - ((total - newTotal) / total)) * 100) + "%"
+                percentage = str("%.2f") % ((1 - ((total - newTotal) / total)) * 100) + "%"
                 text = str("%.2f") % newTotal + "(" + percentage + ")"
                 self.ui.label_11.setText(text)
+            elif (flag == 3):
+                self.ui.label_11.setText(beforeDiscount)
         else:
             return
     def clicked_bt_Paid(self):
