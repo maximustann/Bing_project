@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/bin/env python
 
 from PyQt4 import QtCore, QtGui
 from ui import Ui_Cash as ui_cash

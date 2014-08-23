@@ -10,7 +10,7 @@ class Discount_Dialog(QtGui.QDialog):
         self.ui.setupUi(self)
         self.ui.lineEdit.textChanged.connect(self.setDiscount)
         self.ui.lineEdit_2.textChanged.connect(self.setDiscount)
-        self.ui.pushButton.clicked.connect(self.clicked_bt_deleteDiscount)
+        self.ui.pushButton.clicked.connect(self.before_discount_accept)
         self.flag = 0
         self.ui.label_5.setText("")
         self.discount = 0
@@ -24,10 +24,10 @@ class Discount_Dialog(QtGui.QDialog):
                 self.flag = 2
         else:
             self.ui.label_5.setText("Please fill one and only one field")
-    def clicked_bt_deleteDiscount(self):
+    def before_discount_accept(self):
         self.flag = 3
+        super(Discount_Dialog, self).accept()
     def getDiscount(self):
-        print self.beforeDiscount
         return str(self.flag), str(self.discount), self.beforeDiscount
 if __name__ == "__main__":
     import sys
