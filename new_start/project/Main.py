@@ -1,4 +1,4 @@
-#!/user/bin/env python
+#!/bin/env python
 
 from PyQt4 import QtCore, QtGui
 
@@ -143,10 +143,10 @@ class Main_Dialog(QtGui.QDialog):
         return time.strftime("%Y-%m-%d", time.localtime(time.time()))
 
     def convert_month(self):
-        year = int(time.strftime("%Y", time.localtime(time.time())))
-        month = int(time.strftime("%m", time.localtime(time.time())))
-        day = 1
-        return str(year) + '-' + str(month) + '-' + str(day)
+        year = time.strftime("%Y", time.localtime(time.time()))
+        month = time.strftime("%m", time.localtime(time.time()))
+        day = '01'
+        return year + '-' + month + '-' + day
 
     def print_table(self, date):
         self.delete_empty_row()

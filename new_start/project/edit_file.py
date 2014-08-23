@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/bin/env python
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from PyQt4.QtWebKit import *
