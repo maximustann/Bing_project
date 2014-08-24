@@ -27,6 +27,7 @@ class Main_Dialog(QtGui.QDialog):
         self.print_main_table(self.convert_week(self.getday()))
         self.print_customer_table()
         self.print_unpaid_table()
+        self.ui.tableWidget.setColumnWidth(0, 100)
     def init_data(self):
         self.customer_name = 0
         self.tel = 1

@@ -52,6 +52,7 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.tableWidget.itemChanged.connect(self.changed_table)
         self.ui.comboBox_3.currentIndexChanged.connect(self.wof_comboBox)
         self.ui.tableWidget.setColumnWidth(1, 300)
+        #self.load_style()
         if package != None:
             self.initialize(package)
 

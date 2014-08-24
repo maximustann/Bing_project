@@ -26,6 +26,116 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.resize(769, 723)
+        Dialog.setStyleSheet(_fromUtf8("#Dialog {\n"
+"   background-color: beige;\n"
+"}\n"
+"\n"
+"/* Nice Windows-XP-style password character. */\n"
+"QLineEdit[echoMode=\"2\"] {\n"
+"    lineedit-password-character: 9679;\n"
+"}\n"
+"\n"
+"/* We provide a min-width and min-height for push buttons\n"
+"   so that they look elegant regardless of the width of the text. */\n"
+"QPushButton {\n"
+"    background-color: palegoldenrod;\n"
+"    border-width: 2px;\n"
+"    border-color: darkkhaki;\n"
+"    border-style: solid;\n"
+"    border-radius: 5;\n"
+"    padding: 3px;\n"
+"    min-width: 9ex;\n"
+"    min-height: 2.5ex;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"   background-color: khaki;\n"
+"}\n"
+"\n"
+"/* Increase the padding, so the text is shifted when the button is\n"
+"   pressed. */\n"
+"QPushButton:pressed {\n"
+"    padding-left: 5px;\n"
+"    padding-top: 5px;\n"
+"    background-color: #d0d67c;\n"
+"}\n"
+"\n"
+"QLabel, QAbstractButton {\n"
+"    font: bold;\n"
+"}\n"
+"\n"
+"/* Mark mandatory fields with a brownish color. */\n"
+".mandatory {\n"
+"    color: brown;\n"
+"}\n"
+"\n"
+"/* Bold text on status bar looks awful. */\n"
+"QStatusBar QLabel {\n"
+"   font: normal;\n"
+"}\n"
+"\n"
+"QStatusBar::item {\n"
+"    border-width: 1;\n"
+"    border-color: darkkhaki;\n"
+"    border-style: solid;\n"
+"    border-radius: 2;\n"
+"}\n"
+"\n"
+"QComboBox, QLineEdit, QSpinBox, QTextEdit, QListView {\n"
+"    background-color: cornsilk;\n"
+"    selection-color: #0a214c; \n"
+"    selection-background-color: #C19A6B;\n"
+"}\n"
+"\n"
+"QListView {\n"
+"    show-decoration-selected: 1;\n"
+"}\n"
+"\n"
+"QListView::item:hover {\n"
+"    background-color: wheat;\n"
+"}\n"
+"\n"
+"/* We reserve 1 pixel space in padding. When we get the focus,\n"
+"   we kill the padding and enlarge the border. This makes the items\n"
+"   glow. */\n"
+"QLineEdit, QFrame {\n"
+"    border-width: 2px;\n"
+"    padding: 1px;\n"
+"    border-style: solid;\n"
+"    border-color: darkkhaki;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"\n"
+"/* As mentioned above, eliminate the padding and increase the border. */\n"
+"QLineEdit:focus, QFrame:focus {\n"
+"    border-width: 3px;\n"
+"    padding: 0px;\n"
+"}\n"
+"\n"
+"/* A QLabel is a QFrame ... */\n"
+"QLabel {\n"
+"    border: none;\n"
+"    padding: 0;\n"
+"    background: none;\n"
+"}\n"
+"\n"
+"/* A QToolTip is a QLabel ... */\n"
+"QToolTip {\n"
+"    border: 2px solid darkkhaki;\n"
+"    padding: 5px;\n"
+"    border-radius: 3px;\n"
+"    opacity: 200;\n"
+"}\n"
+"\n"
+"/* Nice to have the background color change when hovered. */\n"
+"QRadioButton:hover, QCheckBox:hover {\n"
+"    background-color: wheat;\n"
+"}\n"
+"\n"
+"/* Force the dialog\'s buttons to follow the Windows guidelines. */\n"
+"QDialogButtonBox {\n"
+"    button-layout: 0;\n"
+"}"))
         self.gridLayout = QtGui.QGridLayout(Dialog)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.horizontalLayout = QtGui.QHBoxLayout()
@@ -45,7 +155,111 @@ class Ui_Dialog(object):
         self.gridLayout_6 = QtGui.QGridLayout(self.tab)
         self.gridLayout_6.setObjectName(_fromUtf8("gridLayout_6"))
         self.tableWidget = QtGui.QTableWidget(self.tab)
+        self.tableWidget.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
+        self.tableWidget.setStyleSheet(_fromUtf8("#Dialog {\n"
+"   background-color: beige;\n"
+"}\n"
+"\n"
+"/* Nice Windows-XP-style password character. */\n"
+"QLineEdit[echoMode=\"2\"] {\n"
+"    lineedit-password-character: 9679;\n"
+"}\n"
+"\n"
+"/* We provide a min-width and min-height for push buttons\n"
+"   so that they look elegant regardless of the width of the text. */\n"
+"QPushButton {\n"
+"    background-color: palegoldenrod;\n"
+"    border-width: 2px;\n"
+"    border-color: darkkhaki;\n"
+"    border-style: solid;\n"
+"    border-radius: 5;\n"
+"    padding: 3px;\n"
+"    min-width: 9ex;\n"
+"    min-height: 2.5ex;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"   background-color: khaki;\n"
+"}\n"
+"\n"
+"/* Increase the padding, so the text is shifted when the button is\n"
+"   pressed. */\n"
+"QPushButton:pressed {\n"
+"    padding-left: 5px;\n"
+"    padding-top: 5px;\n"
+"    background-color: #d0d67c;\n"
+"}\n"
+"\n"
+"QLabel, QAbstractButton {\n"
+"    font: bold;\n"
+"}\n"
+"\n"
+"/* Mark mandatory fields with a brownish color. */\n"
+".mandatory {\n"
+"    color: brown;\n"
+"}\n"
+"\n"
+"/* Bold text on status bar looks awful. */\n"
+"QStatusBar QLabel {\n"
+"   font: normal;\n"
+"}\n"
+"\n"
+"\n"
+"QComboBox, QLineEdit, QSpinBox, QTextEdit, QListView {\n"
+"    background-color: cornsilk;\n"
+"    selection-color: #0a214c; \n"
+"    selection-background-color: #C19A6B;\n"
+"}\n"
+"\n"
+"QListView {\n"
+"    show-decoration-selected: 1;\n"
+"}\n"
+"\n"
+"QListView::item:hover {\n"
+"    background-color: wheat;\n"
+"}\n"
+"\n"
+"/* We reserve 1 pixel space in padding. When we get the focus,\n"
+"   we kill the padding and enlarge the border. This makes the items\n"
+"   glow. */\n"
+"\n"
+"\n"
+"/* As mentioned above, eliminate the padding and increase the border. */\n"
+"QLineEdit:focus, QFrame:focus {\n"
+"    border-width: 3px;\n"
+"    padding: 0px;\n"
+"}\n"
+"\n"
+"/* A QLabel is a QFrame ... */\n"
+"QLabel {\n"
+"    border: none;\n"
+"    padding: 0;\n"
+"    background: none;\n"
+"}\n"
+"\n"
+"/* A QToolTip is a QLabel ... */\n"
+"QToolTip {\n"
+"    border: 2px solid darkkhaki;\n"
+"    padding: 5px;\n"
+"    border-radius: 3px;\n"
+"    opacity: 200;\n"
+"}\n"
+"\n"
+"/* Nice to have the background color change when hovered. */\n"
+"QRadioButton:hover, QCheckBox:hover {\n"
+"    background-color: wheat;\n"
+"}\n"
+"\n"
+"/* Force the dialog\'s buttons to follow the Windows guidelines. */\n"
+"QDialogButtonBox {\n"
+"    button-layout: 0;\n"
+"}"))
+        self.tableWidget.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.tableWidget.setFrameShadow(QtGui.QFrame.Sunken)
+        self.tableWidget.setLineWidth(1)
         self.tableWidget.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+        self.tableWidget.setTabKeyNavigation(True)
+        self.tableWidget.setProperty("showDropIndicator", True)
         self.tableWidget.setShowGrid(True)
         self.tableWidget.setObjectName(_fromUtf8("tableWidget"))
         self.tableWidget.setColumnCount(7)
@@ -64,6 +278,9 @@ class Ui_Dialog(object):
         self.tableWidget.setHorizontalHeaderItem(5, item)
         item = QtGui.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(6, item)
+        self.tableWidget.horizontalHeader().setVisible(False)
+        self.tableWidget.horizontalHeader().setHighlightSections(False)
+        self.tableWidget.verticalHeader().setVisible(False)
         self.gridLayout_6.addWidget(self.tableWidget, 1, 0, 1, 3)
         self.gridLayout_2 = QtGui.QGridLayout()
         self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
@@ -98,6 +315,7 @@ class Ui_Dialog(object):
         item = QtGui.QTableWidgetItem()
         self.tableWidget_2.setHorizontalHeaderItem(2, item)
         self.tableWidget_2.horizontalHeader().setStretchLastSection(True)
+        self.tableWidget_2.verticalHeader().setVisible(False)
         self.gridLayout_3.addWidget(self.tableWidget_2, 0, 0, 1, 1)
         self.tabWidget.addTab(self.tab_4, _fromUtf8(""))
         self.tab_3 = QtGui.QWidget()
@@ -113,6 +331,7 @@ class Ui_Dialog(object):
         item = QtGui.QTableWidgetItem()
         self.tableWidget_3.setHorizontalHeaderItem(1, item)
         self.tableWidget_3.horizontalHeader().setStretchLastSection(True)
+        self.tableWidget_3.verticalHeader().setVisible(False)
         self.gridLayout_4.addWidget(self.tableWidget_3, 0, 0, 1, 1)
         self.tabWidget.addTab(self.tab_3, _fromUtf8(""))
         self.tab_2 = QtGui.QWidget()
@@ -133,6 +352,7 @@ class Ui_Dialog(object):
         item = QtGui.QTableWidgetItem()
         self.tableWidget_4.setHorizontalHeaderItem(3, item)
         self.tableWidget_4.horizontalHeader().setStretchLastSection(True)
+        self.tableWidget_4.verticalHeader().setVisible(False)
         self.gridLayout_5.addWidget(self.tableWidget_4, 0, 0, 1, 1)
         self.tabWidget.addTab(self.tab_2, _fromUtf8(""))
         self.gridLayout.addWidget(self.tabWidget, 1, 0, 1, 1)

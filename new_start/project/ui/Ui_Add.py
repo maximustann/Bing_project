@@ -26,6 +26,116 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.resize(996, 890)
+        Dialog.setStyleSheet(_fromUtf8("#Dialog {\n"
+"   background-color: beige;\n"
+"}\n"
+"\n"
+"/* Nice Windows-XP-style password character. */\n"
+"QLineEdit[echoMode=\"2\"] {\n"
+"    lineedit-password-character: 9679;\n"
+"}\n"
+"\n"
+"/* We provide a min-width and min-height for push buttons\n"
+"   so that they look elegant regardless of the width of the text. */\n"
+"QPushButton {\n"
+"    background-color: palegoldenrod;\n"
+"    border-width: 2px;\n"
+"    border-color: darkkhaki;\n"
+"    border-style: solid;\n"
+"    border-radius: 5;\n"
+"    padding: 3px;\n"
+"    min-width: 9ex;\n"
+"    min-height: 2.5ex;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"   background-color: khaki;\n"
+"}\n"
+"\n"
+"/* Increase the padding, so the text is shifted when the button is\n"
+"   pressed. */\n"
+"QPushButton:pressed {\n"
+"    padding-left: 5px;\n"
+"    padding-top: 5px;\n"
+"    background-color: #d0d67c;\n"
+"}\n"
+"\n"
+"QLabel, QAbstractButton {\n"
+"    font: bold;\n"
+"}\n"
+"\n"
+"/* Mark mandatory fields with a brownish color. */\n"
+".mandatory {\n"
+"    color: brown;\n"
+"}\n"
+"\n"
+"/* Bold text on status bar looks awful. */\n"
+"QStatusBar QLabel {\n"
+"   font: normal;\n"
+"}\n"
+"\n"
+"QStatusBar::item {\n"
+"    border-width: 1;\n"
+"    border-color: darkkhaki;\n"
+"    border-style: solid;\n"
+"    border-radius: 2;\n"
+"}\n"
+"\n"
+"QComboBox, QLineEdit, QSpinBox, QTextEdit, QListView {\n"
+"    background-color: cornsilk;\n"
+"    selection-color: #0a214c; \n"
+"    selection-background-color: #C19A6B;\n"
+"}\n"
+"\n"
+"QListView {\n"
+"    show-decoration-selected: 1;\n"
+"}\n"
+"\n"
+"QListView::item:hover {\n"
+"    background-color: wheat;\n"
+"}\n"
+"\n"
+"/* We reserve 1 pixel space in padding. When we get the focus,\n"
+"   we kill the padding and enlarge the border. This makes the items\n"
+"   glow. */\n"
+"QLineEdit, QFrame {\n"
+"    border-width: 2px;\n"
+"    padding: 1px;\n"
+"    border-style: solid;\n"
+"    border-color: darkkhaki;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"\n"
+"/* As mentioned above, eliminate the padding and increase the border. */\n"
+"QLineEdit:focus, QFrame:focus {\n"
+"    border-width: 3px;\n"
+"    padding: 0px;\n"
+"}\n"
+"\n"
+"/* A QLabel is a QFrame ... */\n"
+"QLabel {\n"
+"    border: none;\n"
+"    padding: 0;\n"
+"    background: none;\n"
+"}\n"
+"\n"
+"/* A QToolTip is a QLabel ... */\n"
+"QToolTip {\n"
+"    border: 2px solid darkkhaki;\n"
+"    padding: 5px;\n"
+"    border-radius: 3px;\n"
+"    opacity: 200;\n"
+"}\n"
+"\n"
+"/* Nice to have the background color change when hovered. */\n"
+"QRadioButton:hover, QCheckBox:hover {\n"
+"    background-color: wheat;\n"
+"}\n"
+"\n"
+"/* Force the dialog\'s buttons to follow the Windows guidelines. */\n"
+"QDialogButtonBox {\n"
+"    button-layout: 0;\n"
+"}"))
         self.layoutWidget = QtGui.QWidget(Dialog)
         self.layoutWidget.setGeometry(QtCore.QRect(500, 590, 411, 261))
         self.layoutWidget.setObjectName(_fromUtf8("layoutWidget"))
@@ -38,20 +148,25 @@ class Ui_Dialog(object):
         self.verticalLayout_8.setObjectName(_fromUtf8("verticalLayout_8"))
         self.label_14 = QtGui.QLabel(self.layoutWidget)
         font = QtGui.QFont()
-        font.setFamily(_fromUtf8("Courier 10 Pitch"))
-        font.setPointSize(12)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.label_14.setFont(font)
         self.label_14.setObjectName(_fromUtf8("label_14"))
         self.verticalLayout_8.addWidget(self.label_14)
         self.label_18 = QtGui.QLabel(self.layoutWidget)
         font = QtGui.QFont()
-        font.setFamily(_fromUtf8("Courier 10 Pitch"))
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.label_18.setFont(font)
         self.label_18.setObjectName(_fromUtf8("label_18"))
         self.verticalLayout_8.addWidget(self.label_18)
         self.label_19 = QtGui.QLabel(self.layoutWidget)
         font = QtGui.QFont()
-        font.setFamily(_fromUtf8("Courier 10 Pitch"))
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.label_19.setFont(font)
         self.label_19.setObjectName(_fromUtf8("label_19"))
         self.verticalLayout_8.addWidget(self.label_19)
@@ -63,19 +178,25 @@ class Ui_Dialog(object):
         self.verticalLayout_9.setObjectName(_fromUtf8("verticalLayout_9"))
         self.label_15 = QtGui.QLabel(self.layoutWidget)
         font = QtGui.QFont()
-        font.setFamily(_fromUtf8("Courier 10 Pitch"))
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.label_15.setFont(font)
         self.label_15.setObjectName(_fromUtf8("label_15"))
         self.verticalLayout_9.addWidget(self.label_15)
         self.label_16 = QtGui.QLabel(self.layoutWidget)
         font = QtGui.QFont()
-        font.setFamily(_fromUtf8("Courier 10 Pitch"))
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.label_16.setFont(font)
         self.label_16.setObjectName(_fromUtf8("label_16"))
         self.verticalLayout_9.addWidget(self.label_16)
         self.label_17 = QtGui.QLabel(self.layoutWidget)
         font = QtGui.QFont()
-        font.setFamily(_fromUtf8("Courier 10 Pitch"))
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.label_17.setFont(font)
         self.label_17.setObjectName(_fromUtf8("label_17"))
         self.verticalLayout_9.addWidget(self.label_17)
@@ -124,7 +245,7 @@ class Ui_Dialog(object):
         self.horizontalLayout_10.addLayout(self.verticalLayout_12)
         self.verticalLayout_14.addLayout(self.horizontalLayout_10)
         self.layoutWidget_2 = QtGui.QWidget(Dialog)
-        self.layoutWidget_2.setGeometry(QtCore.QRect(30, 10, 337, 31))
+        self.layoutWidget_2.setGeometry(QtCore.QRect(30, 10, 337, 35))
         self.layoutWidget_2.setObjectName(_fromUtf8("layoutWidget_2"))
         self.horizontalLayout_4 = QtGui.QHBoxLayout(self.layoutWidget_2)
         self.horizontalLayout_4.setMargin(0)
@@ -155,26 +276,25 @@ class Ui_Dialog(object):
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
         self.label_2 = QtGui.QLabel(self.layoutWidget_3)
         font = QtGui.QFont()
-        font.setFamily(_fromUtf8("Courier 10 Pitch"))
-        font.setPointSize(14)
-        font.setBold(False)
-        font.setWeight(50)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.label_2.setFont(font)
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.verticalLayout_2.addWidget(self.label_2)
         self.label_3 = QtGui.QLabel(self.layoutWidget_3)
         font = QtGui.QFont()
-        font.setFamily(_fromUtf8("Courier 10 Pitch"))
-        font.setPointSize(14)
-        font.setBold(False)
-        font.setWeight(50)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.label_3.setFont(font)
         self.label_3.setObjectName(_fromUtf8("label_3"))
         self.verticalLayout_2.addWidget(self.label_3)
         self.label_4 = QtGui.QLabel(self.layoutWidget_3)
         font = QtGui.QFont()
-        font.setFamily(_fromUtf8("Courier 10 Pitch"))
-        font.setPointSize(14)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.label_4.setFont(font)
         self.label_4.setObjectName(_fromUtf8("label_4"))
         self.verticalLayout_2.addWidget(self.label_4)
@@ -224,15 +344,17 @@ class Ui_Dialog(object):
         self.pushButton_9 = QtGui.QPushButton(Dialog)
         self.pushButton_9.setGeometry(QtCore.QRect(810, 70, 101, 41))
         font = QtGui.QFont()
-        font.setFamily(_fromUtf8("FreeSans"))
-        font.setPointSize(14)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.pushButton_9.setFont(font)
         self.pushButton_9.setObjectName(_fromUtf8("pushButton_9"))
         self.pushButton_7 = QtGui.QPushButton(Dialog)
-        self.pushButton_7.setGeometry(QtCore.QRect(720, 70, 81, 41))
+        self.pushButton_7.setGeometry(QtCore.QRect(720, 70, 91, 41))
         font = QtGui.QFont()
-        font.setFamily(_fromUtf8("FreeSans"))
-        font.setPointSize(14)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.pushButton_7.setFont(font)
         self.pushButton_7.setObjectName(_fromUtf8("pushButton_7"))
         self.comboBox_5 = QtGui.QComboBox(Dialog)
@@ -288,7 +410,7 @@ class Ui_Dialog(object):
         self.comboBox_3.addItem(_fromUtf8(""))
         self.comboBox_3.addItem(_fromUtf8(""))
         self.layoutWidget_6 = QtGui.QWidget(Dialog)
-        self.layoutWidget_6.setGeometry(QtCore.QRect(30, 330, 228, 31))
+        self.layoutWidget_6.setGeometry(QtCore.QRect(30, 330, 228, 35))
         self.layoutWidget_6.setObjectName(_fromUtf8("layoutWidget_6"))
         self.horizontalLayout_6 = QtGui.QHBoxLayout(self.layoutWidget_6)
         self.horizontalLayout_6.setMargin(0)
@@ -302,8 +424,9 @@ class Ui_Dialog(object):
         self.pushButton_10 = QtGui.QPushButton(Dialog)
         self.pushButton_10.setGeometry(QtCore.QRect(810, 10, 101, 41))
         font = QtGui.QFont()
-        font.setFamily(_fromUtf8("FreeSans"))
-        font.setPointSize(14)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.pushButton_10.setFont(font)
         self.pushButton_10.setObjectName(_fromUtf8("pushButton_10"))
         self.tabWidget = QtGui.QTabWidget(Dialog)
@@ -341,8 +464,9 @@ class Ui_Dialog(object):
         self.gridLayout_4.setObjectName(_fromUtf8("gridLayout_4"))
         self.label_8 = QtGui.QLabel(self.layoutWidget1)
         font = QtGui.QFont()
-        font.setFamily(_fromUtf8("Courier 10 Pitch"))
-        font.setPointSize(14)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.label_8.setFont(font)
         self.label_8.setObjectName(_fromUtf8("label_8"))
         self.gridLayout_4.addWidget(self.label_8, 1, 0, 1, 1)
@@ -362,8 +486,9 @@ class Ui_Dialog(object):
         self.gridLayout_4.addWidget(self.comboBox_2, 1, 1, 1, 1)
         self.label_9 = QtGui.QLabel(self.layoutWidget1)
         font = QtGui.QFont()
-        font.setFamily(_fromUtf8("Courier 10 Pitch"))
-        font.setPointSize(14)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.label_9.setFont(font)
         self.label_9.setObjectName(_fromUtf8("label_9"))
         self.gridLayout_4.addWidget(self.label_9, 2, 0, 1, 1)
@@ -372,15 +497,17 @@ class Ui_Dialog(object):
         self.gridLayout_4.addWidget(self.pushButton, 2, 2, 1, 1)
         self.label_10 = QtGui.QLabel(self.layoutWidget1)
         font = QtGui.QFont()
-        font.setFamily(_fromUtf8("Courier 10 Pitch"))
-        font.setPointSize(14)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.label_10.setFont(font)
         self.label_10.setObjectName(_fromUtf8("label_10"))
         self.gridLayout_4.addWidget(self.label_10, 3, 0, 1, 1)
         self.label_7 = QtGui.QLabel(self.layoutWidget1)
         font = QtGui.QFont()
-        font.setFamily(_fromUtf8("Courier 10 Pitch"))
-        font.setPointSize(14)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.label_7.setFont(font)
         self.label_7.setObjectName(_fromUtf8("label_7"))
         self.gridLayout_4.addWidget(self.label_7, 0, 0, 1, 1)
