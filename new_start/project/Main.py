@@ -25,6 +25,7 @@ class Main_Dialog(QtGui.QDialog):
         self.ui.comboBox.currentIndexChanged.connect(self.clicked_bt_filter)
         self.ui.tableWidget.cellDoubleClicked.connect(self.clicked_table)
         self.print_table(self.convert_week(self.getday()))
+        self.print_paid_status_tables()
     def init_data(self):
         self.invoice_no = 0
         self.customer = 1
@@ -185,6 +186,38 @@ class Main_Dialog(QtGui.QDialog):
             self.ui.tableWidget.setItem(0, self.amount_due, item)
             item = QtGui.QTableWidgetItem(date_in)
             self.ui.tableWidget.setItem(0, self.date, item)
+    
+    def print_paid_status_tables(self):
+        while True:
+            row = self.cur.fetchone()
+            if row == None:
+                break
+            if amount_due == 0:
+                paid = True
+            else:
+                paid = False
+            if paid:
+                name = row[0]
+                invoice_no = row[1]
+                self.ui.tableWidget_3.insertRow(0)
+                item = QtGui.QTableWidgetItem(name)
+                self.ui.tableWidget_3.setItem(0, self.customer, item)
+                item = QtGui.QTableWidgetItem(str(invoice_no))
+                self.ui.tableWidget_3.setItem(0, self.invoice_no, item)
+            if not paid:
+                name = row[0]
+                amount_paid = row[1]
+                amount_due = row[2]
+                invoice_no = row[3]
+                self.ui.tableWidget_4.insertRow(0)
+                item = QtGui.QTableWidgetItem(name)
+                self.ui.tableWidget_4.setItem(0, self.customer, item)
+                item = QtGui.QTableWidgetItem(str(amount_paid))
+                self.ui.tableWidget_4.setItem(0, self.amount_paid, item)
+                item = QtGui.QTableWidgetItem(str(amount_due))
+                self.ui.tableWidget_4.setItem(0, self.amount_due, item)
+                item = QtGui.QTableWidgetItem(str(invoice_no))
+                self.ui.tableWidget_4.setItem(0, self.invoice_no, item)
 
     def delete_empty_row(self):
         self.ui.tableWidget.clearContents()
