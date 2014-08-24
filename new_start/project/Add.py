@@ -47,7 +47,7 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.pushButton_12.clicked.connect(self.clicked_bt_addLine)
         self.ui.pushButton_13.clicked.connect(self.clicked_bt_delLine)
         self.ui.pushButton_3.clicked.connect(self.clicked_bt_preview)
-        self.ui.lineEdit_8.editingFinished.connect(self.autoChangeText)
+        self.ui.lineEdit_8.textChanged.connect(self.autoChangeText)
 
         self.ui.tableWidget.itemChanged.connect(self.changed_table)
         self.ui.comboBox_3.currentIndexChanged.connect(self.wof_comboBox)
@@ -396,6 +396,7 @@ class Add_Dialog(QtGui.QDialog):
             value = 0
             try:
                 self.ui.label_17.setText(str("%.2f" % total))
+                self.ui.lineEdit_8.setText("0.00")
                 self.ui.label_11.setText(str("%.2f" % total))
             except RuntimeError:
                 pass

@@ -38,6 +38,7 @@ CREATE TABLE invoice
 	name		varchar(80),
 	rego		varchar(80),
 	money_in	real,
+	amount_due	real,
 	primary key (invoice_no),
 	foreign key (tel) references customer(tel)
 );
