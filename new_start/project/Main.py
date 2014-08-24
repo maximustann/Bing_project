@@ -24,9 +24,14 @@ class Main_Dialog(QtGui.QDialog):
         self.cur = self.conn.cursor()
         self.ui.comboBox.currentIndexChanged.connect(self.clicked_bt_filter)
         self.ui.tableWidget.cellDoubleClicked.connect(self.clicked_table)
-        self.print_table(self.convert_week(self.getday()))
         self.print_paid_status_tables()
+        self.print_main_table(self.convert_week(self.getday()))
+        self.print_customer_table()
+        self.print_unpaid_table()
     def init_data(self):
+        self.customer_name = 0
+        self.tel = 1
+        self.address = 2
         self.invoice_no = 0
         self.customer = 1
         self.model = 2
@@ -62,7 +67,7 @@ class Main_Dialog(QtGui.QDialog):
             self.clicked_bt_filter()
     def return_items(self, invoice_no):
         items = []
-        self.cur.execute('select * from items where invoice_no="%s"' % invoice_no)
+        self.cur.execute('SELECT * FROM items WHERE invoice_no="%s"' % invoice_no)
         while True:
             row = self.cur.fetchone()
             if row == None:
@@ -71,7 +76,7 @@ class Main_Dialog(QtGui.QDialog):
         return items
     def return_invoice(self, invoice_no):
         items = []
-        self.cur.execute('select * from invoice where invoice_no="%s"' % invoice_no)
+        self.cur.execute('SELECT * FROM invoice WHERE invoice_no="%s"' % invoice_no)
         while True:
             row = self.cur.fetchone()
             if row == None:
@@ -84,18 +89,18 @@ class Main_Dialog(QtGui.QDialog):
         #current day
         if self.ui.comboBox.currentIndex() == 1:
             date = self.current_day()
-            self.print_table(date)
+            self.print_main_table(date)
         #current month
         elif self.ui.comboBox.currentIndex() == 2:
             date = self.convert_month()
-            self.print_table(date)
+            self.print_main_table(date)
         #all record
         elif self.ui.comboBox.currentIndex() == 3:
-            self.print_table(0)
+            self.print_main_table(0)
         #current week
         elif self.ui.comboBox.currentIndex() == 0:
             date = self.convert_week(self.getday())
-            self.print_table(date)
+            self.print_main_table(date)
 
     def clicked_bt_Add(self):
         Dialog = add.Add_Dialog(None)
@@ -149,12 +154,55 @@ class Main_Dialog(QtGui.QDialog):
         day = '01'
         return year + '-' + month + '-' + day
 
-    def print_table(self, date):
+    def print_unpaid_table(self):
+        self.cur.execute("SELECT name, amount_paid, amount_due, invoice_no FROM invoice WHERE\
+                amount_due != '0.0'")
+        while True:
+            row  = self.cur.fetchone()
+            if row == None:
+                break
+            name = row[0]
+            amount_paid = row[1]
+            amount_due = row[2]
+            invoice_no = row[3]
+            self.ui.tableWidget_4.insertRow(0)
+            item = QtGui.QTableWidgetItem(name)
+            self.ui.tableWidget_4.setItem(0, self.customer_name, item)
+
+            item = QtGui.QTableWidgetItem(str(amount_paid))
+            #unpaid table is different from main table
+            self.ui.tableWidget_4.setItem(0, self.amount_paid - 3, item)
+
+            item = QtGui.QTableWidgetItem(str(amount_due))
+            #unpaid table is different from main table
+            self.ui.tableWidget_4.setItem(0, self.amount_due - 3, item)
+
+            item = QtGui.QTableWidgetItem(str(invoice_no))
+            #unpaid table is different from main table
+            self.ui.tableWidget_4.setItem(0, self.invoice_no + 3, item)
+    def print_customer_table(self):
+        self.cur.execute("SELECT name, tel, Address FROM customer")
+        while True:
+            row = self.cur.fetchone()
+            if row == None:
+                break
+            name = row[0]
+            tel = row[1]
+            addr = row[2]
+            self.ui.tableWidget_2.insertRow(0)
+            item = QtGui.QTableWidgetItem(name)
+            self.ui.tableWidget_2.setItem(0, self.customer_name, item)
+            item = QtGui.QTableWidgetItem(tel)
+            self.ui.tableWidget_2.setItem(0, self.tel, item)
+            item = QtGui.QTableWidgetItem(addr)
+            self.ui.tableWidget_2.setItem(0, self.address, item)
+
+    def print_main_table(self, date):
         self.delete_empty_row()
         if date == 0:
-            self.cur.execute("select * from invoice")
+            self.cur.execute("SELECT * FROM invoice")
         else:
-            self.cur.execute("select * from invoice where date_in >= '%s'" % date)
+            self.cur.execute("SELECT * FROM  invoice WHERE date_in >= '%s'" % date)
         while True:
             row = self.cur.fetchone()
             if row == None:
@@ -186,7 +234,7 @@ class Main_Dialog(QtGui.QDialog):
             self.ui.tableWidget.setItem(0, self.amount_due, item)
             item = QtGui.QTableWidgetItem(date_in)
             self.ui.tableWidget.setItem(0, self.date, item)
-    
+
     def print_paid_status_tables(self):
         while True:
             row = self.cur.fetchone()

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Calender.ui'
 #
-#      by: PyQt4 UI code generator 4.10.4
+#      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
 
