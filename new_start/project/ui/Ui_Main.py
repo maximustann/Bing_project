@@ -105,6 +105,7 @@ class Ui_Dialog(object):
         self.gridLayout_4 = QtGui.QGridLayout(self.tab_3)
         self.gridLayout_4.setObjectName(_fromUtf8("gridLayout_4"))
         self.tableWidget_3 = QtGui.QTableWidget(self.tab_3)
+        self.tableWidget_3.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
         self.tableWidget_3.setObjectName(_fromUtf8("tableWidget_3"))
         self.tableWidget_3.setColumnCount(2)
         self.tableWidget_3.setRowCount(0)
@@ -138,7 +139,7 @@ class Ui_Dialog(object):
         self.gridLayout.addWidget(self.tabWidget, 1, 0, 1, 1)
 
         self.retranslateUi(Dialog)
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
