@@ -35,7 +35,7 @@ class Add_Dialog(QtGui.QDialog):
         self.init_invoice()
         self.ui.comboBox.currentIndexChanged.connect(self.changeModel)
         self.ui.comboBox_5.currentIndexChanged.connect(self.changeService)
-        self.ui.pushButton_10.clicked.connect(self.clicked_bt_save)
+        #self.ui.pushButton_10.clicked.connect(self.clicked_bt_save)
         self.ui.pushButton_2.clicked.connect(self.clicked_bt_print)
         self.ui.pushButton_7.clicked.connect(self.clicked_bt_Tyres)
         self.ui.pushButton_5.clicked.connect(self.clicked_bt_Calender)
@@ -52,7 +52,6 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.tableWidget.itemChanged.connect(self.changed_table)
         self.ui.comboBox_3.currentIndexChanged.connect(self.wof_comboBox)
         self.ui.tableWidget.setColumnWidth(1, 300)
-        #self.load_style()
         if package != None:
             self.initialize(package)
 
@@ -71,7 +70,7 @@ class Add_Dialog(QtGui.QDialog):
         self.unit = 4
         self.amount = 5
         self.gst_amount = 6
-        self.saved_flag = 0
+        #self.saved_flag = 0
 
     def initialize(self, package):
         self.ui.lineEdit_7.setText(package[0])      #invoice_no
@@ -127,15 +126,14 @@ class Add_Dialog(QtGui.QDialog):
                 self.ui.tableWidget.setItem(0, idx, it)
 
     def closeEvent(self, event):
-        if self.saved_flag == 0:
-            reply = QtGui.QMessageBox.question(self, 'Message', 
-                    'Do you want to save this page?', QtGui.QMessageBox.Yes,
-                    QtGui.QMessageBox.No)
-            if reply == QtGui.QMessageBox.Yes:
-                self.clicked_bt_save()
-                event.accept()
-            else:
-                event.accept()
+        reply = QtGui.QMessageBox.question(self, 'Message', 
+                'Do you want to save this page?', QtGui.QMessageBox.Yes,
+                QtGui.QMessageBox.No)
+        if reply == QtGui.QMessageBox.Yes:
+            self.clicked_bt_save()
+            event.accept()
+        else:
+            event.accept()
     def clicked_bt_print(self):
         invoice_no, date, name, tel,\
         addr, make, model, rego, odo,\
@@ -556,10 +554,10 @@ class Add_Dialog(QtGui.QDialog):
                         AND invoice_no='%s'" % (des, price, qty,\
                         unit, amount, amount_gst, no, invoice_no))
             self.conn.commit()
-        self.saved_flag = 1
+        #self.saved_flag = 1
 
-        self.ui.pushButton_10.setText("Saved")
-        self.ui.pushButton_10.setStyleSheet('QPushButton {color: green}')
+        #self.ui.pushButton_10.setText("Saved")
+        #self.ui.pushButton_10.setStyleSheet('QPushButton {color: green}')
     def gather_data(self):
         table = []
         name = self.ui.lineEdit.text()
