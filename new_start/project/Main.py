@@ -15,8 +15,8 @@ class Main_Dialog(QtGui.QDialog):
         super(Main_Dialog, self).__init__()
         self.ui = ui_main.Ui_Dialog()
         self.ui.setupUi(self)
-        self.ui.pushButton_2.clicked.connect(self.clicked_bt_Add)
-        self.ui.pushButton.clicked.connect(self.clicked_bt_Del)
+        self.ui.pushButton_2.clicked.connect(self.clicked_bt_Main_Add)
+        self.ui.pushButton.clicked.connect(self.clicked_bt_Main_Del)
         self.init_data()
         self.conn = None
         self.cur = None
@@ -29,6 +29,8 @@ class Main_Dialog(QtGui.QDialog):
         self.print_customer_table()
         self.print_unpaid_table()
         self.ui.tableWidget.setColumnWidth(0, 100)
+        self.ui.tabWidget.currentChanged.connect(self.clicked_change_tab)
+        self.ui.tabWidget.setCurrentIndex(self.main_tab)
     def init_data(self):
         self.customer_name = 0
         self.tel = 1
@@ -40,12 +42,49 @@ class Main_Dialog(QtGui.QDialog):
         self.amount_paid = 4
         self.amount_due = 5
         self.date = 6
+        self.main_tab = 0
+        self.customer_tab = 1
+        self.paid_tab = 2
+        self.unpaid_tab = 3
 
-    def clicked_bt_Del(self):
+    def clicked_change_tab(self):
+        index = self.ui.tabWidget.currentIndex()
+        self.ui.pushButton.clicked.disconnect()
+        self.ui.pushButton_2.clicked.disconnect()
+        if index == self.main_tab:
+            self.ui.pushButton.clicked.connect(self.clicked_bt_Main_Del)
+            self.ui.pushButton_2.clicked.connect(self.clicked_bt_Main_Add)
+        elif index == self.customer_tab:
+            self.ui.pushButton.clicked.connect(self.clicked_bt_Customer_Del)
+            self.ui.pushButton_2.clicked.connect(self.clicked_bt_Customer_Add)
+        elif index == self.paid_tab:
+            self.ui.pushButton.clicked.connect(self.clicked_bt_Paid_Del)
+            self.ui.pushButton_2.clicked.connect(self.clicked_bt_Paid_Add)
+        elif index == self.unpaid_tab:
+            self.ui.pushButton.clicked.connect(self.clicked_bt_Unpaid_Del)
+            self.ui.pushButton_2.clicked.connect(self.clicked_bt_Unpaid_Add)
+
+    def clicked_bt_Customer_Del(self):
+        print "Customer Delete"
+    def clicked_bt_Paid_Del(self):
+        print "Paid Delete"
+    def clicked_bt_Unpaid_Del(self):
+        print "Unpaid Delete"
+    def clicked_bt_Customer_Add(self):
+        print "Customer Add"
+    def clicked_bt_Paid_Add(self):
+        print "Paid Add"
+    def clicked_bt_Unpaid_Add(self):
+        print "UnPaid Add"
+
+    def clicked_bt_Main_Del(self):
         current_row = self.ui.tableWidget.currentRow()
         if current_row == -1:
             current_row = 0
-        invoice_no = self.ui.tableWidget.item(current_row, self.invoice_no).text()
+        invoice_no_item = self.ui.tableWidget.item(current_row, self.invoice_no)
+        if invoice_no_item == None:
+            return
+        invoice_no = invoice_no_item.text()
         self.cur.execute("DELETE FROM invoice WHERE invoice_no='%s'" % invoice_no)
         self.cur.execute("DELETE FROM items WHERE invoice_no='%s'" % invoice_no)
         self.conn.commit()
@@ -103,7 +142,7 @@ class Main_Dialog(QtGui.QDialog):
             date = self.convert_week(self.getday())
             self.print_main_table(date)
 
-    def clicked_bt_Add(self):
+    def clicked_bt_Main_Add(self):
         Dialog = add.Add_Dialog(None)
         Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
         Dialog.show()
