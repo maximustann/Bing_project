@@ -299,9 +299,17 @@ class Add_Dialog(QtGui.QDialog):
     def clicked_bt_addLine(self):
         self.ui.tableWidget.insertRow(0)
         self.add_no()
+
     def add_no(self):
         no = self.ui.tableWidget.rowCount()
-        item = QtGui.QTableWidgetItem(str(no))
+        print no
+        if no == 1:
+            item = QtGui.QTableWidgetItem(str(no))
+        else:
+            item_value = int(self.ui.tableWidget.item(1, 0).text()) + 1
+            item = QtGui.QTableWidgetItem(str(item_value))
+
+        item.setFlags(QtCore.Qt.ItemIsEnabled)
         self.ui.tableWidget.setItem(0, self.no, item)
 
 
