@@ -90,7 +90,7 @@ class Add_Dialog(QtGui.QDialog):
         addr = self.cur.fetchone()[0]
         if addr != None:
             self.ui.lineEdit_2.setText(addr)
-        
+
         #looking for oddometer and set back
         self.cur.execute("SELECT odo FROM vehicle WHERE tel='%s'" % tel)
         odo = self.cur.fetchone()[0]
@@ -293,7 +293,7 @@ class Add_Dialog(QtGui.QDialog):
         return 0
 
     def clicked_bt_fullPayment(self):
-        text = self.ui.label_11.text()
+        text = str(self.ui.label_11.text()).split("(")[0]
         self.ui.lineEdit_8.setText(text)
         self.ui.lineEdit_9.setText("0")
     def clicked_bt_addLine(self):
@@ -402,7 +402,11 @@ class Add_Dialog(QtGui.QDialog):
             value = 0
             try:
                 self.ui.label_17.setText(str("%.2f" % total))
-                self.ui.lineEdit_8.setText("0.00")
+                text = self.ui.lineEdit_8.text()
+                if text != "":
+                    self.ui.lineEdit_8.setText(text)
+                else:
+                    self.ui.lineEdit_8.setText("0.00")
                 self.ui.label_11.setText(str("%.2f" % total))
             except RuntimeError:
                 pass
@@ -708,7 +712,10 @@ class Add_Dialog(QtGui.QDialog):
             self.ui.comboBox_2.addItem(row[0])
 
     def autoChangeText(self):
-        amount_paid = float(self.ui.lineEdit_8.text())
+        if self.ui.lineEdit_8.text() == "":
+            amount_paid = 0.00
+        else:
+            amount_paid = float(self.ui.lineEdit_8.text())
         total = float(self.ui.label_17.text())
         amount_due = float (total) - float (amount_paid)
         self.ui.lineEdit_9.setText(str("%.2f") % amount_due)
