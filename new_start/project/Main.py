@@ -24,11 +24,8 @@ class Main_Dialog(QtGui.QDialog):
         self.cur = self.conn.cursor()
         self.ui.comboBox.currentIndexChanged.connect(self.clicked_bt_filter)
         self.ui.tableWidget.cellDoubleClicked.connect(self.clicked_table)
-        self.print_paid_table()
-        self.print_main_table(self.convert_week(self.getday()))
-        self.print_customer_table()
-        self.print_unpaid_table()
-        self.ui.tableWidget.setColumnWidth(0, 100)
+        self.print_all_table()
+        self.resize_table_column()
         self.ui.tabWidget.currentChanged.connect(self.clicked_change_tab)
         self.ui.tabWidget.setCurrentIndex(self.main_tab)
     def init_data(self):
@@ -47,6 +44,16 @@ class Main_Dialog(QtGui.QDialog):
         self.paid_tab = 2
         self.unpaid_tab = 3
 
+    def print_all_table(self):
+        self.print_main_table(self.convert_week(self.getday()))
+        self.print_paid_table()
+        self.print_customer_table()
+        self.print_unpaid_table()
+    def resize_table_column(self):
+        self.ui.tableWidget.setColumnWidth(0, 100)
+        self.ui.tableWidget_4.setColumnWidth(0, 200)
+        self.ui.tableWidget_4.setColumnWidth(1, 200)
+        self.ui.tableWidget_4.setColumnWidth(2, 200)
     def clicked_change_tab(self):
         index = self.ui.tabWidget.currentIndex()
         self.ui.pushButton.clicked.disconnect()

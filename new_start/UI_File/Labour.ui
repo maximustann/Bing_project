@@ -10,6 +10,12 @@
     <height>478</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>Droid Serif</family>
+    <pointsize>24</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Labour</string>
   </property>
@@ -79,6 +85,11 @@ QRadioButton{
      <height>32</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Droid Serif</family>
+    </font>
+   </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
@@ -95,6 +106,11 @@ QRadioButton{
      <height>19</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Droid Serif</family>
+    </font>
+   </property>
    <property name="text">
     <string>Check:</string>
    </property>
@@ -108,6 +124,11 @@ QRadioButton{
      <height>101</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Droid Serif</family>
+    </font>
+   </property>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
@@ -117,6 +138,11 @@ QRadioButton{
      <width>101</width>
      <height>19</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Droid Serif</family>
+    </font>
    </property>
    <property name="text">
     <string>Fix/Repair:</string>
@@ -131,6 +157,11 @@ QRadioButton{
      <height>101</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Droid Serif</family>
+    </font>
+   </property>
   </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
@@ -140,6 +171,11 @@ QRadioButton{
      <width>71</width>
      <height>19</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Droid Serif</family>
+    </font>
    </property>
    <property name="text">
     <string>Repalce:</string>
@@ -154,6 +190,11 @@ QRadioButton{
      <height>101</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Droid Serif</family>
+    </font>
+   </property>
   </widget>
   <widget class="QLabel" name="label_4">
    <property name="geometry">
@@ -163,6 +204,11 @@ QRadioButton{
      <width>71</width>
      <height>19</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Droid Serif</family>
+    </font>
    </property>
    <property name="text">
     <string>Hours:</string>
@@ -176,6 +222,11 @@ QRadioButton{
      <width>101</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Droid Serif</family>
+    </font>
    </property>
   </widget>
  </widget>

@@ -1,0 +1,54 @@
+#Dialog {
+   background-color: rgb(255, 255, 204);
+   color: #cccccc;
+}
+QComboBox {
+	background-color:rgb(153, 204, 255);
+}
+QPushButton {
+    background-color: rgb(34, 185, 255);
+    border-width: 2px;
+    border-color: rgb(117, 156, 195);
+    border-style: solid;
+    border-radius: 5;
+    padding: 3px;
+    min-width: 9ex;
+    min-height: 2.5ex;
+	alternate-background-color: rgb(220, 220, 220);
+}
+
+QPushButton:hover {
+   background-color: rgb(122, 163, 204);
+}
+QTreeView {
+   background-color: #666666;
+   color: #cccccc;
+   alternate-background-color: #333333;
+} 
+QListView {
+   background-color: #333333;
+   color: #cccccc;
+}
+QTextEdit {
+   color: rgb(0, 0, 0);
+}
+QScrollBar:horizontal {
+   height: 20px;
+}
+QScrollBar:vertical {
+   width: 20px;
+}
+QTabWidget::pane {
+   border-top: 2px solid #cccccc;
+}
+QLabel {
+   color: rgb(102, 102, 102); 
+}
+
+QCheckBox {
+   color: white; 
+}
+
+QRadioButton{
+   color:white;
+}

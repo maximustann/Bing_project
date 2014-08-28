@@ -10,6 +10,12 @@
     <height>295</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>Droid Serif</family>
+    <pointsize>24</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Discount</string>
   </property>
@@ -79,6 +85,11 @@ QRadioButton{
      <height>20</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Droid Serif</family>
+    </font>
+   </property>
    <property name="text">
     <string>OR</string>
    </property>
@@ -108,6 +119,11 @@ QRadioButton{
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QPushButton" name="pushButton">
+      <property name="font">
+       <font>
+        <family>Droid Serif</family>
+       </font>
+      </property>
       <property name="text">
        <string>Delete Discount</string>
       </property>
@@ -131,19 +147,30 @@ QRadioButton{
      <x>120</x>
      <y>100</y>
      <width>171</width>
-     <height>29</height>
+     <height>30</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <widget class="QLabel" name="label_4">
+      <property name="font">
+       <font>
+        <family>Droid Serif</family>
+       </font>
+      </property>
       <property name="text">
        <string>-$:</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit_2"/>
+     <widget class="QLineEdit" name="lineEdit_2">
+      <property name="font">
+       <font>
+        <family>Droid Serif</family>
+       </font>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -153,22 +180,38 @@ QRadioButton{
      <x>61</x>
      <y>41</y>
      <width>245</width>
-     <height>29</height>
+     <height>30</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <family>Droid Serif</family>
+       </font>
+      </property>
       <property name="text">
        <string>Discount:</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit"/>
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="font">
+       <font>
+        <family>Droid Serif</family>
+       </font>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_2">
+      <property name="font">
+       <font>
+        <family>Droid Serif</family>
+       </font>
+      </property>
       <property name="text">
        <string>%</string>
       </property>
