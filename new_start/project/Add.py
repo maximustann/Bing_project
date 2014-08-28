@@ -25,6 +25,8 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.label_15.setText("0")
         self.ui.label_16.setText("0")
         self.ui.label_17.setText("0")
+        self.ui.lineEdit_8.setText("0.00")
+        self.ui.lineEdit_9.setText("0.00")
         self.init_data()
         self.conn = None
         self.cur = None

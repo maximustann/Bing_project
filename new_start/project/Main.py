@@ -209,11 +209,11 @@ class Main_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem(name)
             self.ui.tableWidget_4.setItem(0, self.customer_name, item)
 
-            item = QtGui.QTableWidgetItem(str(amount_paid))
+            item = QtGui.QTableWidgetItem(str ("%.2f") % amount_paid)
             #unpaid table is different from main table
             self.ui.tableWidget_4.setItem(0, self.amount_paid - 3, item)
 
-            item = QtGui.QTableWidgetItem(str(amount_due))
+            item = QtGui.QTableWidgetItem(str ("%.2f") % amount_due)
             #unpaid table is different from main table
             self.ui.tableWidget_4.setItem(0, self.amount_due - 3, item)
 
@@ -267,10 +267,10 @@ class Main_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem(model)
             self.ui.tableWidget.setItem(0, self.model, item)
             item = QtGui.QTableWidgetItem(rego)
-            self.ui.tableWidget.setItem(0, self.rego, item)
-            item = QtGui.QTableWidgetItem(str(amount_paid))
+            self.ui.tableWidget.setItem(0, self.rego, item) 
+            item = QtGui.QTableWidgetItem(str("%.2f") % amount_paid)
             self.ui.tableWidget.setItem(0, self.amount_paid, item)
-            item = QtGui.QTableWidgetItem(str(amount_due))
+            item = QtGui.QTableWidgetItem(str("%.2f") % amount_due)
             self.ui.tableWidget.setItem(0, self.amount_due, item)
             item = QtGui.QTableWidgetItem(date_in)
             self.ui.tableWidget.setItem(0, self.date, item)
