@@ -55,12 +55,15 @@ class Main_Dialog(QtGui.QDialog):
             self.ui.pushButton.clicked.connect(self.clicked_bt_Main_Del)
             self.ui.pushButton_2.clicked.connect(self.clicked_bt_Main_Add)
         elif index == self.customer_tab:
+            self.print_customer_table()
             self.ui.pushButton.clicked.connect(self.clicked_bt_Customer_Del)
             self.ui.pushButton_2.clicked.connect(self.clicked_bt_Customer_Add)
         elif index == self.paid_tab:
+            self.print_paid_table()
             self.ui.pushButton.clicked.connect(self.clicked_bt_Paid_Del)
             self.ui.pushButton_2.clicked.connect(self.clicked_bt_Paid_Add)
         elif index == self.unpaid_tab:
+            self.print_unpaid_table()
             self.ui.pushButton.clicked.connect(self.clicked_bt_Unpaid_Del)
             self.ui.pushButton_2.clicked.connect(self.clicked_bt_Unpaid_Add)
 
@@ -195,6 +198,7 @@ class Main_Dialog(QtGui.QDialog):
         return year + '-' + month + '-' + day
 
     def print_unpaid_table(self):
+        self.delete_empty_row(3)
         self.cur.execute("SELECT name, amount_paid, amount_due, invoice_no FROM invoice WHERE\
                 amount_due != '0.0'")
         while True:
@@ -221,6 +225,7 @@ class Main_Dialog(QtGui.QDialog):
             #unpaid table is different from main table
             self.ui.tableWidget_4.setItem(0, self.invoice_no + 3, item)
     def print_customer_table(self):
+        self.delete_empty_row(2)
         self.cur.execute("SELECT name, tel, Address FROM customer")
         while True:
             row = self.cur.fetchone()
@@ -238,7 +243,7 @@ class Main_Dialog(QtGui.QDialog):
             self.ui.tableWidget_2.setItem(0, self.address, item)
 
     def print_main_table(self, date):
-        self.delete_empty_row()
+        self.delete_empty_row(0)
         if date == 0:
             self.cur.execute("SELECT * FROM invoice")
         else:
@@ -276,6 +281,7 @@ class Main_Dialog(QtGui.QDialog):
             self.ui.tableWidget.setItem(0, self.date, item)
 
     def print_paid_table(self):
+        self.delete_empty_row(1)
         self.cur.execute("SELECT name, invoice_no FROM invoice WHERE\
                 amount_due == '0.0'")
         while True:
@@ -290,10 +296,23 @@ class Main_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem(str(invoice_no))
             self.ui.tableWidget_3.setItem(0, self.invoice_no + 1, item)
 
-    def delete_empty_row(self):
-        self.ui.tableWidget.clearContents()
-        for i in range(self.ui.tableWidget.rowCount()):
-            self.ui.tableWidget.removeRow(0)
+    def delete_empty_row(self, table_number):
+        if table_number == 0:
+            self.ui.tableWidget.clearContents()
+            for i in range(self.ui.tableWidget.rowCount()):
+                self.ui.tableWidget.removeRow(0)
+        elif table_number == 1:
+            self.ui.tableWidget_3.clearContents()
+            for i in range(self.ui.tableWidget_3.rowCount()):
+                self.ui.tableWidget_3.removeRow(0)
+        elif table_number == 2:
+            self.ui.tableWidget_2.clearContents()
+            for i in range(self.ui.tableWidget_2.rowCount()):
+                self.ui.tableWidget_2.removeRow(0)
+        else:
+            self.ui.tableWidget_4.clearContents()
+            for i in range(self.ui.tableWidget_4.rowCount()):
+                self.ui.tableWidget_4.removeRow(0)
 
     def write_log(self, string):
         my_time = None
