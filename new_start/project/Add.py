@@ -35,7 +35,6 @@ class Add_Dialog(QtGui.QDialog):
         self.init_invoice()
         self.ui.comboBox.currentIndexChanged.connect(self.changeModel)
         self.ui.comboBox_5.currentIndexChanged.connect(self.changeService)
-        #self.ui.pushButton_10.clicked.connect(self.clicked_bt_save)
         self.ui.pushButton_2.clicked.connect(self.clicked_bt_print)
         self.ui.pushButton_7.clicked.connect(self.clicked_bt_Tyres)
         self.ui.pushButton_5.clicked.connect(self.clicked_bt_Calender)
@@ -71,15 +70,23 @@ class Add_Dialog(QtGui.QDialog):
         self.unit = 4
         self.amount = 5
         self.gst_amount = 6
-        #self.saved_flag = 0
 
     def initialize(self, package):
+        #amount paid & amount due 2 decimal point
+        amount_paid = str(package[4])
+        amount_paid = float(amount_paid)
+        amount_paid = '%0.2f' % amount_paid
+        amount_due = str(package[5])
+        amount_due = float(amount_due)
+        amount_due = '%0.2f' % amount_due
+        #dan dou sui le
+
         self.ui.lineEdit_7.setText(package[0])      #invoice_no
         self.ui.lineEdit.setText(package[1])        #customer name
         self.ui.lineEdit_4.setText(package[3])      #rego
         self.ui.pushButton_5.setText(package[6])    #Date
-        self.ui.lineEdit_8.setText(package[4])      #amount paid
-        self.ui.lineEdit_9.setText(package[5])      #amount due
+        self.ui.lineEdit_8.setText(str(amount_paid))      #amount paid
+        self.ui.lineEdit_9.setText(str(amount_due))      #amount due
         tel = package[8][0][2]
         self.ui.lineEdit_3.setText(tel)   #tel
         self.ui.comboBox.setCurrentIndex(self.ui.comboBox.findText(package[8][0][12]))#make
@@ -120,6 +127,11 @@ class Add_Dialog(QtGui.QDialog):
                     item = 'None'
             lis = [item for no, item in enumerate(record) if no != 1]
             for idx, item in enumerate(lis):
+                if idx == 0:
+                    it = QtGui.QTableWidgetItem(str(item))
+                    it.setFlags(QtCore.Qt.ItemIsEnabled)
+                    self.ui.tableWidget.setItem(0, idx, it)
+                    continue
                 if not isinstance(item, unicode):
                     it = QtGui.QTableWidgetItem(('%.2f') % item)
                 else:
@@ -303,7 +315,6 @@ class Add_Dialog(QtGui.QDialog):
 
     def add_no(self):
         no = self.ui.tableWidget.rowCount()
-        print no
         if no == 1:
             item = QtGui.QTableWidgetItem(str(no))
         else:
