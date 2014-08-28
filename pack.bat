@@ -1,3 +1,3 @@
-python pyinstaller.py -Fw Bing_project/new_start/project/Add.py
+python pyinstaller.py -Fw Bing_project/new_start/project/Main.py
 xcopy Bing_project/new_start/Database Add/ /e
 
