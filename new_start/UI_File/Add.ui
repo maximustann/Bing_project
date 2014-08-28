@@ -266,7 +266,7 @@ QDialogButtonBox {
         <item>
          <widget class="QPushButton" name="pushButton_15">
           <property name="text">
-           <string>Insert Payment</string>
+           <string>Payment Option</string>
           </property>
          </widget>
         </item>
@@ -291,7 +291,11 @@ QDialogButtonBox {
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit_8"/>
+           <widget class="QLineEdit" name="lineEdit_8">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -305,7 +309,11 @@ QDialogButtonBox {
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit_9"/>
+           <widget class="QLineEdit" name="lineEdit_9">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -843,6 +851,19 @@ QDialogButtonBox {
     </item>
    </layout>
   </widget>
+  <zorder>layoutWidget</zorder>
+  <zorder>layoutWidget_2</zorder>
+  <zorder>layoutWidget_3</zorder>
+  <zorder>layoutWidget_4</zorder>
+  <zorder>pushButton_9</zorder>
+  <zorder>pushButton_7</zorder>
+  <zorder>comboBox_5</zorder>
+  <zorder>tableWidget</zorder>
+  <zorder>comboBox_3</zorder>
+  <zorder>layoutWidget_6</zorder>
+  <zorder>tabWidget</zorder>
+  <zorder>layoutWidget</zorder>
+  <zorder>label_15</zorder>
  </widget>
  <resources/>
  <connections/>

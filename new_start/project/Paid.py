@@ -9,8 +9,12 @@ class Paid_Dialog(QtGui.QDialog):
         self.ui = ui_paid.Ui_Dialog()
         self.ui.setupUi(self)
         self.ui.lineEdit.textChanged.connect(self.setPaid)
+        self.ui.lineEdit_2.textChanged.connect(self.setPaid)
     def setPaid(self):
-        self.paid = float(self.ui.lineEdit.text())
+        if(self.ui.lineEdit.text() != "") and (self.ui.lineEdit_2.text() == ""):
+            self.paid = float(self.ui.lineEdit.text())
+        elif (self.ui.lineEdit_2.text() != "") and (self.ui.lineEdit.text() == ""):
+            self.paid = - float(self.ui.lineEdit_2.text())
     def getPaid(self):
         return self.paid
 if __name__ == "__main__":

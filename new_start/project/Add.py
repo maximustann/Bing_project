@@ -48,6 +48,7 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.pushButton_13.clicked.connect(self.clicked_bt_delLine)
         self.ui.pushButton_3.clicked.connect(self.clicked_bt_preview)
         self.ui.lineEdit_8.textChanged.connect(self.autoChangeText)
+        self.ui.lineEdit_8.cursorPositionChanged.connect(self.autoChangeText)
 
         self.ui.tableWidget.itemChanged.connect(self.changed_table)
         self.ui.comboBox_3.currentIndexChanged.connect(self.wof_comboBox)
