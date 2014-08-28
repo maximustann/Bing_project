@@ -548,8 +548,8 @@ class Add_Dialog(QtGui.QDialog):
                     model, odo, tel) VALUES('%s', '%s', '%s',\
                     '%s','%s')" % (rego, make, model, odo, tel))
         except lite.IntegrityError,e:
-            self.cur.execute("UPDATE vehicle SET rego='%s',\
-                    make='%s', model='%s', odo='%s' WHERE tel='%s'" %\
+            self.cur.execute("UPDATE vehicle SET \
+                    make='%s', model='%s', odo='%s' WHERE tel='%s' AND rego='%s'" %\
                     (rego, make, model, odo, tel))
         self.conn.commit()
 
