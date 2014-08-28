@@ -938,7 +938,7 @@ INSERT INTO "model" VALUES(937,'Vista','Toyota');
 INSERT INTO "model" VALUES(938,'Vitz','Toyota');
 INSERT INTO "model" VALUES(939,'Voltz','Toyota');
 INSERT INTO "model" VALUES(940,'Voxy','Toyota');
-INSERT INTO "model" VALUES(941,'WiLL','Toyota');
+INSERT INTO "model" VALUES(941,'Will','Toyota');
 INSERT INTO "model" VALUES(942,'Windom','Toyota');
 INSERT INTO "model" VALUES(943,'Wish','Toyota');
 INSERT INTO "model" VALUES(944,'Yaris','Toyota');

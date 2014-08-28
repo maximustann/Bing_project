@@ -12,6 +12,7 @@ import Cash as cash;
 import time;
 import os;
 import edit_file
+from random import randint;
 
 
 class Add_Dialog(QtGui.QDialog):
@@ -35,6 +36,7 @@ class Add_Dialog(QtGui.QDialog):
         self.cur = self.conn.cursor()
         self.setMake()
         self.init_invoice()
+        self.ui.lineEdit_3.setText(self.random_Tel_Num())
         self.ui.comboBox.currentIndexChanged.connect(self.changeModel)
         self.ui.comboBox_5.currentIndexChanged.connect(self.changeService)
         self.ui.pushButton_2.clicked.connect(self.clicked_bt_print)
@@ -56,6 +58,17 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.tableWidget.setColumnWidth(1, 300)
         if package != None:
             self.initialize(package)
+
+    def random_Tel_Num(self):
+        while True:
+            num = str (randint(0, 99999))
+            self.cur.execute('SELECT tel FROM customer WHERE tel = "%s"' % num )
+            while True:
+                telNum = self.cur.fetchone()
+                if telNum == None:
+                    return num
+                else:
+                    break
 
     def init_data(self):
         self.before_gst_dis = "26.09"
