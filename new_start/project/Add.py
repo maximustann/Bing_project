@@ -10,6 +10,7 @@ import Discount as discount;
 import Paid as paid_file;
 import Cash as cash;
 import time;
+import log_keeper
 import os;
 import edit_file
 from random import randint;
@@ -218,7 +219,7 @@ class Add_Dialog(QtGui.QDialog):
         try:
             self.conn = lite.connect("../Database/garage")
         except lite.Error, e:
-            self.write_log(e.args[0])
+            log_keeper.write_log(e.args[0])
             sys.exit(1)
     def wof_comboBox(self):
         if self.ui.comboBox_3.currentIndex() == 1:
@@ -239,12 +240,6 @@ class Add_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem(self.before_gst)
             self.ui.tableWidget.setItem(0, self.pri, item)
         self.add_no()
-    def write_log(self, string):
-        my_time = None
-        fd = open("../Database/log/log.txt", "a")
-        my_time = str(time.strftime("%Y-%m-%d-%I:%M", time.localtime(time.time())))
-        print >> fd, string, my_time
-        fd.close()
 
     def changeService(self):
         self.ui.textEdit_2.clear()
@@ -260,9 +255,15 @@ class Add_Dialog(QtGui.QDialog):
             try:
                 fd = open("../Database/text/express.txt", 'r')
             except IOError,e:
-                self.write_log(e)
-            self.ui.textEdit_2.setPlainText(fd.read())
-            fd.close()
+                log_keeper.write_log(e)
+            try:
+                self.ui.textEdit_2.setPlainText(fd.read())
+            except UnboundLocalError, e:
+                log_keeper.write_log(e)
+            try:
+                fd.close()
+            except UnboundLocalError, e:
+                pass
         elif chosen_name == 'Extensive':
             self.ui.tableWidget.insertRow(0)
             item = QtGui.QTableWidgetItem("Extensive Service")
@@ -274,9 +275,15 @@ class Add_Dialog(QtGui.QDialog):
             try:
                 fd = open("../Database/text/extensive.txt", 'r')
             except IOError, e:
-                self.write_log(e)
-            self.ui.textEdit_2.setPlainText(fd.read())
-            fd.close()
+                log_keeper.write_log(e)
+            try:
+                self.ui.textEdit_2.setPlainText(fd.read())
+            except UnboundLocalError, e:
+                log_keeper.write_log(e)
+            try:
+                fd.close()
+            except UnboundLocalError, e:
+                pass
         elif chosen_name == 'Euro_Car':
             self.ui.tableWidget.insertRow(0)
             item = QtGui.QTableWidgetItem("EuroCars Service")
@@ -288,9 +295,15 @@ class Add_Dialog(QtGui.QDialog):
             try:
                 fd = open("../Database/text/euro.txt", 'r')
             except IOError, e:
-                self.write_log(str(e))
-            self.ui.textEdit_2.setPlainText(fd.read())
-            fd.close()
+                log_keeper.write_log(str(e))
+            try:
+                self.ui.textEdit_2.setPlainText(fd.read())
+            except UnboundLocalError, e:
+                log_keeper.write_log(e)
+            try:
+                fd.close()
+            except UnboundLocalError, e:
+                pass
         elif chosen_name == 'Van_4WD':
             self.ui.tableWidget.insertRow(0)
             item = QtGui.QTableWidgetItem("Van 4wd Service")
@@ -302,9 +315,15 @@ class Add_Dialog(QtGui.QDialog):
             try:
                 fd = open("../Database/text/van_4wd.txt", 'r')
             except IOError, e:
-                self.write_log(e)
-            self.ui.textEdit_2.setPlainText(fd.read())
-            fd.close()
+                log_keeper.write_log(e)
+            try:
+                self.ui.textEdit_2.setPlainText(fd.read())
+            except UnboundLocalError, e:
+                log_keeper.write_log(e)
+            try:
+                fd.close()
+            except UnboundLocalError, e:
+                pass
         else:
             return
         self.add_no()
