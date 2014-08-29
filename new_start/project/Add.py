@@ -732,9 +732,11 @@ class Add_Dialog(QtGui.QDialog):
         if result == 1:
             paid = Dialog.getPaid()
             total = float(self.ui.label_17.text())
+            after_discount = str(self.ui.label_11.text())
+            after_discount = float(after_discount[0:after_discount.find('(')])
             amount_paid = self.ui.lineEdit_8.text()
-            if amount_paid == '':
-                amount_due = total - paid
+            if amount_paid == '0.00':
+                amount_due = after_discount - paid
                 amount_paid = paid
                 self.ui.lineEdit_8.setText(str("%.2f") % amount_paid)
                 self.ui.lineEdit_9.setText(str("%.2f") % amount_due)
