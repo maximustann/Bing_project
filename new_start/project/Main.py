@@ -9,6 +9,7 @@ import os;
 import Add as add;
 import datetime
 import time
+import log_keeper
 
 class Main_Dialog(QtGui.QDialog):
     def __init__(self):

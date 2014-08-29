@@ -221,7 +221,7 @@ class Add_Dialog(QtGui.QDialog):
         try:
             self.conn = lite.connect("../Database/garage")
         except lite.Error, e:
-            log_keeper.write_log(e.args[0])
+            log_keeper.write_log(e.args[0], log_keeper.lineno())
             sys.exit(1)
     def wof_comboBox(self):
         if self.ui.comboBox_3.currentIndex() == 1:
@@ -257,11 +257,11 @@ class Add_Dialog(QtGui.QDialog):
             try:
                 fd = open("../Database/text/express.txt", 'r')
             except IOError,e:
-                log_keeper.write_log(e)
+                log_keeper.write_log(e, log_keeper.lineno())
             try:
                 self.ui.textEdit_2.setPlainText(fd.read())
             except UnboundLocalError, e:
-                log_keeper.write_log(e)
+                log_keeper.write_log(e, log_keeper.lineno())
             try:
                 fd.close()
             except UnboundLocalError, e:
@@ -277,11 +277,11 @@ class Add_Dialog(QtGui.QDialog):
             try:
                 fd = open("../Database/text/extensive.txt", 'r')
             except IOError, e:
-                log_keeper.write_log(e)
+                log_keeper.write_log(e, log_keeper.lineno())
             try:
                 self.ui.textEdit_2.setPlainText(fd.read())
             except UnboundLocalError, e:
-                log_keeper.write_log(e)
+                log_keeper.write_log(e, log_keeper.lineno())
             try:
                 fd.close()
             except UnboundLocalError, e:
@@ -297,11 +297,11 @@ class Add_Dialog(QtGui.QDialog):
             try:
                 fd = open("../Database/text/euro.txt", 'r')
             except IOError, e:
-                log_keeper.write_log(str(e))
+                log_keeper.write_log(str(e), log_keeper.lineno())
             try:
                 self.ui.textEdit_2.setPlainText(fd.read())
             except UnboundLocalError, e:
-                log_keeper.write_log(e)
+                log_keeper.write_log(e, log_keeper.lineno())
             try:
                 fd.close()
             except UnboundLocalError, e:
@@ -317,11 +317,11 @@ class Add_Dialog(QtGui.QDialog):
             try:
                 fd = open("../Database/text/van_4wd.txt", 'r')
             except IOError, e:
-                log_keeper.write_log(e)
+                log_keeper.write_log(e, log_keeper.lineno())
             try:
                 self.ui.textEdit_2.setPlainText(fd.read())
             except UnboundLocalError, e:
-                log_keeper.write_log(e)
+                log_keeper.write_log(e, log_keeper.lineno())
             try:
                 fd.close()
             except UnboundLocalError, e:
