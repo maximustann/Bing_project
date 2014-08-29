@@ -86,6 +86,7 @@ class Add_Dialog(QtGui.QDialog):
         self.unit = 4
         self.amount = 5
         self.gst_amount = 6
+        self.old_tel = None
 
     def initialize(self, package):
         #amount paid & amount due 2 decimal point
@@ -103,26 +104,27 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.pushButton_5.setText(package[6])    #Date
         self.ui.lineEdit_8.setText(str(amount_paid))      #amount paid
         self.ui.lineEdit_9.setText(str(amount_due))      #amount due
-        tel = package[8][0][2]
-        self.ui.lineEdit_3.setText(tel)   #tel
+        self.old_tel = package[8][0][2]
+
+        self.ui.lineEdit_3.setText(self.old_tel)   #old tel
         self.ui.comboBox.setCurrentIndex(self.ui.comboBox.findText(package[8][0][12]))#make
         self.ui.comboBox_2.setCurrentIndex(self.ui.comboBox_2.findText(package[8][0][11])) #model
         self.restore_table(package[7]) #center table restore
 
         #looking for address and set back
-        self.cur.execute("SELECT Address FROM customer WHERE tel = '%s'" % tel)
+        self.cur.execute("SELECT Address FROM customer WHERE tel = '%s'" % self.old_tel)
         addr = self.cur.fetchone()[0]
         if addr != None:
             self.ui.lineEdit_2.setText(addr)
 
         #looking for oddometer and set back
-        self.cur.execute("SELECT odo FROM vehicle WHERE tel='%s'" % tel)
+        self.cur.execute("SELECT odo FROM vehicle WHERE tel='%s'" % self.old_tel)
         odo = self.cur.fetchone()[0]
         if odo != None:
             self.ui.lineEdit_6.setText(odo)
 
         #looking for note and service and labour
-        self.cur.execute("SELECT note, service, labour FROM invoice WHERE tel='%s'" % tel)
+        self.cur.execute("SELECT note, service, labour FROM invoice WHERE tel='%s'" % self.old_tel)
         row = self.cur.fetchone()
         note = row[0]
         service = row[1]
@@ -565,17 +567,18 @@ class Add_Dialog(QtGui.QDialog):
                     (date, tel, name, rego, sub_total,\
                     amount_paid, amount_due, model, make,\
                     service, note, labour, invoice_no))
-            #self.error_window("Invoice No.")
-        try:
-            self.cur.execute("INSERT INTO customer(tel, name,\
-                    Address) VALUES('%s', '%s', '%s')" % (tel, name, addr))
-        except lite.IntegrityError:
-            try:
-                self.cur.execute("UPDATE customer SET tel='%s',\
-                        name='%s', Address='%s'" % (tel, name, addr))
-            except lite.IntegrityError:
-                self.cur.execute("UPDATE customer SET name='%s',\
-                        Address='%s' where tel='%s'" % (name, addr, tel))
+
+        if self.old_tel == None:
+            self.cur.execute("INSERT INTO customer(tel,\
+                            name, Address) VALUES('%s', '%s', '%s')"\
+                            % (tel, name, addr))
+        elif self.old_tel == tel:
+            self.cur.execute("UPDATE customer SET name='%s',\
+                    Address='%s' where tel='%s'" % (name, addr, tel))
+        else:
+            self.cur.execute("UPDATE customer SET tel='%s',\
+                    name='%s', Address='%s' where tel='%s'"\
+                    % (tel, name, addr, self.old_tel))
 
         try:
             self.cur.execute("INSERT INTO vehicle(rego, make,\
