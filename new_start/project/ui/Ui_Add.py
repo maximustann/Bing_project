@@ -421,6 +421,7 @@ class Ui_Dialog(object):
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Droid Serif"))
         self.lineEdit_7.setFont(font)
+        self.lineEdit_7.setReadOnly(True)
         self.lineEdit_7.setObjectName(_fromUtf8("lineEdit_7"))
         self.verticalLayout_5.addWidget(self.lineEdit_7)
         self.pushButton_5 = QtGui.QPushButton(self.layoutWidget_4)
