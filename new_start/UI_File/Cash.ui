@@ -10,160 +10,109 @@
     <height>190</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>Droid Serif</family>
+    <pointsize>24</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Cash</string>
   </property>
   <property name="styleSheet">
    <string notr="true">#Dialog {
-   background-color: beige;
+   background-color: rgb(255, 255, 204);
+   color: #cccccc;
 }
-
-/* Nice Windows-XP-style password character. */
-QLineEdit[echoMode=&quot;2&quot;] {
-    lineedit-password-character: 9679;
+QComboBox {
+	background-color:rgb(153, 204, 255);
 }
-
-/* We provide a min-width and min-height for push buttons
-   so that they look elegant regardless of the width of the text. */
 QPushButton {
-    background-color: palegoldenrod;
+    background-color: rgb(34, 185, 255);
     border-width: 2px;
-    border-color: darkkhaki;
+    border-color: rgb(117, 156, 195);
     border-style: solid;
     border-radius: 5;
     padding: 3px;
     min-width: 9ex;
     min-height: 2.5ex;
+	alternate-background-color: rgb(220, 220, 220);
 }
 
 QPushButton:hover {
-   background-color: khaki;
+   background-color: rgb(122, 163, 204);
 }
-
-/* Increase the padding, so the text is shifted when the button is
-   pressed. */
-QPushButton:pressed {
-    padding-left: 5px;
-    padding-top: 5px;
-    background-color: #d0d67c;
-}
-
-QLabel, QAbstractButton {
-    font: bold;
-}
-
-/* Mark mandatory fields with a brownish color. */
-.mandatory {
-    color: brown;
-}
-
-/* Bold text on status bar looks awful. */
-QStatusBar QLabel {
-   font: normal;
-}
-
-QStatusBar::item {
-    border-width: 1;
-    border-color: darkkhaki;
-    border-style: solid;
-    border-radius: 2;
-}
-
-QComboBox, QLineEdit, QSpinBox, QTextEdit, QListView {
-    background-color: cornsilk;
-    selection-color: #0a214c; 
-    selection-background-color: #C19A6B;
-}
-
+QTreeView {
+   background-color: #666666;
+   color: #cccccc;
+   alternate-background-color: #333333;
+} 
 QListView {
-    show-decoration-selected: 1;
+   background-color: #333333;
+   color: #cccccc;
 }
-
-QListView::item:hover {
-    background-color: wheat;
+QTextEdit {
+   color: rgb(0, 0, 0);
 }
-
-/* We reserve 1 pixel space in padding. When we get the focus,
-   we kill the padding and enlarge the border. This makes the items
-   glow. */
-QLineEdit, QFrame {
-    border-width: 2px;
-    padding: 1px;
-    border-style: solid;
-    border-color: darkkhaki;
-    border-radius: 5px;
+QScrollBar:horizontal {
+   height: 20px;
 }
-
-/* As mentioned above, eliminate the padding and increase the border. */
-QLineEdit:focus, QFrame:focus {
-    border-width: 3px;
-    padding: 0px;
+QScrollBar:vertical {
+   width: 20px;
 }
-
-/* A QLabel is a QFrame ... */
+QTabWidget::pane {
+   border-top: 2px solid #cccccc;
+}
 QLabel {
-    border: none;
-    padding: 0;
-    background: none;
+   color: rgb(102, 102, 102); 
 }
 
-/* A QToolTip is a QLabel ... */
-QToolTip {
-    border: 2px solid darkkhaki;
-    padding: 5px;
-    border-radius: 3px;
-    opacity: 200;
+QCheckBox {
+   color: white; 
 }
 
-/* Nice to have the background color change when hovered. */
-QRadioButton:hover, QCheckBox:hover {
-    background-color: wheat;
-}
-
-/* Force the dialog's buttons to follow the Windows guidelines. */
-QDialogButtonBox {
-    button-layout: 0;
+QRadioButton{
+   color:white;
 }</string>
   </property>
-  <widget class="QDialogButtonBox" name="buttonBox">
-   <property name="geometry">
-    <rect>
-     <x>-130</x>
-     <y>100</y>
-     <width>341</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>60</y>
-     <width>131</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Cash Paid:  $</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEdit">
-   <property name="geometry">
-    <rect>
-     <x>150</x>
-     <y>60</y>
-     <width>91</width>
-     <height>31</height>
-    </rect>
-   </property>
-  </widget>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <family>Droid Serif</family>
+      </font>
+     </property>
+     <property name="text">
+      <string>Cash Paid:  $</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="lineEdit">
+     <property name="font">
+      <font>
+       <family>Droid Serif</family>
+      </font>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="font">
+      <font>
+       <family>Droid Serif</family>
+      </font>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections>
