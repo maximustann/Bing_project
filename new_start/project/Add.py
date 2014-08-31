@@ -161,8 +161,10 @@ class Add_Dialog(QtGui.QDialog):
                 'Do you want to save this page?', QtGui.QMessageBox.Yes,
                 QtGui.QMessageBox.No)
         if reply == QtGui.QMessageBox.Yes:
-            self.clicked_bt_save()
-            event.accept()
+            if self.clicked_bt_save() != False:
+                event.accept()
+            else:
+                event.ignore()
         else:
             event.accept()
     def clicked_bt_print(self):
@@ -569,17 +571,24 @@ class Add_Dialog(QtGui.QDialog):
                     service, note, labour, invoice_no))
 
         if self.old_tel == None:
-            self.cur.execute("INSERT INTO customer(tel,\
-                            name, Address) VALUES('%s', '%s', '%s')"\
-                            % (tel, name, addr))
+            try:
+                self.cur.execute("INSERT INTO customer(tel,\
+                                name, Address) VALUES('%s', '%s', '%s')"\
+                                % (tel, name, addr))
+            except lite.IntegrityError:
+                self.error_window("Telephone number")
+                return False
         elif self.old_tel == tel:
             self.cur.execute("UPDATE customer SET name='%s',\
                     Address='%s' where tel='%s'" % (name, addr, tel))
         else:
-            self.cur.execute("UPDATE customer SET tel='%s',\
-                    name='%s', Address='%s' where tel='%s'"\
-                    % (tel, name, addr, self.old_tel))
-
+            try:
+                self.cur.execute("UPDATE customer SET tel='%s',\
+                        name='%s', Address='%s' where tel='%s'"\
+                        % (tel, name, addr, self.old_tel))
+            except lite.IntegrityError:
+                self.error_window("Telephone number")
+                return False
         try:
             self.cur.execute("INSERT INTO vehicle(rego, make,\
                     model, odo, tel) VALUES('%s', '%s', '%s',\
@@ -611,10 +620,8 @@ class Add_Dialog(QtGui.QDialog):
                         AND invoice_no='%s'" % (des, price, qty,\
                         unit, amount, amount_gst, no, invoice_no))
             self.conn.commit()
-        #self.saved_flag = 1
+        return True
 
-        #self.ui.pushButton_10.setText("Saved")
-        #self.ui.pushButton_10.setStyleSheet('QPushButton {color: green}')
     def gather_data(self):
         table = []
         name = self.ui.lineEdit.text()
