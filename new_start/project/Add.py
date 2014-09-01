@@ -397,12 +397,14 @@ class Add_Dialog(QtGui.QDialog):
             self.ui.label_11.setText(str("%.2f" % total))
         except RuntimeError:
             pass
+        '''
         try:
             no = self.ui.tableWidget.item(current_row, self.no).text()
             self.cur.execute("DELETE FROM items WHERE invoice_no='%s' AND ID='%s'" % (invoice_no, no))
             self.conn.commit()
         except:
             pass
+        '''
         self.ui.tableWidget.removeRow(current_row)
 
     def set_amount_gst(self, current_row, current_column):
@@ -599,6 +601,11 @@ class Add_Dialog(QtGui.QDialog):
                     (rego, make, model, odo, tel))
         self.conn.commit()
 
+        
+        try:
+            self.cur.execute("DELETE FROM items WHERE invoice_no='%s'" % (invoice_no))
+        except lite.IntegrityError:
+            pass
         for row in table:
             no = row["no"]
             des = row["des"]
