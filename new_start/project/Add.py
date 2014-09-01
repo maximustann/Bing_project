@@ -23,12 +23,12 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.setupUi(self)
         self.ui.pushButton_12.setText("Add")
         self.ui.pushButton_13.setText("Delete")
-        self.ui.label_11.setText("0")
-        self.ui.label_15.setText("0")
-        self.ui.label_16.setText("0")
-        self.ui.label_17.setText("0")
-        self.ui.lineEdit_8.setText("0.00")
-        self.ui.lineEdit_9.setText("0.00")
+        self.ui.label_after_discount.setText("0")
+        self.ui.label_sub_total.setText("0")
+        self.ui.label_gst.setText("0")
+        self.ui.label_total.setText("0")
+        self.ui.lineEdit_amount_paid.setText("0.00")
+        self.ui.lineEdit_amount_due.setText("0.00")
         self.init_data()
         self.conn = None
         self.cur = None
@@ -37,12 +37,12 @@ class Add_Dialog(QtGui.QDialog):
         self.cur = self.conn.cursor()
         self.setMake()
         self.init_invoice()
-        self.ui.lineEdit_3.setText(self.random_Tel_Num())
-        self.ui.comboBox.currentIndexChanged.connect(self.changeModel)
+        self.ui.lineEdit_tel.setText(self.random_Tel_Num())
+        self.ui.comboBox_make.currentIndexChanged.connect(self.changeModel)
         self.ui.comboBox_5.currentIndexChanged.connect(self.changeService)
         self.ui.pushButton_2.clicked.connect(self.clicked_bt_print)
         self.ui.pushButton_7.clicked.connect(self.clicked_bt_Tyres)
-        self.ui.pushButton_5.clicked.connect(self.clicked_bt_Calender)
+        self.ui.pushButton_date.clicked.connect(self.clicked_bt_Calender)
         self.ui.pushButton_9.clicked.connect(self.clicked_bt_Labour)
         self.ui.pushButton_17.clicked.connect(self.clicked_bt_Discount)
         self.ui.pushButton_14.clicked.connect(self.clicked_bt_fullPayment)
@@ -51,8 +51,8 @@ class Add_Dialog(QtGui.QDialog):
         self.ui.pushButton_12.clicked.connect(self.clicked_bt_addLine)
         self.ui.pushButton_13.clicked.connect(self.clicked_bt_delLine)
         self.ui.pushButton_3.clicked.connect(self.clicked_bt_preview)
-        self.ui.lineEdit_8.textChanged.connect(self.autoChangeText)
-        self.ui.lineEdit_8.cursorPositionChanged.connect(self.autoChangeText)
+        self.ui.lineEdit_amount_paid.textChanged.connect(self.autoChangeText)
+        self.ui.lineEdit_amount_paid.cursorPositionChanged.connect(self.autoChangeText)
 
         self.ui.tableWidget.itemChanged.connect(self.changed_table)
         self.ui.comboBox_3.currentIndexChanged.connect(self.wof_comboBox)
@@ -98,30 +98,30 @@ class Add_Dialog(QtGui.QDialog):
         amount_due = '%0.2f' % amount_due
         #dan dou sui le
 
-        self.ui.lineEdit_7.setText(package[0])      #invoice_no
-        self.ui.lineEdit.setText(package[1])        #customer name
-        self.ui.lineEdit_4.setText(package[3])      #rego
-        self.ui.pushButton_5.setText(package[6])    #Date
-        self.ui.lineEdit_8.setText(str(amount_paid))      #amount paid
-        self.ui.lineEdit_9.setText(str(amount_due))      #amount due
+        self.ui.lineEdit_invoice_no.setText(package[0])      #invoice_no
+        self.ui.lineEdit_username.setText(package[1])        #customer name
+        self.ui.lineEdit_rego.setText(package[3])      #rego
+        self.ui.pushButton_date.setText(package[6])    #Date
+        self.ui.lineEdit_amount_paid.setText(str(amount_paid))      #amount paid
+        self.ui.lineEdit_amount_due.setText(str(amount_due))      #amount due
         self.old_tel = package[8][0][2]
 
-        self.ui.lineEdit_3.setText(self.old_tel)   #old tel
-        self.ui.comboBox.setCurrentIndex(self.ui.comboBox.findText(package[8][0][12]))#make
-        self.ui.comboBox_2.setCurrentIndex(self.ui.comboBox_2.findText(package[8][0][11])) #model
+        self.ui.lineEdit_tel.setText(self.old_tel)   #old tel
+        self.ui.comboBox_make.setCurrentIndex(self.ui.comboBox_make.findText(package[8][0][12]))#make
+        self.ui.comboBox_model.setCurrentIndex(self.ui.comboBox_model.findText(package[8][0][11])) #model
         self.restore_table(package[7]) #center table restore
 
         #looking for address and set back
         self.cur.execute("SELECT Address FROM customer WHERE tel = '%s'" % self.old_tel)
         addr = self.cur.fetchone()[0]
         if addr != None:
-            self.ui.lineEdit_2.setText(addr)
+            self.ui.lineEdit_addr.setText(addr)
 
         #looking for oddometer and set back
         self.cur.execute("SELECT odo FROM vehicle WHERE tel='%s'" % self.old_tel)
         odo = self.cur.fetchone()[0]
         if odo != None:
-            self.ui.lineEdit_6.setText(odo)
+            self.ui.lineEdit_oddo.setText(odo)
 
         #looking for note and service and labour
         self.cur.execute("SELECT note, service, labour FROM invoice WHERE tel='%s'" % self.old_tel)
@@ -131,11 +131,11 @@ class Add_Dialog(QtGui.QDialog):
         labour = row[2]
 
         if note != None:
-            self.ui.textEdit.setText(note)
+            self.ui.textEdit_note.setText(note)
         if service != None:
-            self.ui.textEdit_2.setText(service)
+            self.ui.textEdit_service.setText(service)
         if labour != None:
-            self.ui.textEdit_3.setText(labour)
+            self.ui.textEdit_labour.setText(labour)
 
     def restore_table(self, table):
         for record in table:
@@ -190,7 +190,7 @@ class Add_Dialog(QtGui.QDialog):
         except TypeError:
             row = 10000
         row += 1
-        self.ui.lineEdit_7.setText(str(row))
+        self.ui.lineEdit_invoice_no.setText(str(row))
     def convert(self):
         self.web.print_(self.printer)
 
@@ -246,7 +246,7 @@ class Add_Dialog(QtGui.QDialog):
         self.add_no()
 
     def changeService(self):
-        self.ui.textEdit_2.clear()
+        self.ui.textEdit_service.clear()
         chosen_name = self.ui.comboBox_5.currentText()
         if chosen_name == 'Express':
             self.ui.tableWidget.insertRow(0)
@@ -261,7 +261,7 @@ class Add_Dialog(QtGui.QDialog):
             except IOError,e:
                 log_keeper.write_log(e, log_keeper.lineno())
             try:
-                self.ui.textEdit_2.setPlainText(fd.read())
+                self.ui.textEdit_service.setPlainText(fd.read())
             except UnboundLocalError, e:
                 log_keeper.write_log(e, log_keeper.lineno())
             try:
@@ -281,7 +281,7 @@ class Add_Dialog(QtGui.QDialog):
             except IOError, e:
                 log_keeper.write_log(e, log_keeper.lineno())
             try:
-                self.ui.textEdit_2.setPlainText(fd.read())
+                self.ui.textEdit_service.setPlainText(fd.read())
             except UnboundLocalError, e:
                 log_keeper.write_log(e, log_keeper.lineno())
             try:
@@ -301,7 +301,7 @@ class Add_Dialog(QtGui.QDialog):
             except IOError, e:
                 log_keeper.write_log(str(e), log_keeper.lineno())
             try:
-                self.ui.textEdit_2.setPlainText(fd.read())
+                self.ui.textEdit_service.setPlainText(fd.read())
             except UnboundLocalError, e:
                 log_keeper.write_log(e, log_keeper.lineno())
             try:
@@ -321,7 +321,7 @@ class Add_Dialog(QtGui.QDialog):
             except IOError, e:
                 log_keeper.write_log(e, log_keeper.lineno())
             try:
-                self.ui.textEdit_2.setPlainText(fd.read())
+                self.ui.textEdit_service.setPlainText(fd.read())
             except UnboundLocalError, e:
                 log_keeper.write_log(e, log_keeper.lineno())
             try:
@@ -344,9 +344,9 @@ class Add_Dialog(QtGui.QDialog):
         return 0
 
     def clicked_bt_fullPayment(self):
-        text = str(self.ui.label_11.text()).split("(")[0]
-        self.ui.lineEdit_8.setText(text)
-        self.ui.lineEdit_9.setText("0")
+        text = str(self.ui.label_after_discount.text()).split("(")[0]
+        self.ui.lineEdit_amount_paid.setText(text)
+        self.ui.lineEdit_amount_due.setText("0")
     def clicked_bt_addLine(self):
         self.ui.tableWidget.insertRow(0)
         self.add_no()
@@ -367,7 +367,7 @@ class Add_Dialog(QtGui.QDialog):
         gst = 0
         amount_value = 0
         gst_amount = 0
-        invoice_no = self.ui.lineEdit_7.text()
+        invoice_no = self.ui.lineEdit_invoice_no.text()
         current_row = self.ui.tableWidget.currentRow()
         if current_row == -1:
             current_row = 0
@@ -375,11 +375,11 @@ class Add_Dialog(QtGui.QDialog):
             amount_value = float(self.ui.tableWidget.item(current_row, self.amount).text())
         except AttributeError:
             amount_value = 0
-        sub_value = float(self.ui.label_15.text())
+        sub_value = float(self.ui.label_sub_total.text())
         sub_value -= amount_value
 
         try:
-            self.ui.label_15.setText(str("%.2f" % sub_value))
+            self.ui.label_sub_total.setText(str("%.2f" % sub_value))
         except RuntimeError:
             pass
 
@@ -387,14 +387,14 @@ class Add_Dialog(QtGui.QDialog):
             gst_amount = float(self.ui.tableWidget.item(current_row, self.gst_amount).text())
         except AttributeError:
             gst_amount = 0
-        total = float(self.ui.label_17.text())
+        total = float(self.ui.label_total.text())
         total -= gst_amount
 
         gst = total - sub_value
         try:
-            self.ui.label_16.setText(str("%.2f" % gst))
-            self.ui.label_17.setText(str("%.2f" % total))
-            self.ui.label_11.setText(str("%.2f" % total))
+            self.ui.label_gst.setText(str("%.2f" % gst))
+            self.ui.label_total.setText(str("%.2f" % total))
+            self.ui.label_after_discount.setText(str("%.2f" % total))
         except RuntimeError:
             pass
         '''
@@ -435,7 +435,7 @@ class Add_Dialog(QtGui.QDialog):
             sub_total += value
             value = 0
         try:
-            self.ui.label_15.setText(str("%.2f" % sub_total))
+            self.ui.label_sub_total.setText(str("%.2f" % sub_total))
         except RuntimeError:
             pass
         return sub_total
@@ -453,19 +453,19 @@ class Add_Dialog(QtGui.QDialog):
             total += value
             value = 0
             try:
-                self.ui.label_17.setText(str("%.2f" % total))
-                text = self.ui.lineEdit_8.text()
+                self.ui.label_total.setText(str("%.2f" % total))
+                text = self.ui.lineEdit_amount_paid.text()
                 if text != "":
-                    self.ui.lineEdit_8.setText(text)
+                    self.ui.lineEdit_amount_paid.setText(text)
                 else:
-                    self.ui.lineEdit_8.setText("0.00")
-                self.ui.label_11.setText(str("%.2f" % total))
+                    self.ui.lineEdit_amount_paid.setText("0.00")
+                self.ui.label_after_discount.setText(str("%.2f" % total))
             except RuntimeError:
                 pass
         return total
     def set_gst_label(self, total, sub_total):
         gst = total - sub_total
-        self.ui.label_16.setText(str("%.2f" % gst))
+        self.ui.label_gst.setText(str("%.2f" % gst))
 
     def set_labels_and_gst(self, current_row, current_column):
         self.set_amount_gst(current_row, current_column)
@@ -521,7 +521,7 @@ class Add_Dialog(QtGui.QDialog):
         Dialog.show()
         if Dialog.exec_() == 1:
             date = Dialog.getDate()
-            self.ui.pushButton_5.setText(date)
+            self.ui.pushButton_date.setText(date)
 
     def clicked_bt_Labour(self):
         Dialog = labour.Labour_Dialog(self)
@@ -631,23 +631,23 @@ class Add_Dialog(QtGui.QDialog):
 
     def gather_data(self):
         table = []
-        name = self.ui.lineEdit.text()
-        tel = self.ui.lineEdit_3.text()
-        addr = self.ui.lineEdit_2.text()
-        invoice_no = self.ui.lineEdit_7.text()
-        date = self.ui.pushButton_5.text()
-        make = self.ui.comboBox.currentText()
-        model = self.ui.comboBox_2.currentText()
-        rego = self.ui.lineEdit_4.text()
-        odo = self.ui.lineEdit_6.text()
-        note = self.ui.textEdit.toPlainText()
-        service = self.ui.textEdit_2.toPlainText()
-        labour = self.ui.textEdit_3.toPlainText()
-        sub_total = self.ui.label_15.text()
-        gst = self.ui.label_16.text()
-        total = self.ui.label_17.text()
-        amount_paid = self.ui.lineEdit_8.text()
-        amount_due = self.ui.lineEdit_9.text()
+        name = self.ui.lineEdit_username.text()
+        tel = self.ui.lineEdit_tel.text()
+        addr = self.ui.lineEdit_addr.text()
+        invoice_no = self.ui.lineEdit_invoice_no.text()
+        date = self.ui.pushButton_date.text()
+        make = self.ui.comboBox_make.currentText()
+        model = self.ui.comboBox_model.currentText()
+        rego = self.ui.lineEdit_rego.text()
+        odo = self.ui.lineEdit_oddo.text()
+        note = self.ui.textEdit_note.toPlainText()
+        service = self.ui.textEdit_service.toPlainText()
+        labour = self.ui.textEdit_labour.toPlainText()
+        sub_total = self.ui.label_sub_total.text()
+        gst = self.ui.label_gst.text()
+        total = self.ui.label_total.text()
+        amount_paid = self.ui.lineEdit_amount_paid.text()
+        amount_due = self.ui.lineEdit_amount_due.text()
 
 
         for i in range(self.ui.tableWidget.rowCount()):
@@ -702,18 +702,18 @@ class Add_Dialog(QtGui.QDialog):
             row = self.cur.fetchone()
             if row == None:
                 break
-            self.ui.comboBox.addItem(row[0])
-        self.ui.comboBox.setCurrentIndex(-1)
+            self.ui.comboBox_make.addItem(row[0])
+        self.ui.comboBox_make.setCurrentIndex(-1)
 
 
     def setLabourText(self, dialog):
         checkText = dialog.getCheckText()
         fixText = dialog.getFixText()
         replaceText = dialog.getReplaceText()
-        self.ui.textEdit_3.setPlainText("Check: %s \n\nFix/Repair:\
+        self.ui.textEdit_labour.setPlainText("Check: %s \n\nFix/Repair:\
                 %s \n\nReplace: %s" %(checkText, fixText, replaceText))
     def clicked_bt_Discount(self):
-        beforeDiscount = self.ui.label_17.text()
+        beforeDiscount = self.ui.label_total.text()
         Dialog = discount.Discount_Dialog(beforeDiscount)
         Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
         Dialog.show()
@@ -722,20 +722,20 @@ class Add_Dialog(QtGui.QDialog):
             flag, discount1, beforeDiscount = Dialog.getDiscount()
             flag = float(flag)
             discount1 = float(discount1)
-            total = float(self.ui.label_17.text())
+            total = float(self.ui.label_total.text())
             if (flag == 1):
                 newTotal = total * discount1
                 string_DP = str("%.0f") % (discount1 * 100)
                 noteText = string_DP + "%"
                 text = str("%.2f") % newTotal + "(" + noteText + ")"
-                self.ui.label_11.setText(text)
+                self.ui.label_after_discount.setText(text)
             elif (flag == 2):
                 newTotal = total + discount1
                 percentage = str("%.2f") % ((1 - ((total - newTotal) / total)) * 100) + "%"
                 text = str("%.2f") % newTotal + "(" + percentage + ")"
-                self.ui.label_11.setText(text)
+                self.ui.label_after_discount.setText(text)
             elif (flag == 3):
-                self.ui.label_11.setText(beforeDiscount)
+                self.ui.label_after_discount.setText(beforeDiscount)
         else:
             return
     def clicked_bt_Paid(self):
@@ -745,20 +745,20 @@ class Add_Dialog(QtGui.QDialog):
         result = Dialog.exec_()
         if result == 1:
             paid = Dialog.getPaid()
-            total = float(self.ui.label_17.text())
-            after_discount = str(self.ui.label_11.text())
+            total = float(self.ui.label_total.text())
+            after_discount = str(self.ui.label_after_discount.text())
             after_discount = float(after_discount[0:after_discount.find('(')])
-            amount_paid = self.ui.lineEdit_8.text()
+            amount_paid = self.ui.lineEdit_amount_paid.text()
             if amount_paid == '0.00':
                 amount_due = after_discount - paid
                 amount_paid = paid
-                self.ui.lineEdit_8.setText(str("%.2f") % amount_paid)
-                self.ui.lineEdit_9.setText(str("%.2f") % amount_due)
+                self.ui.lineEdit_amount_paid.setText(str("%.2f") % amount_paid)
+                self.ui.lineEdit_amount_due.setText(str("%.2f") % amount_due)
             else:
                 amount_paid = float(amount_paid) + paid
                 amount_due = total - float(amount_paid)
-                self.ui.lineEdit_8.setText(str("%.2f") % amount_paid)
-                self.ui.lineEdit_9.setText(str("%.2f") % amount_due)
+                self.ui.lineEdit_amount_paid.setText(str("%.2f") % amount_paid)
+                self.ui.lineEdit_amount_due.setText(str("%.2f") % amount_due)
 
 
     def clicked_bt_Cash(self):
@@ -767,26 +767,26 @@ class Add_Dialog(QtGui.QDialog):
         Dialog.show()
         result = Dialog.exec_()
     def changeModel(self):
-        self.ui.comboBox_2.clear()
-        chosen_name = self.ui.comboBox.currentText()
+        self.ui.comboBox_model.clear()
+        chosen_name = self.ui.comboBox_make.currentText()
         self.cur.execute("SELECT name from model WHERE make_name='%s'" % chosen_name)
         while True:
             row = self.cur.fetchone()
             if row == None:
                 break
-            self.ui.comboBox_2.addItem(row[0])
+            self.ui.comboBox_model.addItem(row[0])
 
     def autoChangeText(self):
-        if self.ui.lineEdit_8.text() == "":
+        if self.ui.lineEdit_amount_paid.text() == "":
             amount_paid = 0.00
         else:
-            amount_paid = float(self.ui.lineEdit_8.text())
-        total = float(self.ui.label_17.text())
+            amount_paid = float(self.ui.lineEdit_amount_paid.text())
+        total = float(self.ui.label_total.text())
         amount_due = float (total) - float (amount_paid)
-        self.ui.lineEdit_9.setText(str("%.2f") % amount_due)
+        self.ui.lineEdit_amount_due.setText(str("%.2f") % amount_due)
 
     def setTime(self):
-        self.ui.pushButton_5.setText(time.strftime("%Y-%m-%d", time.localtime(time.time())))
+        self.ui.pushButton_date.setText(time.strftime("%Y-%m-%d", time.localtime(time.time())))
 
 if __name__ == "__main__":
     import sys
