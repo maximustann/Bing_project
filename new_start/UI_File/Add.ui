@@ -268,7 +268,7 @@ QRadioButton{
       </widget>
      </item>
      <item row="0" column="0">
-      <widget class="QLabel" name="label_7">
+      <widget class="QLabel" name="label_make">
        <property name="font">
         <font>
          <family>Droid Serif</family>
@@ -283,7 +283,7 @@ QRadioButton{
       </widget>
      </item>
      <item row="2" column="2">
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="pushButton_match">
        <property name="font">
         <font>
          <family>Droid Serif</family>
@@ -296,7 +296,7 @@ QRadioButton{
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_8">
+      <widget class="QLabel" name="label_model">
        <property name="font">
         <font>
          <family>Droid Serif</family>
@@ -311,7 +311,7 @@ QRadioButton{
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_9">
+      <widget class="QLabel" name="label_rego">
        <property name="font">
         <font>
          <family>Droid Serif</family>
@@ -335,7 +335,7 @@ QRadioButton{
       </widget>
      </item>
      <item row="3" column="0">
-      <widget class="QLabel" name="label_10">
+      <widget class="QLabel" name="label_oddo">
        <property name="font">
         <font>
          <family>Droid Serif</family>
@@ -378,7 +378,7 @@ QRadioButton{
     </layout>
    </item>
    <item row="2" column="2">
-    <widget class="QComboBox" name="comboBox_5">
+    <widget class="QComboBox" name="comboBox_service">
      <property name="font">
       <font>
        <family>Droid Serif</family>
@@ -413,7 +413,7 @@ QRadioButton{
     </widget>
    </item>
    <item row="2" column="4">
-    <widget class="QPushButton" name="pushButton_9">
+    <widget class="QPushButton" name="pushButton_labour">
      <property name="font">
       <font>
        <family>Droid Serif</family>
@@ -431,7 +431,7 @@ QRadioButton{
    <item row="4" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_6">
      <item>
-      <widget class="QPushButton" name="pushButton_12">
+      <widget class="QPushButton" name="pushButton_Add">
        <property name="font">
         <font>
          <family>Droid Serif</family>
@@ -439,12 +439,12 @@ QRadioButton{
         </font>
        </property>
        <property name="text">
-        <string>PushButton</string>
+        <string>Add</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_13">
+      <widget class="QPushButton" name="pushButton_Del">
        <property name="font">
         <font>
          <family>Droid Serif</family>
@@ -452,7 +452,7 @@ QRadioButton{
         </font>
        </property>
        <property name="text">
-        <string>PushButton</string>
+        <string>Delete</string>
        </property>
       </widget>
      </item>
@@ -492,7 +492,7 @@ QRadioButton{
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QLabel" name="label_2">
+          <widget class="QLabel" name="label_name">
            <property name="font">
             <font>
              <family>Droid Serif</family>
@@ -507,7 +507,7 @@ QRadioButton{
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_3">
+          <widget class="QLabel" name="label_tel">
            <property name="font">
             <font>
              <family>Droid Serif</family>
@@ -522,7 +522,7 @@ QRadioButton{
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_4">
+          <widget class="QLabel" name="label_addr">
            <property name="font">
             <font>
              <family>Droid Serif</family>
@@ -756,7 +756,7 @@ QRadioButton{
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_8">
          <item>
-          <widget class="QLabel" name="label_14">
+          <widget class="QLabel" name="label_show_sub_total">
            <property name="font">
             <font>
              <family>Droid Serif</family>
@@ -772,7 +772,7 @@ QRadioButton{
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_18">
+          <widget class="QLabel" name="label_show_gst">
            <property name="font">
             <font>
              <family>Droid Serif</family>
@@ -787,7 +787,7 @@ QRadioButton{
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_19">
+          <widget class="QLabel" name="label_show_total">
            <property name="font">
             <font>
              <family>Droid Serif</family>
@@ -802,7 +802,7 @@ QRadioButton{
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_6">
+          <widget class="QLabel" name="label_show_after_discount">
            <property name="font">
             <font>
              <family>Droid Serif</family>
@@ -883,7 +883,7 @@ QRadioButton{
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_13">
          <item>
-          <widget class="QPushButton" name="pushButton_17">
+          <widget class="QPushButton" name="pushButton_discount">
            <property name="font">
             <font>
              <family>Droid Serif</family>
@@ -896,7 +896,7 @@ QRadioButton{
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_14">
+          <widget class="QPushButton" name="pushButton_full_payment">
            <property name="font">
             <font>
              <family>Droid Serif</family>
@@ -909,7 +909,7 @@ QRadioButton{
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_15">
+          <widget class="QPushButton" name="pushButton_payment_option">
            <property name="font">
             <font>
              <family>Droid Serif</family>
@@ -925,7 +925,7 @@ QRadioButton{
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_16">
+          <widget class="QPushButton" name="pushButton_cash_paid">
            <property name="font">
             <font>
              <family>Droid Serif</family>
@@ -944,7 +944,7 @@ QRadioButton{
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_8">
            <item>
-            <widget class="QLabel" name="label_20">
+            <widget class="QLabel" name="label_amount_paid">
              <property name="font">
               <font>
                <family>Droid Serif</family>
@@ -972,7 +972,7 @@ QRadioButton{
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_9">
            <item>
-            <widget class="QLabel" name="label_21">
+            <widget class="QLabel" name="label_amout_due">
              <property name="font">
               <font>
                <family>Droid Serif</family>
@@ -1006,7 +1006,7 @@ QRadioButton{
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="pushButton_preview">
        <property name="font">
         <font>
          <family>Droid Serif</family>
@@ -1019,7 +1019,7 @@ QRadioButton{
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="pushButton_print">
        <property name="font">
         <font>
          <family>Droid Serif</family>
@@ -1527,7 +1527,7 @@ QRadioButton{
     </spacer>
    </item>
    <item row="2" column="3">
-    <widget class="QPushButton" name="pushButton_7">
+    <widget class="QPushButton" name="pushButton_tyres">
      <property name="font">
       <font>
        <family>Droid Serif</family>
@@ -1543,7 +1543,7 @@ QRadioButton{
     </widget>
    </item>
    <item row="2" column="1">
-    <widget class="QComboBox" name="comboBox_3">
+    <widget class="QComboBox" name="comboBox_wof">
      <property name="font">
       <font>
        <family>Droid Serif</family>
@@ -1568,7 +1568,7 @@ QRadioButton{
     </widget>
    </item>
    <item row="0" column="3" rowspan="2">
-    <widget class="QLabel" name="label_13">
+    <widget class="QLabel" name="label_logo">
      <property name="text">
       <string/>
      </property>

@@ -21,8 +21,8 @@ class Add_Dialog(QtGui.QDialog):
         super(Add_Dialog, self).__init__()
         self.ui = ui_add.Ui_Dialog()
         self.ui.setupUi(self)
-        self.ui.pushButton_12.setText("Add")
-        self.ui.pushButton_13.setText("Delete")
+        self.ui.pushButton_Add.setText("Add")
+        self.ui.pushButton_Del.setText("Delete")
         self.ui.label_after_discount.setText("0")
         self.ui.label_sub_total.setText("0")
         self.ui.label_gst.setText("0")
@@ -39,23 +39,23 @@ class Add_Dialog(QtGui.QDialog):
         self.init_invoice()
         self.ui.lineEdit_tel.setText(self.random_Tel_Num())
         self.ui.comboBox_make.currentIndexChanged.connect(self.changeModel)
-        self.ui.comboBox_5.currentIndexChanged.connect(self.changeService)
-        self.ui.pushButton_2.clicked.connect(self.clicked_bt_print)
-        self.ui.pushButton_7.clicked.connect(self.clicked_bt_Tyres)
+        self.ui.comboBox_service.currentIndexChanged.connect(self.changeService)
+        self.ui.pushButton_print.clicked.connect(self.clicked_bt_print)
+        self.ui.pushButton_tyres.clicked.connect(self.clicked_bt_Tyres)
         self.ui.pushButton_date.clicked.connect(self.clicked_bt_Calender)
-        self.ui.pushButton_9.clicked.connect(self.clicked_bt_Labour)
-        self.ui.pushButton_17.clicked.connect(self.clicked_bt_Discount)
-        self.ui.pushButton_14.clicked.connect(self.clicked_bt_fullPayment)
-        self.ui.pushButton_15.clicked.connect(self.clicked_bt_Paid)
-        self.ui.pushButton_16.clicked.connect(self.clicked_bt_Cash)
-        self.ui.pushButton_12.clicked.connect(self.clicked_bt_addLine)
-        self.ui.pushButton_13.clicked.connect(self.clicked_bt_delLine)
-        self.ui.pushButton_3.clicked.connect(self.clicked_bt_preview)
+        self.ui.pushButton_labour.clicked.connect(self.clicked_bt_Labour)
+        self.ui.pushButton_discount.clicked.connect(self.clicked_bt_Discount)
+        self.ui.pushButton_full_payment.clicked.connect(self.clicked_bt_fullPayment)
+        self.ui.pushButton_payment_option.clicked.connect(self.clicked_bt_Paid)
+        self.ui.pushButton_cash_paid.clicked.connect(self.clicked_bt_Cash)
+        self.ui.pushButton_Add.clicked.connect(self.clicked_bt_addLine)
+        self.ui.pushButton_Del.clicked.connect(self.clicked_bt_delLine)
+        self.ui.pushButton_preview.clicked.connect(self.clicked_bt_preview)
         self.ui.lineEdit_amount_paid.textChanged.connect(self.autoChangeText)
         self.ui.lineEdit_amount_paid.cursorPositionChanged.connect(self.autoChangeText)
 
         self.ui.tableWidget.itemChanged.connect(self.changed_table)
-        self.ui.comboBox_3.currentIndexChanged.connect(self.wof_comboBox)
+        self.ui.comboBox_wof.currentIndexChanged.connect(self.wof_comboBox)
         self.ui.tableWidget.setColumnWidth(1, 300)
         if package != None:
             self.initialize(package)
@@ -226,7 +226,7 @@ class Add_Dialog(QtGui.QDialog):
             log_keeper.write_log(e.args[0], log_keeper.lineno())
             sys.exit(1)
     def wof_comboBox(self):
-        if self.ui.comboBox_3.currentIndex() == 1:
+        if self.ui.comboBox_wof.currentIndex() == 1:
             self.ui.tableWidget.insertRow(0)
             item = QtGui.QTableWidgetItem("Warrant of Fitness Check")
             self.ui.tableWidget.setItem(0, self.des, item)
@@ -235,7 +235,7 @@ class Add_Dialog(QtGui.QDialog):
             item = QtGui.QTableWidgetItem(self.before_gst_dis)
             self.ui.tableWidget.setItem(0, self.pri, item)
 
-        elif self.ui.comboBox_3.currentIndex() == 2:
+        elif self.ui.comboBox_wof.currentIndex() == 2:
             self.ui.tableWidget.insertRow(0)
             item = QtGui.QTableWidgetItem("Warrant of Fitness Check")
             self.ui.tableWidget.setItem(0, self.des, item)
@@ -247,7 +247,7 @@ class Add_Dialog(QtGui.QDialog):
 
     def changeService(self):
         self.ui.textEdit_service.clear()
-        chosen_name = self.ui.comboBox_5.currentText()
+        chosen_name = self.ui.comboBox_service.currentText()
         if chosen_name == 'Express':
             self.ui.tableWidget.insertRow(0)
             item = QtGui.QTableWidgetItem("Express Service")

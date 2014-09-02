@@ -16,15 +16,15 @@ class Main_Dialog(QtGui.QDialog):
         super(Main_Dialog, self).__init__()
         self.ui = ui_main.Ui_Dialog()
         self.ui.setupUi(self)
-        self.ui.pushButton_2.clicked.connect(self.clicked_bt_Main_Add)
-        self.ui.pushButton.clicked.connect(self.clicked_bt_Main_Del)
+        self.ui.pushButton_Add.clicked.connect(self.clicked_bt_Main_Add)
+        self.ui.pushButton_Del.clicked.connect(self.clicked_bt_Main_Del)
         self.init_data()
         self.conn = None
         self.cur = None
         self.connect()
         self.cur = self.conn.cursor()
-        self.ui.comboBox.currentIndexChanged.connect(self.clicked_bt_filter)
-        self.ui.tableWidget.cellDoubleClicked.connect(self.clicked_table)
+        self.ui.comboBox_filter.currentIndexChanged.connect(self.clicked_bt_filter)
+        self.ui.tableWidget_Main.cellDoubleClicked.connect(self.clicked_table)
         self.print_all_table()
         self.resize_table_column()
         self.ui.tabWidget.currentChanged.connect(self.clicked_change_tab)
@@ -51,29 +51,29 @@ class Main_Dialog(QtGui.QDialog):
         self.print_customer_table()
         self.print_unpaid_table()
     def resize_table_column(self):
-        self.ui.tableWidget.setColumnWidth(0, 100)
-        self.ui.tableWidget_4.setColumnWidth(0, 200)
-        self.ui.tableWidget_4.setColumnWidth(1, 200)
-        self.ui.tableWidget_4.setColumnWidth(2, 200)
+        self.ui.tableWidget_Main.setColumnWidth(0, 100)
+        self.ui.tableWidget_Unpaid.setColumnWidth(0, 200)
+        self.ui.tableWidget_Unpaid.setColumnWidth(1, 200)
+        self.ui.tableWidget_Unpaid.setColumnWidth(2, 200)
     def clicked_change_tab(self):
         index = self.ui.tabWidget.currentIndex()
-        self.ui.pushButton.clicked.disconnect()
-        self.ui.pushButton_2.clicked.disconnect()
+        self.ui.pushButton_Del.clicked.disconnect()
+        self.ui.pushButton_Add.clicked.disconnect()
         if index == self.main_tab:
-            self.ui.pushButton.clicked.connect(self.clicked_bt_Main_Del)
-            self.ui.pushButton_2.clicked.connect(self.clicked_bt_Main_Add)
+            self.ui.pushButton_Del.clicked.connect(self.clicked_bt_Main_Del)
+            self.ui.pushButton_Add.clicked.connect(self.clicked_bt_Main_Add)
         elif index == self.customer_tab:
             self.print_customer_table()
-            self.ui.pushButton.clicked.connect(self.clicked_bt_Customer_Del)
-            self.ui.pushButton_2.clicked.connect(self.clicked_bt_Customer_Add)
+            self.ui.pushButton_Del.clicked.connect(self.clicked_bt_Customer_Del)
+            self.ui.pushButton_Add.clicked.connect(self.clicked_bt_Customer_Add)
         elif index == self.paid_tab:
             self.print_paid_table()
-            self.ui.pushButton.clicked.connect(self.clicked_bt_Paid_Del)
-            self.ui.pushButton_2.clicked.connect(self.clicked_bt_Paid_Add)
+            self.ui.pushButton_Del.clicked.connect(self.clicked_bt_Paid_Del)
+            self.ui.pushButton_Add.clicked.connect(self.clicked_bt_Paid_Add)
         elif index == self.unpaid_tab:
             self.print_unpaid_table()
-            self.ui.pushButton.clicked.connect(self.clicked_bt_Unpaid_Del)
-            self.ui.pushButton_2.clicked.connect(self.clicked_bt_Unpaid_Add)
+            self.ui.pushButton_Del.clicked.connect(self.clicked_bt_Unpaid_Del)
+            self.ui.pushButton_Add.clicked.connect(self.clicked_bt_Unpaid_Add)
 
     def clicked_bt_Customer_Del(self):
         print "Customer Delete"
@@ -89,25 +89,25 @@ class Main_Dialog(QtGui.QDialog):
         print "UnPaid Add"
 
     def clicked_bt_Main_Del(self):
-        current_row = self.ui.tableWidget.currentRow()
+        current_row = self.ui.tableWidget_Main.currentRow()
         if current_row == -1:
             current_row = 0
-        invoice_no_item = self.ui.tableWidget.item(current_row, self.invoice_no)
+        invoice_no_item = self.ui.tableWidget_Main.item(current_row, self.invoice_no)
         if invoice_no_item == None:
             return
         invoice_no = invoice_no_item.text()
         self.cur.execute("DELETE FROM invoice WHERE invoice_no='%s'" % invoice_no)
         self.cur.execute("DELETE FROM items WHERE invoice_no='%s'" % invoice_no)
         self.conn.commit()
-        self.ui.tableWidget.removeRow(current_row)
+        self.ui.tableWidget_Main.removeRow(current_row)
 
     def clicked_table(self):
-        current_row = self.ui.tableWidget.currentRow()
+        current_row = self.ui.tableWidget_Main.currentRow()
         package = []
         for i in xrange(7):
-            package.append(self.ui.tableWidget.item(current_row, i).text())
-        package.append(self.return_items(self.ui.tableWidget.item(current_row, self.invoice_no).text()))
-        package.append(self.return_invoice(self.ui.tableWidget.item(current_row, self.invoice_no).text()))
+            package.append(self.ui.tableWidget_Main.item(current_row, i).text())
+        package.append(self.return_items(self.ui.tableWidget_Main.item(current_row, self.invoice_no).text()))
+        package.append(self.return_invoice(self.ui.tableWidget_Main.item(current_row, self.invoice_no).text()))
 
 
         Dialog = add.Add_Dialog(package)
@@ -138,18 +138,18 @@ class Main_Dialog(QtGui.QDialog):
 
     def clicked_bt_filter(self):
         #current day
-        if self.ui.comboBox.currentIndex() == 1:
+        if self.ui.comboBox_filter.currentIndex() == 1:
             date = self.current_day()
             self.print_main_table(date)
         #current month
-        elif self.ui.comboBox.currentIndex() == 2:
+        elif self.ui.comboBox_filter.currentIndex() == 2:
             date = self.convert_month()
             self.print_main_table(date)
         #all record
-        elif self.ui.comboBox.currentIndex() == 3:
+        elif self.ui.comboBox_filter.currentIndex() == 3:
             self.print_main_table(0)
         #current week
-        elif self.ui.comboBox.currentIndex() == 0:
+        elif self.ui.comboBox_filter.currentIndex() == 0:
             date = self.convert_week(self.getday())
             self.print_main_table(date)
 
@@ -217,21 +217,21 @@ class Main_Dialog(QtGui.QDialog):
             amount_paid = row[1]
             amount_due = row[2]
             invoice_no = row[3]
-            self.ui.tableWidget_4.insertRow(0)
+            self.ui.tableWidget_Unpaid.insertRow(0)
             item = QtGui.QTableWidgetItem(name)
-            self.ui.tableWidget_4.setItem(0, self.customer_name, item)
+            self.ui.tableWidget_Unpaid.setItem(0, self.customer_name, item)
 
             item = QtGui.QTableWidgetItem(str ("%.2f") % amount_paid)
             #unpaid table is different from main table
-            self.ui.tableWidget_4.setItem(0, self.amount_paid - 3, item)
+            self.ui.tableWidget_Unpaid.setItem(0, self.amount_paid - 3, item)
 
             item = QtGui.QTableWidgetItem(str ("%.2f") % amount_due)
             #unpaid table is different from main table
-            self.ui.tableWidget_4.setItem(0, self.amount_due - 3, item)
+            self.ui.tableWidget_Unpaid.setItem(0, self.amount_due - 3, item)
 
             item = QtGui.QTableWidgetItem(str(invoice_no))
             #unpaid table is different from main table
-            self.ui.tableWidget_4.setItem(0, self.invoice_no + 3, item)
+            self.ui.tableWidget_Unpaid.setItem(0, self.invoice_no + 3, item)
     def print_customer_table(self):
         self.delete_empty_row(2)
         self.cur.execute("SELECT name, tel, Address FROM customer")
@@ -242,13 +242,13 @@ class Main_Dialog(QtGui.QDialog):
             name = row[0]
             tel = row[1]
             addr = row[2]
-            self.ui.tableWidget_2.insertRow(0)
+            self.ui.tableWidget_Customer.insertRow(0)
             item = QtGui.QTableWidgetItem(name)
-            self.ui.tableWidget_2.setItem(0, self.customer_name, item)
+            self.ui.tableWidget_Customer.setItem(0, self.customer_name, item)
             item = QtGui.QTableWidgetItem(tel)
-            self.ui.tableWidget_2.setItem(0, self.tel, item)
+            self.ui.tableWidget_Customer.setItem(0, self.tel, item)
             item = QtGui.QTableWidgetItem(addr)
-            self.ui.tableWidget_2.setItem(0, self.address, item)
+            self.ui.tableWidget_Customer.setItem(0, self.address, item)
 
     def print_main_table(self, date):
         self.delete_empty_row(0)
@@ -272,21 +272,21 @@ class Main_Dialog(QtGui.QDialog):
             service = row[9]
             labour = row[10]
             model = row[11]
-            self.ui.tableWidget.insertRow(0)
+            self.ui.tableWidget_Main.insertRow(0)
             item = QtGui.QTableWidgetItem(str(invoice_no))
-            self.ui.tableWidget.setItem(0, self.invoice_no, item)
+            self.ui.tableWidget_Main.setItem(0, self.invoice_no, item)
             item = QtGui.QTableWidgetItem(name)
-            self.ui.tableWidget.setItem(0, self.customer, item)
+            self.ui.tableWidget_Main.setItem(0, self.customer, item)
             item = QtGui.QTableWidgetItem(model)
-            self.ui.tableWidget.setItem(0, self.model, item)
+            self.ui.tableWidget_Main.setItem(0, self.model, item)
             item = QtGui.QTableWidgetItem(rego)
-            self.ui.tableWidget.setItem(0, self.rego, item) 
+            self.ui.tableWidget_Main.setItem(0, self.rego, item) 
             item = QtGui.QTableWidgetItem(str("%.2f") % amount_paid)
-            self.ui.tableWidget.setItem(0, self.amount_paid, item)
+            self.ui.tableWidget_Main.setItem(0, self.amount_paid, item)
             item = QtGui.QTableWidgetItem(str("%.2f") % amount_due)
-            self.ui.tableWidget.setItem(0, self.amount_due, item)
+            self.ui.tableWidget_Main.setItem(0, self.amount_due, item)
             item = QtGui.QTableWidgetItem(date_in)
-            self.ui.tableWidget.setItem(0, self.date, item)
+            self.ui.tableWidget_Main.setItem(0, self.date, item)
 
     def print_paid_table(self):
         self.delete_empty_row(1)
@@ -298,29 +298,29 @@ class Main_Dialog(QtGui.QDialog):
                 break
             name = row[0]
             invoice_no = row[1]
-            self.ui.tableWidget_3.insertRow(0)
+            self.ui.tableWidget_Paid.insertRow(0)
             item = QtGui.QTableWidgetItem(name)
-            self.ui.tableWidget_3.setItem(0, self.customer - 1, item)
+            self.ui.tableWidget_Paid.setItem(0, self.customer - 1, item)
             item = QtGui.QTableWidgetItem(str(invoice_no))
-            self.ui.tableWidget_3.setItem(0, self.invoice_no + 1, item)
+            self.ui.tableWidget_Paid.setItem(0, self.invoice_no + 1, item)
 
     def delete_empty_row(self, table_number):
         if table_number == 0:
-            self.ui.tableWidget.clearContents()
-            for i in range(self.ui.tableWidget.rowCount()):
-                self.ui.tableWidget.removeRow(0)
+            self.ui.tableWidget_Main.clearContents()
+            for i in range(self.ui.tableWidget_Main.rowCount()):
+                self.ui.tableWidget_Main.removeRow(0)
         elif table_number == 1:
-            self.ui.tableWidget_3.clearContents()
-            for i in range(self.ui.tableWidget_3.rowCount()):
-                self.ui.tableWidget_3.removeRow(0)
+            self.ui.tableWidget_Paid.clearContents()
+            for i in range(self.ui.tableWidget_Paid.rowCount()):
+                self.ui.tableWidget_Paid.removeRow(0)
         elif table_number == 2:
-            self.ui.tableWidget_2.clearContents()
-            for i in range(self.ui.tableWidget_2.rowCount()):
-                self.ui.tableWidget_2.removeRow(0)
+            self.ui.tableWidget_Customer.clearContents()
+            for i in range(self.ui.tableWidget_Customer.rowCount()):
+                self.ui.tableWidget_Customer.removeRow(0)
         else:
-            self.ui.tableWidget_4.clearContents()
-            for i in range(self.ui.tableWidget_4.rowCount()):
-                self.ui.tableWidget_4.removeRow(0)
+            self.ui.tableWidget_Unpaid.clearContents()
+            for i in range(self.ui.tableWidget_Unpaid.rowCount()):
+                self.ui.tableWidget_Unpaid.removeRow(0)
 
     def write_log(self, string):
         my_time = None

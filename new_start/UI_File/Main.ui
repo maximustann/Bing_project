@@ -80,7 +80,7 @@ QRadioButton{
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="pushButton_Add">
        <property name="font">
         <font>
          <family>Droid Serif</family>
@@ -96,7 +96,7 @@ QRadioButton{
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="pushButton_Del">
        <property name="font">
         <font>
          <family>Droid Serif</family>
@@ -120,13 +120,13 @@ QRadioButton{
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="tab_main">
       <attribute name="title">
        <string>Main</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_6">
        <item row="1" column="0" colspan="3">
-        <widget class="QTableWidget" name="tableWidget">
+        <widget class="QTableWidget" name="tableWidget_Main">
          <property name="font">
           <font>
            <family>Droid Serif</family>
@@ -257,7 +257,7 @@ QDialogButtonBox {
           <bool>true</bool>
          </property>
          <attribute name="horizontalHeaderVisible">
-          <bool>true</bool>
+          <bool>false</bool>
          </attribute>
          <attribute name="horizontalHeaderHighlightSections">
           <bool>false</bool>
@@ -305,7 +305,7 @@ QDialogButtonBox {
        <item row="0" column="0">
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="0" column="0">
-          <widget class="QComboBox" name="comboBox">
+          <widget class="QComboBox" name="comboBox_filter">
            <property name="font">
             <font>
              <family>Droid Serif</family>
@@ -336,7 +336,7 @@ QDialogButtonBox {
         </layout>
        </item>
        <item row="0" column="1">
-        <widget class="QLineEdit" name="lineEdit">
+        <widget class="QLineEdit" name="lineEdit_main_search">
          <property name="font">
           <font>
            <family>Droid Serif</family>
@@ -345,7 +345,7 @@ QDialogButtonBox {
         </widget>
        </item>
        <item row="0" column="2">
-        <widget class="QPushButton" name="pushButton_3">
+        <widget class="QPushButton" name="pushButton_main_search">
          <property name="font">
           <font>
            <family>Droid Serif</family>
@@ -358,7 +358,7 @@ QDialogButtonBox {
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_4">
+     <widget class="QWidget" name="tab_customer">
       <attribute name="title">
        <string>Customer</string>
       </attribute>
@@ -366,7 +366,7 @@ QDialogButtonBox {
        <item row="0" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QLineEdit" name="lineEdit_2">
+          <widget class="QLineEdit" name="lineEdit_cust_search">
            <property name="font">
             <font>
              <family>Droid Serif</family>
@@ -375,7 +375,7 @@ QDialogButtonBox {
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_4">
+          <widget class="QPushButton" name="pushButton_cust_search">
            <property name="font">
             <font>
              <family>Droid Serif</family>
@@ -389,7 +389,7 @@ QDialogButtonBox {
         </layout>
        </item>
        <item row="1" column="0">
-        <widget class="QTableWidget" name="tableWidget_2">
+        <widget class="QTableWidget" name="tableWidget_Customer">
          <property name="font">
           <font>
            <family>Droid Serif</family>
@@ -423,13 +423,13 @@ QDialogButtonBox {
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_3">
+     <widget class="QWidget" name="tab_paid">
       <attribute name="title">
        <string>Paid</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_4">
        <item row="0" column="0">
-        <widget class="QTableWidget" name="tableWidget_3">
+        <widget class="QTableWidget" name="tableWidget_Paid">
          <property name="font">
           <font>
            <family>Droid Serif</family>
@@ -458,13 +458,13 @@ QDialogButtonBox {
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="tab_unpaid">
       <attribute name="title">
        <string>Unpaid</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_5">
        <item row="0" column="0">
-        <widget class="QTableWidget" name="tableWidget_4">
+        <widget class="QTableWidget" name="tableWidget_Unpaid">
          <property name="font">
           <font>
            <family>Droid Serif</family>
