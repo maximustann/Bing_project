@@ -46,6 +46,7 @@ CREATE TABLE invoice
 	labour		varchar(1024),
 	model		varchar(1024),
 	make		varchar(1024),
+	after_discount varchar(80),
 	primary key (invoice_no),
 	foreign key (tel) references customer(tel)
 );
