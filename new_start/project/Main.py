@@ -7,6 +7,7 @@ import sqlite3 as lite;
 import sys;
 import os;
 import Add as add;
+#import Add_user as add_user;
 import datetime
 import time
 import log_keeper
@@ -62,18 +63,26 @@ class Main_Dialog(QtGui.QDialog):
         if index == self.main_tab:
             self.ui.pushButton_Del.clicked.connect(self.clicked_bt_Main_Del)
             self.ui.pushButton_Add.clicked.connect(self.clicked_bt_Main_Add)
+            self.ui.pushButton_Add.setEnabled(True)
+            self.ui.pushButton_Del.setEnabled(True)
         elif index == self.customer_tab:
             self.print_customer_table()
             self.ui.pushButton_Del.clicked.connect(self.clicked_bt_Customer_Del)
             self.ui.pushButton_Add.clicked.connect(self.clicked_bt_Customer_Add)
+            self.ui.pushButton_Add.setEnabled(True)
+            self.ui.pushButton_Del.setEnabled(True)
         elif index == self.paid_tab:
             self.print_paid_table()
             self.ui.pushButton_Del.clicked.connect(self.clicked_bt_Paid_Del)
             self.ui.pushButton_Add.clicked.connect(self.clicked_bt_Paid_Add)
+            self.ui.pushButton_Add.setEnabled(False)
+            self.ui.pushButton_Del.setEnabled(False)
         elif index == self.unpaid_tab:
             self.print_unpaid_table()
             self.ui.pushButton_Del.clicked.connect(self.clicked_bt_Unpaid_Del)
             self.ui.pushButton_Add.clicked.connect(self.clicked_bt_Unpaid_Add)
+            self.ui.pushButton_Add.setEnabled(False)
+            self.ui.pushButton_Del.setEnabled(False)
 
     def clicked_bt_Customer_Del(self):
         print "Customer Delete"
@@ -82,6 +91,11 @@ class Main_Dialog(QtGui.QDialog):
     def clicked_bt_Unpaid_Del(self):
         print "Unpaid Delete"
     def clicked_bt_Customer_Add(self):
+        Dialog = add.Add_user_Dialog(None)
+        Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
+        Dialog.show()
+        result = Dialog.exec_()
+
         print "Customer Add"
     def clicked_bt_Paid_Add(self):
         print "Paid Add"
@@ -134,7 +148,6 @@ class Main_Dialog(QtGui.QDialog):
                 break
             items.append(row)
         return items
-
 
     def clicked_bt_filter(self):
         #current day
@@ -329,6 +342,8 @@ class Main_Dialog(QtGui.QDialog):
         fd.write(string + "\t" + my_time + "\n")
         fd.close()
 
+def nothing():
+    return True
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     Dialog = Main_Dialog()
