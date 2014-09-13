@@ -7,7 +7,11 @@ import sqlite3 as lite;
 import sys;
 import os;
 import Add as add;
+<<<<<<< HEAD
 #import Add_user as add_user;
+=======
+import Add_user as add_user;
+>>>>>>> 2fb39a7478566fa84ba5e3cc9b33bdfc0fb87cd9
 import datetime
 import time
 import log_keeper
@@ -25,7 +29,8 @@ class Main_Dialog(QtGui.QDialog):
         self.connect()
         self.cur = self.conn.cursor()
         self.ui.comboBox_filter.currentIndexChanged.connect(self.clicked_bt_filter)
-        self.ui.tableWidget_Main.cellDoubleClicked.connect(self.clicked_table)
+        self.ui.tableWidget_Main.cellDoubleClicked.connect(self.clicked_main_table)
+        self.ui.tableWidget_Customer.cellDoubleClicked.connect(self.clicked_customer_table)
         self.print_all_table()
         self.resize_table_column()
         self.ui.tabWidget.currentChanged.connect(self.clicked_change_tab)
@@ -91,12 +96,21 @@ class Main_Dialog(QtGui.QDialog):
     def clicked_bt_Unpaid_Del(self):
         print "Unpaid Delete"
     def clicked_bt_Customer_Add(self):
+<<<<<<< HEAD
         Dialog = add.Add_user_Dialog(None)
         Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
         Dialog.show()
         result = Dialog.exec_()
 
         print "Customer Add"
+=======
+        Dialog = add_user.Add_user_Dialog(None)
+        Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
+        Dialog.show()
+        result = Dialog.exec_()
+        if result != -1:
+            self.print_customer_table()
+>>>>>>> 2fb39a7478566fa84ba5e3cc9b33bdfc0fb87cd9
     def clicked_bt_Paid_Add(self):
         print "Paid Add"
     def clicked_bt_Unpaid_Add(self):
@@ -115,10 +129,10 @@ class Main_Dialog(QtGui.QDialog):
         self.conn.commit()
         self.ui.tableWidget_Main.removeRow(current_row)
 
-    def clicked_table(self):
+    def clicked_main_table(self):
         current_row = self.ui.tableWidget_Main.currentRow()
         package = []
-        for i in xrange(7):
+        for i in range(7):
             package.append(self.ui.tableWidget_Main.item(current_row, i).text())
         package.append(self.return_items(self.ui.tableWidget_Main.item(current_row, self.invoice_no).text()))
         package.append(self.return_invoice(self.ui.tableWidget_Main.item(current_row, self.invoice_no).text()))
@@ -130,6 +144,17 @@ class Main_Dialog(QtGui.QDialog):
         result = Dialog.exec_()
         if result == 0:
             self.clicked_bt_filter()
+    def clicked_customer_table(self):
+        current_row = self.ui.tableWidget_Customer.currentRow()
+        package = []
+        for i in range(3):
+            package.append(self.ui.tableWidget_Customer.item(current_row, i).text())
+
+        Dialog = add_user.Add_user_Dialog(package)
+        Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
+        Dialog.show()
+        result = Dialog.exec_()
+        self.print_customer_table()
     def return_items(self, invoice_no):
         items = []
         self.cur.execute('SELECT * FROM items WHERE invoice_no="%s"' % invoice_no)
