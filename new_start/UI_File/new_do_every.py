@@ -24,7 +24,7 @@ def detectexist(namelist):
     ui_dir = '../project/ui'
     for name in namelist:
         if not os.path.exists("%s/Ui_%s.py" % (ui_dir, name)):
-            os.system('cp %name.py %s/Ui_%s.py' % (name, ui_dir, name))
+            os.system('cp %s.py %s/Ui_%s.py' % (name, ui_dir, name))
 
 def checkdiff(namelist):
     ui_dir = '../project/ui'
