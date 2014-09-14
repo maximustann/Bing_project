@@ -7,11 +7,7 @@ import sqlite3 as lite;
 import sys;
 import os;
 import Add as add;
-<<<<<<< HEAD
-#import Add_user as add_user;
-=======
 import Add_user as add_user;
->>>>>>> 2fb39a7478566fa84ba5e3cc9b33bdfc0fb87cd9
 import datetime
 import time
 import log_keeper
@@ -63,8 +59,8 @@ class Main_Dialog(QtGui.QDialog):
         self.ui.tableWidget_Unpaid.setColumnWidth(2, 200)
     def clicked_change_tab(self):
         index = self.ui.tabWidget.currentIndex()
-        self.ui.pushButton_Del.clicked.disconnect()
-        self.ui.pushButton_Add.clicked.disconnect()
+        if index != 2 and index != 3:
+            self.ui.pushButton_Add.clicked.disconnect()
         if index == self.main_tab:
             self.ui.pushButton_Del.clicked.connect(self.clicked_bt_Main_Del)
             self.ui.pushButton_Add.clicked.connect(self.clicked_bt_Main_Add)
@@ -72,49 +68,25 @@ class Main_Dialog(QtGui.QDialog):
             self.ui.pushButton_Del.setEnabled(True)
         elif index == self.customer_tab:
             self.print_customer_table()
-            self.ui.pushButton_Del.clicked.connect(self.clicked_bt_Customer_Del)
             self.ui.pushButton_Add.clicked.connect(self.clicked_bt_Customer_Add)
             self.ui.pushButton_Add.setEnabled(True)
-            self.ui.pushButton_Del.setEnabled(True)
+            self.ui.pushButton_Del.setEnabled(False)
         elif index == self.paid_tab:
             self.print_paid_table()
-            self.ui.pushButton_Del.clicked.connect(self.clicked_bt_Paid_Del)
-            self.ui.pushButton_Add.clicked.connect(self.clicked_bt_Paid_Add)
             self.ui.pushButton_Add.setEnabled(False)
             self.ui.pushButton_Del.setEnabled(False)
         elif index == self.unpaid_tab:
             self.print_unpaid_table()
-            self.ui.pushButton_Del.clicked.connect(self.clicked_bt_Unpaid_Del)
-            self.ui.pushButton_Add.clicked.connect(self.clicked_bt_Unpaid_Add)
             self.ui.pushButton_Add.setEnabled(False)
             self.ui.pushButton_Del.setEnabled(False)
 
-    def clicked_bt_Customer_Del(self):
-        print "Customer Delete"
-    def clicked_bt_Paid_Del(self):
-        print "Paid Delete"
-    def clicked_bt_Unpaid_Del(self):
-        print "Unpaid Delete"
     def clicked_bt_Customer_Add(self):
-<<<<<<< HEAD
-        Dialog = add.Add_user_Dialog(None)
-        Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
-        Dialog.show()
-        result = Dialog.exec_()
-
-        print "Customer Add"
-=======
         Dialog = add_user.Add_user_Dialog(None)
         Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
         Dialog.show()
         result = Dialog.exec_()
         if result != -1:
             self.print_customer_table()
->>>>>>> 2fb39a7478566fa84ba5e3cc9b33bdfc0fb87cd9
-    def clicked_bt_Paid_Add(self):
-        print "Paid Add"
-    def clicked_bt_Unpaid_Add(self):
-        print "UnPaid Add"
 
     def clicked_bt_Main_Del(self):
         current_row = self.ui.tableWidget_Main.currentRow()

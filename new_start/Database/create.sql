@@ -81,3 +81,8 @@ CREATE TABLE model
 	foreign key (make_name) references make(name)
 );
 
+CREATE TRIGGER update_invoice UPDATE OF tel ON customer
+	BEGIN
+		UPDATE invoice SET tel = new.tel WHERE invoice_no = invoice_no;
+		UPDATE vehicle SET tel = new.tel WHERE tel = old.tel;
+	END;

@@ -241,7 +241,7 @@ class Ui_Dialog(object):
         self.tableWidget_Main.setHorizontalHeaderItem(5, item)
         item = QtGui.QTableWidgetItem()
         self.tableWidget_Main.setHorizontalHeaderItem(6, item)
-        self.tableWidget_Main.horizontalHeader().setVisible(False)
+        self.tableWidget_Main.horizontalHeader().setVisible(True)
         self.tableWidget_Main.horizontalHeader().setHighlightSections(False)
         self.tableWidget_Main.verticalHeader().setVisible(False)
         self.gridLayout_6.addWidget(self.tableWidget_Main, 1, 0, 1, 3)
